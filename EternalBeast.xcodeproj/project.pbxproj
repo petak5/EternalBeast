@@ -75,8 +75,9 @@
 		D095B218263E8E0000113A8C /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				D0B2655226507411009E0307 /* Main */,
-				D0B26551265073EF009E0307 /* Artist */,
+				D095B21B263E8E6200113A8C /* MainWindowControler.swift */,
+				D095B21D263E8EE600113A8C /* SidebarViewController.swift */,
+				D095B22B263E8FD700113A8C /* ArtistsViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -96,23 +97,6 @@
 				D0B265572651034A009E0307 /* Song.swift */,
 			);
 			path = Model;
-			sourceTree = "<group>";
-		};
-		D0B26551265073EF009E0307 /* Artist */ = {
-			isa = PBXGroup;
-			children = (
-				D095B22B263E8FD700113A8C /* ArtistsViewController.swift */,
-			);
-			path = Artist;
-			sourceTree = "<group>";
-		};
-		D0B2655226507411009E0307 /* Main */ = {
-			isa = PBXGroup;
-			children = (
-				D095B21B263E8E6200113A8C /* MainWindowControler.swift */,
-				D095B21D263E8EE600113A8C /* SidebarViewController.swift */,
-			);
-			path = Main;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

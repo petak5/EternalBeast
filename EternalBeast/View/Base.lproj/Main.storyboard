@@ -741,9 +741,8 @@
                                                                     <rect key="frame" x="8" y="0.0" width="111" height="24"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
-                                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MyE-7Z-dqY">
+                                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="MyE-7Z-dqY">
                                                                             <rect key="frame" x="0.0" y="4" width="111" height="16"/>
-                                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="JvL-H6-OLg">
                                                                                 <font key="font" usesAppearanceFont="YES"/>
                                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -751,6 +750,11 @@
                                                                             </textFieldCell>
                                                                         </textField>
                                                                     </subviews>
+                                                                    <constraints>
+                                                                        <constraint firstItem="MyE-7Z-dqY" firstAttribute="top" secondItem="cVh-id-0BH" secondAttribute="top" constant="4" id="mHD-qC-rCl"/>
+                                                                        <constraint firstAttribute="trailing" secondItem="MyE-7Z-dqY" secondAttribute="trailing" constant="2" id="oOY-jt-6Kz"/>
+                                                                        <constraint firstItem="MyE-7Z-dqY" firstAttribute="leading" secondItem="cVh-id-0BH" secondAttribute="leading" constant="2" id="u8q-pu-Qzs"/>
+                                                                    </constraints>
                                                                     <connections>
                                                                         <outlet property="textField" destination="MyE-7Z-dqY" id="op7-1Y-fn5"/>
                                                                     </connections>
@@ -811,9 +815,8 @@
                                                                     <rect key="frame" x="8" y="0.0" width="111" height="24"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
-                                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2nS-dV-ha9">
+                                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="2nS-dV-ha9">
                                                                             <rect key="frame" x="0.0" y="4" width="111" height="16"/>
-                                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="c6e-4b-aIp">
                                                                                 <font key="font" usesAppearanceFont="YES"/>
                                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -821,6 +824,11 @@
                                                                             </textFieldCell>
                                                                         </textField>
                                                                     </subviews>
+                                                                    <constraints>
+                                                                        <constraint firstItem="2nS-dV-ha9" firstAttribute="leading" secondItem="14e-LM-aeg" secondAttribute="leading" constant="2" id="HiA-Ed-mhG"/>
+                                                                        <constraint firstItem="2nS-dV-ha9" firstAttribute="top" secondItem="14e-LM-aeg" secondAttribute="top" constant="4" id="eR8-Jd-a4S"/>
+                                                                        <constraint firstAttribute="trailing" secondItem="2nS-dV-ha9" secondAttribute="trailing" constant="2" id="jaq-Ug-RaS"/>
+                                                                    </constraints>
                                                                     <connections>
                                                                         <outlet property="textField" destination="2nS-dV-ha9" id="AY5-rk-EgP"/>
                                                                     </connections>

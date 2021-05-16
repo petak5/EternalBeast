@@ -7,7 +7,7 @@
 
 import Cocoa
 
-class ArtistsViewController: NSSplitViewController {
+class ArtistsViewController: NSViewController {
 
     private var library = Library.shared
     
@@ -25,66 +25,39 @@ class ArtistsViewController: NSSplitViewController {
         songsTableView.dataSource = self
     }
     
-    func showItems(title: String, items: [String]) {
-        //self.items.append(title)
-    }
-    
-    
-    public func openFolder(withPath path: String) {
-        let fileManager = FileManager.default
-        
-        do {
-            let items = try fileManager.contentsOfDirectory(atPath: path)
-            
-            showItems(title: path, items: items)
-        } catch let error {
-            NSResponder().presentError(error)
-            print("Failed to retreive contents of directory: '" + path + "'")
-        }
-    }
-
-    override var representedObject: Any? {
-        didSet {
-        // Update the view, if already loaded.
-        }
-    }
-    
-    func add() -> String? {
+    func add() -> [String] {
         let dialog = NSOpenPanel();
-            
-        dialog.title                   = "Choose a directory";
         dialog.showsResizeIndicator    = true;
         dialog.showsHiddenFiles        = false;
-        dialog.canChooseFiles          = false;
+        dialog.canChooseFiles          = true;
         dialog.canChooseDirectories    = true;
-        dialog.allowsMultipleSelection = false;
+        dialog.allowsMultipleSelection = true;
 
+        var paths = [String]()
+        
         if (dialog.runModal() == NSApplication.ModalResponse.OK) {
-            let result = dialog.url
+            let result = dialog.urls
             
-            if let _result = result {
-                let path = _result.path
-                print(path)
-                
-                return path
-            } else {
-                return nil
+            for path in result {
+                paths.append(path.path)
             }
+            
+            return paths
         } else {
             // User clicked on "Cancel"
-            return nil
+            return paths
         }
     }
 
     @IBAction func addToLibrary(_ sender: Any) {
-        let path = add()
-        if let _path = path {
-            openFolder(withPath: _path)
-            library.addSongs(fromPath: _path)
-            
-            artistsTableView.reloadData()
-            songsTableView.reloadData()
+        let paths = add()
+        
+        for path in paths {
+            library.addSongs(fromPath: path)
         }
+        
+        artistsTableView.reloadData()
+        songsTableView.reloadData()
     }
     
 }
