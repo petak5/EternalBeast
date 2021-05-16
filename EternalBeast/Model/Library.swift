@@ -10,20 +10,33 @@ import Cocoa
 final class Library {
     static let shared = Library()
     
-    private var songs: [Song]
+    private var songs: [String: [Song]]
     
     private init() {
-        songs = [Song]()
+        songs = [String: [Song]]()
     }
     
     private func addFile(path: String) {
-        let song = Song(fromPath: path)
-        if let _song = song {
-            songs.append(_song)
+        let fileManager = FileManager.default
+
+        if !fileManager.fileExists(atPath: path) || !fileManager.isReadableFile(atPath: path) {
+            print("File '\(path)' does not exist or is not readable.")
+            return
+        }
+        
+        let fileName = (path as NSString).lastPathComponent
+        let directoryPath = (path as NSString).deletingLastPathComponent
+        
+        let song = Song(directoryPath: directoryPath, fileName: fileName)
+        
+        if songs[directoryPath] == nil {
+            songs[directoryPath] = [song]
+        } else {
+            songs[directoryPath]?.append(song)
         }
     }
     
-    private func addDirectory(directory: String) {
+    private func addFilesFromDirectory(directory: String) {
         let fileManager = FileManager.default
         
         do {
@@ -43,14 +56,18 @@ final class Library {
         
         if FileManager.default.fileExists(atPath: path, isDirectory: &isDir) {
             if isDir.boolValue {
-                addDirectory(directory: path)
+                addFilesFromDirectory(directory: path)
             } else {
                 addFile(path: path)
             }
         }
     }
     
-    public func getSongs() -> [Song] {
-        return songs
+    public func getDirectories() -> [String] {
+        return Array(songs.keys)
+    }
+    
+    public func getSongs(fromDirectory directory: String) -> [Song]? {
+        return songs[directory]
     }
 }

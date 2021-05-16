@@ -67,7 +67,32 @@ class ArtistsViewController: NSViewController {
 extension ArtistsViewController: NSTableViewDelegate, NSTableViewDataSource {
 
     func numberOfRows(in tableView: NSTableView) -> Int {
-        return library.getSongs().count
+        if tableView == artistsTableView {
+            return library.getDirectories().count
+        } else if tableView == songsTableView {
+            let row = artistsTableView.selectedRow
+            
+            // No row selected
+            if row == -1 {
+                return 0
+            } else {
+                let directories = library.getDirectories()
+                
+                // Index out of bounds
+                if row > directories.count {
+                    return 0
+                }
+                
+                let songs = library.getSongs(fromDirectory: directories[row])
+                if let _songs = songs {
+                    return _songs.count
+                } else {
+                    return 0
+                }
+            }
+        } else {
+            return 0
+        }
     }
 
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
@@ -76,10 +101,32 @@ extension ArtistsViewController: NSTableViewDelegate, NSTableViewDataSource {
         
         if tableView == artistsTableView {
             cellName = "artistCell"
-            text = library.getSongs()[row].getDirectoryPath()
+            text = library.getDirectories()[row]
         } else if tableView == songsTableView {
             cellName = "songCell"
-            text = library.getSongs()[row].getFileName()
+            
+            let directorySelectedRow = artistsTableView.selectedRow
+            
+            // No row selected
+            if directorySelectedRow == -1 {
+                return nil
+            } else {
+                let directories = library.getDirectories()
+                
+                // Index out of bounds
+                if directorySelectedRow > directories.count {
+                    return nil
+                }
+                
+                let songs = library.getSongs(fromDirectory: directories[directorySelectedRow])
+                if let _songs = songs {
+                    text = _songs[row].getFileName()
+                } else {
+                    return nil
+                }
+            }
+        } else {
+            return nil
         }
         
         let cell = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(cellName), owner: self) as! NSTableCellView
@@ -98,5 +145,14 @@ extension ArtistsViewController: NSTableViewDelegate, NSTableViewDataSource {
         }
         
         return value
+    }
+    
+    func tableViewSelectionDidChange(_ notification: Notification) {
+        let tableView = notification.object as? NSTableView
+        if let _tableView = tableView {
+            if _tableView == artistsTableView {
+                songsTableView.reloadData()
+            }
+        }
     }
 }
