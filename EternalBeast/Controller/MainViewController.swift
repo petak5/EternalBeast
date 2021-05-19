@@ -26,6 +26,7 @@ class MainViewController: NSViewController {
     
     
     @IBOutlet weak var playButton: NSButton!
+    @IBOutlet weak var repeatButton: NSButton!
     @IBOutlet weak var coverArtImage: NSImageView!
     @IBOutlet weak var songNameLabel: NSTextField!
     @IBOutlet weak var progressLabel: NSTextField!
@@ -47,6 +48,8 @@ class MainViewController: NSViewController {
         songsTableView.delegate = self
         songsTableView.dataSource = self
         songsTableView.doubleAction = #selector(songsTableViewDoubleClicked)
+        
+        player.delegate = self
     }
     
     @objc func songsTableViewDoubleClicked() {
@@ -148,7 +151,7 @@ class MainViewController: NSViewController {
         }
     }
     
-    // MARK: - Playback buttons
+    // MARK: - Playback controls
     
     @IBAction func previousButtonClicked(_ sender: Any) {
     }
@@ -156,19 +159,64 @@ class MainViewController: NSViewController {
     @IBAction func playButtonClicked(_ sender: Any) {
         if !player.isPlaying() {
             player.play()
-            if player.isPlaying() {
-                playButton.image = NSImage(named: NSImage.touchBarPauseTemplateName)
-            }
         } else {
             player.pause()
-            playButton.image = NSImage(named: NSImage.touchBarPlayTemplateName)
         }
+        
+        updatePlaybackInfo()
     }
     
     @IBAction func nextButtonClicked(_ sender: Any) {
         player.playNext()
+        
+        updatePlaybackInfo()
+    }
+    
+    func updatePlaybackInfo() {
+        if let currentSong = player.getCurrentSong() {
+            songNameLabel.stringValue = currentSong.getArtistName() + " - " + currentSong.getTitle()
+            
+            // TODO: Set cover art
+        } else {
+            songNameLabel.stringValue = ""
+            
+            // TODO: Set cover art to some placeholder image
+        }
+        
+        if player.isPlaying() {
+            playButton.image = NSImage(named: NSImage.touchBarPauseTemplateName)
+        } else {
+            playButton.image = NSImage(named: NSImage.touchBarPlayTemplateName)
+        }
+    }
+    
+    @IBAction func playbackSliderChanged(_ sender: Any) {
+        let seekTime = playbackSlider.doubleValue * player.getCurrentSongLength()
+        player.seekToTime(time: seekTime)
     }
 }
+
+// MARK: - PlayerDelegate
+extension MainViewController: PlayerDelegate {
+    func progressChanged(progress: Double) {
+        playbackSlider.doubleValue = progress
+        
+        let total = player.getCurrentSongLength().timeStringFromDouble()
+        let current = (progress * player.getCurrentSongLength()).timeStringFromDouble()
+        progressLabel.stringValue = current + "/" + total
+    }
+    
+    func playbackStateChanged(currentSong: Song?, isPlaying: Bool, progress: Double) {
+        updatePlaybackInfo()
+        
+        if currentSong == nil {
+            playbackSlider.isEnabled = false
+        } else {
+            playbackSlider.isEnabled = true
+        }
+    }
+}
+
 
 // MARK: - TableView Extensions
 

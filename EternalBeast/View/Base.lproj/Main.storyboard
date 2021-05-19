@@ -707,14 +707,14 @@
             <objects>
                 <viewController id="hrP-Qf-xFH" customClass="MainViewController" customModule="EternalBeast" customModuleProvider="target" sceneMemberID="viewController">
                     <stackView key="view" distribution="fill" orientation="vertical" alignment="leading" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" id="Yca-eu-QSV">
-                        <rect key="frame" x="0.0" y="0.0" width="801" height="424"/>
+                        <rect key="frame" x="0.0" y="0.0" width="843" height="424"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <splitView arrangesAllSubviews="NO" dividerStyle="thin" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YrH-jU-kxH">
-                                <rect key="frame" x="0.0" y="64" width="801" height="360"/>
+                                <rect key="frame" x="0.0" y="64" width="843" height="360"/>
                                 <subviews>
                                     <customView misplaced="YES" id="LfO-Db-tSI">
-                                        <rect key="frame" x="0.0" y="0.0" width="397" height="360"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="417" height="360"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <subviews>
                                             <scrollView autohidesScrollers="YES" horizontalLineScroll="24" horizontalPageScroll="10" verticalLineScroll="24" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BZ1-nc-1Gj">
@@ -772,7 +772,7 @@
                                                     </subviews>
                                                 </clipView>
                                                 <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="JiI-jC-yPK">
-                                                    <rect key="frame" x="1" y="284" width="36" height="15"/>
+                                                    <rect key="frame" x="1" y="344" width="198" height="15"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </scroller>
                                                 <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="p4M-UY-Znd">
@@ -789,23 +789,23 @@
                                         </constraints>
                                     </customView>
                                     <customView misplaced="YES" id="Nhp-Go-2MA">
-                                        <rect key="frame" x="398" y="0.0" width="403" height="360"/>
+                                        <rect key="frame" x="418" y="0.0" width="425" height="360"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <subviews>
                                             <scrollView autohidesScrollers="YES" horizontalLineScroll="24" horizontalPageScroll="10" verticalLineScroll="24" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZRY-Pm-4Qs">
-                                                <rect key="frame" x="0.0" y="0.0" width="600" height="360"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="642" height="360"/>
                                                 <clipView key="contentView" id="vho-aL-hXe">
-                                                    <rect key="frame" x="1" y="1" width="598" height="358"/>
+                                                    <rect key="frame" x="1" y="1" width="640" height="358"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="24" rowSizeStyle="automatic" viewBased="YES" id="IkP-UW-57R">
-                                                            <rect key="frame" x="0.0" y="0.0" width="598" height="358"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="640" height="358"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <size key="intercellSpacing" width="17" height="0.0"/>
                                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                                             <tableColumns>
-                                                                <tableColumn width="586" minWidth="40" maxWidth="1000" id="BIp-pX-Y2l">
+                                                                <tableColumn width="628" minWidth="40" maxWidth="1000" id="BIp-pX-Y2l">
                                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border">
                                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
@@ -818,11 +818,11 @@
                                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                                     <prototypeCellViews>
                                                                         <tableCellView identifier="songCell" id="14e-LM-aeg">
-                                                                            <rect key="frame" x="8" y="0.0" width="581" height="24"/>
+                                                                            <rect key="frame" x="8" y="0.0" width="623" height="24"/>
                                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                             <subviews>
                                                                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="2nS-dV-ha9">
-                                                                                    <rect key="frame" x="0.0" y="4" width="581" height="16"/>
+                                                                                    <rect key="frame" x="0.0" y="4" width="623" height="16"/>
                                                                                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="c6e-4b-aIp">
                                                                                         <font key="font" usesAppearanceFont="YES"/>
                                                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -847,7 +847,7 @@
                                                     </subviews>
                                                 </clipView>
                                                 <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="Fdc-S3-hav">
-                                                    <rect key="frame" x="1" y="284" width="17" height="15"/>
+                                                    <rect key="frame" x="1" y="344" width="598" height="15"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </scroller>
                                                 <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="5ok-aA-FvI">
@@ -870,7 +870,7 @@
                                 </holdingPriorities>
                             </splitView>
                             <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dC3-QP-ZWd">
-                                <rect key="frame" x="16" y="0.0" width="769" height="64"/>
+                                <rect key="frame" x="16" y="0.0" width="811" height="64"/>
                                 <subviews>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="08y-Wq-a5u" userLabel="Previous">
                                         <rect key="frame" x="0.0" y="14.5" width="32" height="36"/>
@@ -914,8 +914,19 @@
                                             <action selector="nextButtonClicked:" target="hrP-Qf-xFH" id="HbD-8J-oDr"/>
                                         </connections>
                                     </button>
+                                    <button translatesAutoresizingMaskIntoConstraints="NO" id="Pwf-sL-BwK" userLabel="Repeat">
+                                        <rect key="frame" x="120" y="17.5" width="24" height="29"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="24" id="OtV-yc-Y1Y"/>
+                                            <constraint firstAttribute="width" constant="24" id="mic-8i-bbr"/>
+                                        </constraints>
+                                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="repeat" catalog="system" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="McX-Os-6ag">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                    </button>
                                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="c57-BB-FMa" userLabel="Cover art">
-                                        <rect key="frame" x="120" y="3" width="48.5" height="58"/>
+                                        <rect key="frame" x="152" y="3" width="48.5" height="58"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="48" id="4bf-f6-z2s"/>
                                             <constraint firstAttribute="width" constant="48" id="zEH-7Y-Yy2"/>
@@ -925,22 +936,22 @@
                                         </imageCell>
                                     </imageView>
                                     <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uDH-14-pL0">
-                                        <rect key="frame" x="176" y="10" width="593" height="44"/>
+                                        <rect key="frame" x="208" y="10" width="603" height="44"/>
                                         <subviews>
                                             <stackView distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AZl-Et-sqK">
-                                                <rect key="frame" x="16" y="28" width="577" height="16"/>
+                                                <rect key="frame" x="26" y="28" width="577" height="16"/>
                                                 <subviews>
                                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QJK-MT-H2x">
-                                                        <rect key="frame" x="-2" y="0.0" width="515" height="16"/>
-                                                        <textFieldCell key="cell" lineBreakMode="clipping" title="Song name" id="swt-QS-JuW">
+                                                        <rect key="frame" x="-2" y="0.0" width="512" height="16"/>
+                                                        <textFieldCell key="cell" lineBreakMode="clipping" id="swt-QS-JuW">
                                                             <font key="font" metaFont="system"/>
                                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                         </textFieldCell>
                                                     </textField>
                                                     <textField horizontalHuggingPriority="252" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="s0M-05-d4i">
-                                                        <rect key="frame" x="517" y="0.0" width="62" height="16"/>
-                                                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="0:00/5:21" id="aPC-H3-NWY">
+                                                        <rect key="frame" x="514" y="0.0" width="65" height="16"/>
+                                                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="0:00/0:00" id="aPC-H3-NWY">
                                                             <font key="font" metaFont="system"/>
                                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -957,8 +968,11 @@
                                                 </customSpacing>
                                             </stackView>
                                             <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fXQ-wI-2hX" userLabel="Playback slider">
-                                                <rect key="frame" x="14" y="-6" width="581" height="28"/>
-                                                <sliderCell key="cell" state="on" alignment="left" maxValue="1" tickMarkPosition="above" sliderType="linear" id="j7t-Na-5HD"/>
+                                                <rect key="frame" x="24" y="-6" width="581" height="28"/>
+                                                <sliderCell key="cell" enabled="NO" state="on" alignment="left" maxValue="1" tickMarkPosition="above" sliderType="linear" id="j7t-Na-5HD"/>
+                                                <connections>
+                                                    <action selector="playbackSliderChanged:" target="hrP-Qf-xFH" id="jVB-03-w9c"/>
+                                                </connections>
                                             </slider>
                                         </subviews>
                                         <constraints>
@@ -986,8 +1000,10 @@
                                     <integer value="1000"/>
                                     <integer value="1000"/>
                                     <integer value="1000"/>
+                                    <integer value="1000"/>
                                 </visibilityPriorities>
                                 <customSpacing>
+                                    <real value="3.4028234663852886e+38"/>
                                     <real value="3.4028234663852886e+38"/>
                                     <real value="3.4028234663852886e+38"/>
                                     <real value="3.4028234663852886e+38"/>
@@ -1020,6 +1036,7 @@
                         <outlet property="playButton" destination="2md-4N-b8K" id="4fZ-aw-9al"/>
                         <outlet property="playbackSlider" destination="fXQ-wI-2hX" id="cLY-5e-ZEH"/>
                         <outlet property="progressLabel" destination="s0M-05-d4i" id="MGR-Ot-GrU"/>
+                        <outlet property="repeatButton" destination="Pwf-sL-BwK" id="EWa-Up-kMz"/>
                         <outlet property="songNameLabel" destination="QJK-MT-H2x" id="qmH-nD-HZV"/>
                         <outlet property="songsTableView" destination="IkP-UW-57R" id="K3m-Up-QLA"/>
                     </connections>
@@ -1034,5 +1051,6 @@
         <image name="NSTouchBarSkipToEndTemplate" width="15" height="13"/>
         <image name="NSTouchBarSkipToStartTemplate" width="15" height="13"/>
         <image name="music.note.list" catalog="system" width="20" height="19"/>
+        <image name="repeat" catalog="system" width="17" height="14"/>
     </resources>
 </document>

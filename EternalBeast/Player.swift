@@ -8,17 +8,32 @@
 import Cocoa
 import AVFoundation
 
-final class Player {
+enum PlaybackMode {
+    case RepeatAll
+    case RepeatOne
+}
+
+final class Player: NSObject {
     static let shared = Player()
     
     private var player: AVAudioPlayer
     private var queue: Queue<Song>
     private var currentSong: Song? { queue.first() }
+    private var playbackMode: PlaybackMode
+    private var timer: Timer?
     
-    private init() {
+    var delegate: PlayerDelegate?
+    
+    private override init() {
         queue = Queue<Song>()
-
-        self.player = AVAudioPlayer()
+        player = AVAudioPlayer()
+        playbackMode = .RepeatAll
+        
+        super.init()
+        
+        player.delegate = self
+        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: update)
+        timer?.fire()
     }
     
     func addToQueue(song: Song) {
@@ -54,7 +69,8 @@ final class Player {
     private func prepare(withSong song: Song) {
         do {
             let url = URL(fileURLWithPath: song.getPathToFile())
-            self.player = try AVAudioPlayer(contentsOf: url)
+            player = try AVAudioPlayer(contentsOf: url)
+            player.delegate = self
         } catch let error {
             NSResponder().presentError(error)
             print(error.localizedDescription)
@@ -67,11 +83,20 @@ final class Player {
         }
         
         player.play()
+        
+        delegate?.playbackStateChanged(currentSong: currentSong, isPlaying: isPlaying(), progress: getProgress())
     }
     
     func playNext() {
         stop()
-        let _ = queue.pop()
+        
+        if playbackMode == .RepeatAll {
+            let song = queue.pop()
+            if let song = song {
+                queue.push(song)
+            }
+        }
+        
         play()
     }
     
@@ -79,14 +104,54 @@ final class Player {
         if player.isPlaying {
             player.pause()
         }
+        
+        delegate?.playbackStateChanged(currentSong: currentSong, isPlaying: isPlaying(), progress: getProgress())
     }
     
     func stop() {
         player.stop()
         player = AVAudioPlayer()
+        player.delegate = self
+        
+        delegate?.playbackStateChanged(currentSong: currentSong, isPlaying: isPlaying(), progress: getProgress())
     }
     
     func isPlaying() -> Bool {
         return player.isPlaying
+    }
+    
+    func getCurrentSong() -> Song? {
+        return queue.first()
+    }
+    
+    // Current song's lenght in seconds
+    func getCurrentSongLength() -> Double {
+        return player.duration
+    }
+    
+    func getProgress() -> Double {
+        if player.duration == 0 {
+            return 0
+        } else {
+            return player.currentTime / player.duration
+        }
+    }
+    
+    func seekToTime(time: Double) {
+        player.currentTime = time
+    }
+    
+    // MARK: - Timer
+    
+    private func update(_ timer: Timer) {
+        delegate?.progressChanged(progress: getProgress())
+    }
+}
+
+extension Player: AVAudioPlayerDelegate {
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        playNext()
+        
+        delegate?.playbackStateChanged(currentSong: currentSong, isPlaying: isPlaying(), progress: getProgress())
     }
 }
