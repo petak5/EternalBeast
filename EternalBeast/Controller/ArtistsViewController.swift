@@ -8,11 +8,13 @@
 import Cocoa
 
 class ArtistsViewController: NSViewController {
-
-    private var library = Library.shared
     
     @IBOutlet weak var artistsTableView: NSTableView!
     @IBOutlet weak var songsTableView: NSTableView!
+    
+    private var artists = [String: [Song]]()
+    private var displayedArtists = [String]()
+    private var displayedSongs = [Song]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,16 +50,63 @@ class ArtistsViewController: NSViewController {
             return paths
         }
     }
-
+    
     @IBAction func addToLibrary(_ sender: Any) {
         let paths = add()
         
         for path in paths {
-            library.addSongs(fromPath: path)
+            addSongs(fromPath: path)
         }
+        
+        displayedArtists = Array(artists.keys)
         
         artistsTableView.reloadData()
         songsTableView.reloadData()
+    }
+    
+    private func addFile(path: String) {
+        let fileManager = FileManager.default
+
+        if !fileManager.fileExists(atPath: path) || !fileManager.isReadableFile(atPath: path) {
+            print("File '\(path)' does not exist or is not readable.")
+            return
+        }
+        
+        let song = Song(pathToFile: path)
+        
+        // Create artist if not found
+        if !artists.contains(where: {k, v in k == song.getArtistName()}) {
+            artists[song.getArtistName()] = []
+        }
+        // Add song to artist
+        artists[song.getArtistName()]?.append(song)
+    }
+    
+    private func addFilesFromDirectory(directory: String) {
+        let fileManager = FileManager.default
+        
+        do {
+            let items = try fileManager.contentsOfDirectory(atPath: directory)
+            
+            for item in items {
+                addFile(path: directory + "/" + item)
+            }
+        } catch let error {
+            NSResponder().presentError(error)
+            print("Failed to retreive contents of directory: '" + directory + "'")
+        }
+    }
+    
+    public func addSongs(fromPath path: String) {
+        var isDir: ObjCBool = false
+        
+        if FileManager.default.fileExists(atPath: path, isDirectory: &isDir) {
+            if isDir.boolValue {
+                addFilesFromDirectory(directory: path)
+            } else {
+                addFile(path: path)
+            }
+        }
     }
     
 }
@@ -68,7 +117,7 @@ extension ArtistsViewController: NSTableViewDelegate, NSTableViewDataSource {
 
     func numberOfRows(in tableView: NSTableView) -> Int {
         if tableView == artistsTableView {
-            return library.getDirectories().count
+            return displayedArtists.count
         } else if tableView == songsTableView {
             let row = artistsTableView.selectedRow
             
@@ -76,19 +125,7 @@ extension ArtistsViewController: NSTableViewDelegate, NSTableViewDataSource {
             if row == -1 {
                 return 0
             } else {
-                let directories = library.getDirectories()
-                
-                // Index out of bounds
-                if row > directories.count {
-                    return 0
-                }
-                
-                let songs = library.getSongs(fromDirectory: directories[row])
-                if let _songs = songs {
-                    return _songs.count
-                } else {
-                    return 0
-                }
+                return displayedSongs.count
             }
         } else {
             return 0
@@ -101,29 +138,17 @@ extension ArtistsViewController: NSTableViewDelegate, NSTableViewDataSource {
         
         if tableView == artistsTableView {
             cellName = "artistCell"
-            text = library.getDirectories()[row]
+            text = displayedArtists[row]
         } else if tableView == songsTableView {
             cellName = "songCell"
             
-            let directorySelectedRow = artistsTableView.selectedRow
+            let artistSelectedRow = artistsTableView.selectedRow
             
             // No row selected
-            if directorySelectedRow == -1 {
+            if artistSelectedRow == -1 {
                 return nil
             } else {
-                let directories = library.getDirectories()
-                
-                // Index out of bounds
-                if directorySelectedRow > directories.count {
-                    return nil
-                }
-                
-                let songs = library.getSongs(fromDirectory: directories[directorySelectedRow])
-                if let _songs = songs {
-                    text = _songs[row].getFileName()
-                } else {
-                    return nil
-                }
+                text = displayedSongs[row].getTitle()
             }
         } else {
             return nil
@@ -149,8 +174,25 @@ extension ArtistsViewController: NSTableViewDelegate, NSTableViewDataSource {
     
     func tableViewSelectionDidChange(_ notification: Notification) {
         let tableView = notification.object as? NSTableView
-        if let _tableView = tableView {
-            if _tableView == artistsTableView {
+        
+        guard let _tableView = tableView else { return }
+        if _tableView == artistsTableView {
+            // Get selected artist row
+            let artistRow = artistsTableView.selectedRow
+            
+            if artistRow == -1 {
+                // Do nothing
+            } else {
+                let artistName = displayedArtists[artistRow]
+                let newDisplayedSongs = artists[artistName]
+                guard let newDisplayedSongs = newDisplayedSongs else { return }
+                
+                displayedSongs = newDisplayedSongs
+                // Sort by title
+                displayedSongs.sort {$0.getTitle() < $1.getTitle()}
+                // Sort by album
+                displayedSongs.sort {$0.getAlbumName() < $1.getAlbumName()}
+                
                 songsTableView.reloadData()
             }
         }

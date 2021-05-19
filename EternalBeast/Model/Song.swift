@@ -7,21 +7,41 @@
 
 import Cocoa
 
-struct Song {
-    private var directoryPath: String
-    private var fileName: String
+class Song {
+    private let pathToFile: String
+    private let title: String
+    private let artist: String
+    private let album: String
     
-    public init(directoryPath: String, fileName: String) {
-        self.directoryPath = directoryPath
-        self.fileName = fileName
+    public init(pathToFile: String) {
+        self.pathToFile = pathToFile
+        self.title = (pathToFile as NSString).lastPathComponent
+        self.artist = "Unknown Artist"
+        self.album = (pathToFile as NSString).deletingLastPathComponent
+    }
+    
+    public func getPathToFile() -> String {
+        return pathToFile
     }
     
     public func getDirectoryPath() -> String {
-        return directoryPath
+        return (pathToFile as NSString).deletingLastPathComponent
     }
     
     public func getFileName() -> String {
-        return fileName
+        return (pathToFile as NSString).lastPathComponent
+    }
+    
+    public func getTitle() -> String {
+        return title
+    }
+    
+    public func getArtistName() -> String {
+        return artist
+    }
+    
+    public func getAlbumName() -> String {
+        return album
     }
 
 }
