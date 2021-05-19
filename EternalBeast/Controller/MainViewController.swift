@@ -37,7 +37,7 @@ class MainViewController: NSViewController {
     private var displayedArtists = [String]()
     private var displayedSongs = [SongItem]()
     
-    private let supportedFileTypes = [".mp3", ".flac", ".alac", ".m4a"]
+    private let supportedFileTypes = [".mp3", ".flac", ".alac", ".m4a", ".mp4a", ".wav"]
     
     private var player = Player.shared
     
@@ -105,9 +105,8 @@ class MainViewController: NSViewController {
                             let fileAttributes = try fileURL.resourceValues(forKeys:[.isRegularFileKey])
                             if fileAttributes.isRegularFile! {
                                 let path = fileURL.path
-                                let suffix = String(path.suffix(4))
                                 
-                                if supportedFileTypes.contains(suffix) {
+                                if supportedFileTypes.contains(where: { s in path.hasSuffix(s) }) {
                                     paths.append(path)
                                 }
                             }
