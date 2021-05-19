@@ -7,18 +7,30 @@
 
 import Cocoa
 
+struct SongItem {
+    var song: Song?
+    var album: String
+    var isGroup: Bool
+    
+    init(song: Song?, album: String = "") {
+        self.song = song
+        self.album = album
+        self.isGroup = !self.album.isEmpty
+    }
+}
+
 class ArtistsViewController: NSViewController {
     
     @IBOutlet weak var artistsTableView: NSTableView!
     @IBOutlet weak var songsTableView: NSTableView!
     
+    // [Artist name : Songs]
     private var artists = [String: [Song]]()
     private var displayedArtists = [String]()
-    private var displayedSongs = [Song]()
+    private var displayedSongs = [SongItem]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do view setup here.
         
         artistsTableView.delegate = self
         artistsTableView.dataSource = self
@@ -148,7 +160,12 @@ extension ArtistsViewController: NSTableViewDelegate, NSTableViewDataSource {
             if artistSelectedRow == -1 {
                 return nil
             } else {
-                text = displayedSongs[row].getTitle()
+                if displayedSongs[row].isGroup {
+                    text = displayedSongs[row].album
+                } else {
+                    guard let song = displayedSongs[row].song else { fatalError("WTF dude") }
+                    text = song.getTitle()
+                }
             }
         } else {
             return nil
@@ -158,6 +175,14 @@ extension ArtistsViewController: NSTableViewDelegate, NSTableViewDataSource {
         cell.textField!.stringValue = text
 
         return cell
+    }
+    
+    func tableView(_ tableView: NSTableView, isGroupRow row: Int) -> Bool {
+        if tableView == songsTableView {
+            return displayedSongs[row].isGroup
+        } else {
+            return false
+        }
     }
     
     func tableView(_ tableView: NSTableView, heightOfRow row: Int) -> CGFloat {
@@ -185,13 +210,24 @@ extension ArtistsViewController: NSTableViewDelegate, NSTableViewDataSource {
             } else {
                 let artistName = displayedArtists[artistRow]
                 let newDisplayedSongs = artists[artistName]
-                guard let newDisplayedSongs = newDisplayedSongs else { return }
+                guard var newDisplayedSongs = newDisplayedSongs else { return }
                 
-                displayedSongs = newDisplayedSongs
                 // Sort by title
-                displayedSongs.sort {$0.getTitle() < $1.getTitle()}
+                newDisplayedSongs.sort {$0.getTitle() < $1.getTitle()}
                 // Sort by album
-                displayedSongs.sort {$0.getAlbumName() < $1.getAlbumName()}
+                newDisplayedSongs.sort {$0.getAlbumName() < $1.getAlbumName()}
+                
+                displayedSongs = []
+                for s in newDisplayedSongs {
+                    if displayedSongs.isEmpty {
+                        displayedSongs.append(SongItem(song: nil, album: s.getAlbumName()))
+                    } else if displayedSongs.last?.song?.getAlbumName() != s.getAlbumName() {
+                        displayedSongs.append(SongItem(song: nil, album: s.getAlbumName()))
+                    }
+                    
+                    displayedSongs.append(SongItem(song: s))
+                }
+                
                 
                 songsTableView.reloadData()
             }
