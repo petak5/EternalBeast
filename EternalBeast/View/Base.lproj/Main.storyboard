@@ -3,6 +3,7 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="18122"/>
         <capability name="Image references" minToolsVersion="12.0"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -878,7 +879,7 @@
                                             <constraint firstAttribute="width" constant="32" id="t93-GH-cU2"/>
                                             <constraint firstAttribute="height" constant="32" id="w7n-P1-Msm"/>
                                         </constraints>
-                                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSTouchBarSkipToStartTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="FgX-7A-jrU">
+                                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="backward.end.fill" catalog="system" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="FgX-7A-jrU">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
@@ -892,7 +893,7 @@
                                             <constraint firstAttribute="width" constant="32" id="P3R-Vk-HIf"/>
                                             <constraint firstAttribute="height" constant="32" id="xGm-fg-bPc"/>
                                         </constraints>
-                                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSTouchBarPlayTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="c4C-bZ-aTa">
+                                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="play.fill" catalog="system" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="c4C-bZ-aTa">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
@@ -906,7 +907,7 @@
                                             <constraint firstAttribute="height" constant="32" id="6Ku-0E-P1G"/>
                                             <constraint firstAttribute="width" constant="32" id="wId-CJ-K3z"/>
                                         </constraints>
-                                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSTouchBarSkipToEndTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="4Mp-e8-Vz7">
+                                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="forward.end.fill" catalog="system" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="4Mp-e8-Vz7">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
@@ -924,6 +925,10 @@
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
+                                        <color key="contentTintColor" name="AccentColor"/>
+                                        <connections>
+                                            <action selector="repeatButtonClicked:" target="hrP-Qf-xFH" id="TXl-D2-lH0"/>
+                                        </connections>
                                     </button>
                                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="c57-BB-FMa" userLabel="Cover art">
                                         <rect key="frame" x="152" y="3" width="48.5" height="58"/>
@@ -1047,10 +1052,13 @@
         </scene>
     </scenes>
     <resources>
-        <image name="NSTouchBarPlayTemplate" width="12" height="13"/>
-        <image name="NSTouchBarSkipToEndTemplate" width="15" height="13"/>
-        <image name="NSTouchBarSkipToStartTemplate" width="15" height="13"/>
+        <image name="backward.end.fill" catalog="system" width="15" height="13"/>
+        <image name="forward.end.fill" catalog="system" width="15" height="13"/>
         <image name="music.note.list" catalog="system" width="20" height="19"/>
+        <image name="play.fill" catalog="system" width="12" height="13"/>
         <image name="repeat" catalog="system" width="17" height="14"/>
+        <namedColor name="AccentColor">
+            <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
     </resources>
 </document>

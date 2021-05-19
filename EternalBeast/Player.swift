@@ -9,6 +9,7 @@ import Cocoa
 import AVFoundation
 
 enum PlaybackMode {
+    case RepeatOff
     case RepeatAll
     case RepeatOne
 }
@@ -141,6 +142,14 @@ final class Player: NSObject {
         player.currentTime = time
     }
     
+    func getPlaybackMode() -> PlaybackMode {
+        return playbackMode
+    }
+    
+    func setPlaybackMode(_ playbackMode: PlaybackMode) {
+        self.playbackMode = playbackMode
+    }
+    
     // MARK: - Timer
     
     private func update(_ timer: Timer) {
@@ -150,7 +159,10 @@ final class Player: NSObject {
 
 extension Player: AVAudioPlayerDelegate {
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
-        playNext()
+        
+        if playbackMode != .RepeatOff {
+            playNext()
+        }
         
         delegate?.playbackStateChanged(currentSong: currentSong, isPlaying: isPlaying(), progress: getProgress())
     }

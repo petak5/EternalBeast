@@ -172,6 +172,22 @@ class MainViewController: NSViewController {
         updatePlaybackInfo()
     }
     
+    @IBAction func repeatButtonClicked(_ sender: Any) {
+        if player.getPlaybackMode() == .RepeatOff {
+            player.setPlaybackMode(.RepeatAll)
+            repeatButton.image = NSImage(systemSymbolName: "repeat", accessibilityDescription: "Repeat all")
+            repeatButton.contentTintColor = .controlAccentColor
+        } else if player.getPlaybackMode() == .RepeatAll {
+            player.setPlaybackMode(.RepeatOne)
+            repeatButton.image = NSImage(systemSymbolName: "repeat.1", accessibilityDescription: "Repeat one")
+            repeatButton.contentTintColor = .controlAccentColor
+        } else {
+            player.setPlaybackMode(.RepeatOff)
+            repeatButton.image = NSImage(systemSymbolName: "repeat", accessibilityDescription: "Repeat off")
+            repeatButton.contentTintColor = nil
+        }
+    }
+    
     func updatePlaybackInfo() {
         if let currentSong = player.getCurrentSong() {
             songNameLabel.stringValue = currentSong.getArtistName() + " - " + currentSong.getTitle()
@@ -184,9 +200,9 @@ class MainViewController: NSViewController {
         }
         
         if player.isPlaying() {
-            playButton.image = NSImage(named: NSImage.touchBarPauseTemplateName)
+            playButton.image = NSImage(systemSymbolName: "pause.fill", accessibilityDescription: "Pause")
         } else {
-            playButton.image = NSImage(named: NSImage.touchBarPlayTemplateName)
+            playButton.image = NSImage(systemSymbolName: "play.fill", accessibilityDescription: "Play")
         }
     }
     
