@@ -63,9 +63,22 @@ class MainViewController: NSViewController {
             return
         }
         
-        player.clearQueue()
         player.stop()
-        player.addToQueue(song: displayedSongs[selectedRow].song!)
+        player.clearQueue()
+        
+        // Add songs starting from the selected one
+        for item in displayedSongs[selectedRow...] {
+            if !item.isGroup {
+                player.addToQueue(song: item.song!)
+            }
+        }
+        // Add the other songs before the selected one
+        for item in displayedSongs[0..<selectedRow] {
+            if !item.isGroup {
+                player.addToQueue(song: item.song!)
+            }
+        }
+        
         player.play()
     }
     
