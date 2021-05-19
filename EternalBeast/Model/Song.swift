@@ -6,18 +6,44 @@
 //
 
 import Cocoa
+import AVFoundation
 
 class Song {
     private let pathToFile: String
-    private let title: String
-    private let artist: String
-    private let album: String
+    private var title: String
+    private var artist: String
+    private var album: String
+    private var year: Int
     
     public init(pathToFile: String) {
         self.pathToFile = pathToFile
         self.title = (pathToFile as NSString).lastPathComponent
         self.artist = "Unknown Artist"
         self.album = (pathToFile as NSString).deletingLastPathComponent
+        self.year = 1970
+        
+        retrieveMetadata()
+    }
+    
+    private func retrieveMetadata() {
+        let fileUrl = URL(fileURLWithPath: pathToFile)
+        let asset = AVAsset(url: fileUrl) as AVAsset
+        
+        // Get metadata
+        for metaDataItems in asset.commonMetadata {
+            if metaDataItems.commonKey == .commonKeyTitle {
+                let titleData = metaDataItems.value as! NSString
+                title = String(titleData)
+            }
+            if metaDataItems.commonKey == .commonKeyArtist {
+                let artistData = metaDataItems.value as! NSString
+                artist = String(artistData)
+            }
+            if metaDataItems.commonKey == .commonKeyAlbumName {
+                let albumNameData = metaDataItems.value as! NSString
+                album = String(albumNameData)
+            }
+        }
     }
     
     public func getPathToFile() -> String {

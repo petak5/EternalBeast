@@ -131,7 +131,7 @@ class MainViewController: NSViewController {
             addSongs(fromPath: path)
         }
         
-        displayedArtists = Array(artists.keys)
+        displayedArtists = Array(artists.keys).sorted()
         
         artistsTableView.reloadData()
         songsTableView.reloadData()

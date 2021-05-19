@@ -44,22 +44,6 @@ final class Player: NSObject {
     func clearQueue() {
         queue.clear()
     }
-
-//    func add(fromFolder folder: String) {
-//        do {
-//            let files = try FileManager.default.contentsOfDirectory(atPath: folder)
-//
-//            for file in files {
-//                let suffix = String(file.suffix(4))
-//                if suffix == ".mp3" {
-//                    add(file: file)
-//                }
-//            }
-//
-//        } catch let error {
-//            print(error.localizedDescription)
-//        }
-//    }
     
     private func prepare() {
         // Open first song from queue
