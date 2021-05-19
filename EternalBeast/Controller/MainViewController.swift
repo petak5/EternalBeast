@@ -24,6 +24,13 @@ class MainViewController: NSViewController {
     @IBOutlet weak var artistsTableView: NSTableView!
     @IBOutlet weak var songsTableView: NSTableView!
     
+    
+    @IBOutlet weak var playButton: NSButton!
+    @IBOutlet weak var coverArtImage: NSImageView!
+    @IBOutlet weak var songNameLabel: NSTextField!
+    @IBOutlet weak var progressLabel: NSTextField!
+    @IBOutlet weak var playbackSlider: NSSlider!
+    
     // [Artist name : Songs]
     private var artists = [String: [Song]]()
     private var displayedArtists = [String]()
@@ -46,6 +53,10 @@ class MainViewController: NSViewController {
         let selectedRow = songsTableView.selectedRow
         
         if selectedRow == -1 {
+            return
+        }
+        
+        if displayedSongs[selectedRow].isGroup {
             return
         }
         
@@ -137,6 +148,26 @@ class MainViewController: NSViewController {
         }
     }
     
+    // MARK: - Playback buttons
+    
+    @IBAction func previousButtonClicked(_ sender: Any) {
+    }
+    
+    @IBAction func playButtonClicked(_ sender: Any) {
+        if !player.isPlaying() {
+            player.play()
+            if player.isPlaying() {
+                playButton.image = NSImage(named: NSImage.touchBarPauseTemplateName)
+            }
+        } else {
+            player.pause()
+            playButton.image = NSImage(named: NSImage.touchBarPlayTemplateName)
+        }
+    }
+    
+    @IBAction func nextButtonClicked(_ sender: Any) {
+        player.playNext()
+    }
 }
 
 // MARK: - TableView Extensions

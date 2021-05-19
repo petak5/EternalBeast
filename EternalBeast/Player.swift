@@ -69,6 +69,12 @@ final class Player {
         player.play()
     }
     
+    func playNext() {
+        stop()
+        let _ = queue.pop()
+        play()
+    }
+    
     func pause() {
         if player.isPlaying {
             player.pause()
@@ -78,5 +84,9 @@ final class Player {
     func stop() {
         player.stop()
         player = AVAudioPlayer()
+    }
+    
+    func isPlaying() -> Bool {
+        return player.isPlaying
     }
 }
