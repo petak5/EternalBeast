@@ -37,6 +37,8 @@ class MainViewController: NSViewController {
     private var displayedArtists = [String]()
     private var displayedSongs = [SongItem]()
     
+    private let supportedFileTypes = [".mp3", ".flac", ".alac", ".m4a"]
+    
     private var player = Player.shared
     
     override func viewDidLoad() {
@@ -93,10 +95,27 @@ class MainViewController: NSViewController {
         var paths = [String]()
         
         if (dialog.runModal() == NSApplication.ModalResponse.OK) {
-            let result = dialog.urls
+            let urls = dialog.urls
             
-            for path in result {
-                paths.append(path.path)
+            for url in urls {
+                // Add all music files from subdirectories (recursively)
+                if let enumerator = FileManager.default.enumerator(at: url, includingPropertiesForKeys: [.isRegularFileKey], options: [.skipsHiddenFiles, .skipsPackageDescendants]) {
+                    for case let fileURL as URL in enumerator {
+                        do {
+                            let fileAttributes = try fileURL.resourceValues(forKeys:[.isRegularFileKey])
+                            if fileAttributes.isRegularFile! {
+                                let path = fileURL.path
+                                let suffix = String(path.suffix(4))
+                                
+                                if supportedFileTypes.contains(suffix) {
+                                    paths.append(path)
+                                }
+                            }
+                        } catch {
+                            print(error, fileURL)
+                        }
+                    }
+                }
             }
             
             return paths
