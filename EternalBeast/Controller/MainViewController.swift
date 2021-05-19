@@ -19,7 +19,7 @@ struct SongItem {
     }
 }
 
-class ArtistsViewController: NSViewController {
+class MainViewController: NSViewController {
     
     @IBOutlet weak var artistsTableView: NSTableView!
     @IBOutlet weak var songsTableView: NSTableView!
@@ -29,6 +29,8 @@ class ArtistsViewController: NSViewController {
     private var displayedArtists = [String]()
     private var displayedSongs = [SongItem]()
     
+    private var player = Player.shared
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -37,6 +39,20 @@ class ArtistsViewController: NSViewController {
         
         songsTableView.delegate = self
         songsTableView.dataSource = self
+        songsTableView.doubleAction = #selector(songsTableViewDoubleClicked)
+    }
+    
+    @objc func songsTableViewDoubleClicked() {
+        let selectedRow = songsTableView.selectedRow
+        
+        if selectedRow == -1 {
+            return
+        }
+        
+        player.clearQueue()
+        player.stop()
+        player.addToQueue(song: displayedSongs[selectedRow].song!)
+        player.play()
     }
     
     func add() -> [String] {
@@ -125,7 +141,7 @@ class ArtistsViewController: NSViewController {
 
 // MARK: - TableView Extensions
 
-extension ArtistsViewController: NSTableViewDelegate, NSTableViewDataSource {
+extension MainViewController: NSTableViewDelegate, NSTableViewDataSource {
 
     func numberOfRows(in tableView: NSTableView) -> Int {
         if tableView == artistsTableView {
@@ -207,6 +223,7 @@ extension ArtistsViewController: NSTableViewDelegate, NSTableViewDataSource {
             
             if artistRow == -1 {
                 // Do nothing
+                return
             } else {
                 let artistName = displayedArtists[artistRow]
                 let newDisplayedSongs = artists[artistName]
@@ -219,15 +236,13 @@ extension ArtistsViewController: NSTableViewDelegate, NSTableViewDataSource {
                 
                 displayedSongs = []
                 for s in newDisplayedSongs {
-                    if displayedSongs.isEmpty {
-                        displayedSongs.append(SongItem(song: nil, album: s.getAlbumName()))
-                    } else if displayedSongs.last?.song?.getAlbumName() != s.getAlbumName() {
+                    // If the song is first in the array or if the previous song was from different album, create an album group
+                    if displayedSongs.isEmpty || displayedSongs.last?.song?.getAlbumName() != s.getAlbumName(){
                         displayedSongs.append(SongItem(song: nil, album: s.getAlbumName()))
                     }
                     
                     displayedSongs.append(SongItem(song: s))
                 }
-                
                 
                 songsTableView.reloadData()
             }

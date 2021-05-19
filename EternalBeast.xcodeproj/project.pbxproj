@@ -12,7 +12,9 @@
 		D095B210263E83C100113A8C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D095B20E263E83C100113A8C /* Main.storyboard */; };
 		D095B21C263E8E6200113A8C /* MainWindowControler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D095B21B263E8E6200113A8C /* MainWindowControler.swift */; };
 		D095B21E263E8EE600113A8C /* SidebarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D095B21D263E8EE600113A8C /* SidebarViewController.swift */; };
-		D095B22C263E8FD700113A8C /* ArtistsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D095B22B263E8FD700113A8C /* ArtistsViewController.swift */; };
+		D095B22C263E8FD700113A8C /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D095B22B263E8FD700113A8C /* MainViewController.swift */; };
+		D0ADCDD726552B3800767ACF /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0ADCDD626552B3800767ACF /* Queue.swift */; };
+		D0ADCDD926552CCB00767ACF /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0ADCDD826552CCB00767ACF /* Player.swift */; };
 		D0B265582651034A009E0307 /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B265572651034A009E0307 /* Song.swift */; };
 /* End PBXBuildFile section */
 
@@ -25,7 +27,9 @@
 		D095B212263E83C100113A8C /* EternalBeast.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EternalBeast.entitlements; sourceTree = "<group>"; };
 		D095B21B263E8E6200113A8C /* MainWindowControler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWindowControler.swift; sourceTree = "<group>"; };
 		D095B21D263E8EE600113A8C /* SidebarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarViewController.swift; sourceTree = "<group>"; };
-		D095B22B263E8FD700113A8C /* ArtistsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistsViewController.swift; sourceTree = "<group>"; };
+		D095B22B263E8FD700113A8C /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		D0ADCDD626552B3800767ACF /* Queue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
+		D0ADCDD826552CCB00767ACF /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		D0B265572651034A009E0307 /* Song.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Song.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -59,13 +63,15 @@
 		D095B207263E83BD00113A8C /* EternalBeast */ = {
 			isa = PBXGroup;
 			children = (
-				D095B219263E8E0E00113A8C /* View */,
+				D0ADCDD526552B2600767ACF /* Misc */,
 				D095B21A263E8E2700113A8C /* Model */,
 				D095B218263E8E0000113A8C /* Controller */,
 				D095B208263E83BD00113A8C /* AppDelegate.swift */,
+				D095B219263E8E0E00113A8C /* View */,
 				D095B20C263E83C100113A8C /* Assets.xcassets */,
 				D095B211263E83C100113A8C /* Info.plist */,
 				D095B212263E83C100113A8C /* EternalBeast.entitlements */,
+				D0ADCDD826552CCB00767ACF /* Player.swift */,
 			);
 			path = EternalBeast;
 			sourceTree = "<group>";
@@ -74,8 +80,8 @@
 			isa = PBXGroup;
 			children = (
 				D095B21B263E8E6200113A8C /* MainWindowControler.swift */,
+				D095B22B263E8FD700113A8C /* MainViewController.swift */,
 				D095B21D263E8EE600113A8C /* SidebarViewController.swift */,
-				D095B22B263E8FD700113A8C /* ArtistsViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -94,6 +100,14 @@
 				D0B265572651034A009E0307 /* Song.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		D0ADCDD526552B2600767ACF /* Misc */ = {
+			isa = PBXGroup;
+			children = (
+				D0ADCDD626552B3800767ACF /* Queue.swift */,
+			);
+			path = Misc;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -165,9 +179,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D095B22C263E8FD700113A8C /* ArtistsViewController.swift in Sources */,
+				D095B22C263E8FD700113A8C /* MainViewController.swift in Sources */,
+				D0ADCDD726552B3800767ACF /* Queue.swift in Sources */,
 				D095B21C263E8E6200113A8C /* MainWindowControler.swift in Sources */,
 				D0B265582651034A009E0307 /* Song.swift in Sources */,
+				D0ADCDD926552CCB00767ACF /* Player.swift in Sources */,
 				D095B209263E83BD00113A8C /* AppDelegate.swift in Sources */,
 				D095B21E263E8EE600113A8C /* SidebarViewController.swift in Sources */,
 			);

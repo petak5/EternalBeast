@@ -678,7 +678,7 @@
         <!--Window Controller-->
         <scene sceneID="fGE-SZ-pS2">
             <objects>
-                <windowController id="mlO-OP-Edz" customClass="MainWindowControler" customModule="EternalBeast" customModuleProvider="target" sceneMemberID="viewController">
+                <windowController id="mlO-OP-Edz" sceneMemberID="viewController">
                     <window key="window" title="Eternal Beast" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="xwd-2H-JeQ">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
@@ -700,10 +700,10 @@
             </objects>
             <point key="canvasLocation" x="95" y="418"/>
         </scene>
-        <!--Artists View Controller-->
+        <!--Main View Controller-->
         <scene sceneID="Gu6-bw-acC">
             <objects>
-                <viewController id="srV-u3-UN5" customClass="ArtistsViewController" customModule="EternalBeast" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="srV-u3-UN5" customClass="MainViewController" customModule="EternalBeast" customModuleProvider="target" sceneMemberID="viewController">
                     <splitView key="view" arrangesAllSubviews="NO" dividerStyle="paneSplitter" vertical="YES" id="RaK-6q-kjQ">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -869,7 +869,7 @@
                 </viewController>
                 <customObject id="3dk-NY-DbX" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="762" y="409"/>
+            <point key="canvasLocation" x="759" y="410"/>
         </scene>
     </scenes>
 </document>
