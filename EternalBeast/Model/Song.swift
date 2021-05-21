@@ -45,10 +45,7 @@ class Song {
             if metaDataItem.commonKey == .commonKeyAlbumName {
                 album = metaDataItem.value as! String
             }
-            if metaDataItem.commonKey == .id3MetadataKeyYear ||
-                metaDataItem.commonKey == .quickTimeMetadataKeyYear ||
-                metaDataItem.commonKey == .id3MetadataKeyOriginalReleaseYear ||
-                metaDataItem.commonKey == .metadata3GPUserDataKeyRecordingYear {
+            if metaDataItem.commonKey == .id3MetadataKeyYear {
                 year = metaDataItem.value as! String
             }
             if metaDataItem.commonKey == .id3MetadataKeyTrackNumber ||
