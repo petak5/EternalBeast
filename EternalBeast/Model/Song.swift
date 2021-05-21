@@ -10,17 +10,21 @@ import AVFoundation
 
 class Song {
     private let pathToFile: String
-    private var title: String
-    private var artist: String
-    private var album: String
-    private var year: Int
+    private (set) var title: String
+    private (set) var artist: String
+    private (set) var album: String
+    private (set) var year: String
+    private (set) var length: String
+    private (set) var trackNumber: String
     
     public init(pathToFile: String) {
         self.pathToFile = pathToFile
         self.title = (pathToFile as NSString).lastPathComponent
         self.artist = "Unknown Artist"
         self.album = (pathToFile as NSString).deletingLastPathComponent
-        self.year = 1970
+        self.year = ""
+        self.length = "0:00"
+        self.trackNumber = "0"
         
         retrieveMetadata()
     }
@@ -30,20 +34,36 @@ class Song {
         let asset = AVAsset(url: fileUrl) as AVAsset
         
         // Get metadata
-        for metaDataItems in asset.commonMetadata {
-            if metaDataItems.commonKey == .commonKeyTitle {
-                let titleData = metaDataItems.value as! NSString
-                title = String(titleData)
+        for metaDataItem in asset.metadata {
+            if metaDataItem.commonKey == .commonKeyTitle {
+                title = metaDataItem.value as! String
             }
-            if metaDataItems.commonKey == .commonKeyArtist {
-                let artistData = metaDataItems.value as! NSString
-                artist = String(artistData)
+            if metaDataItem.commonKey == .commonKeyArtist {
+                
+                artist = metaDataItem.value as! String
             }
-            if metaDataItems.commonKey == .commonKeyAlbumName {
-                let albumNameData = metaDataItems.value as! NSString
-                album = String(albumNameData)
+            if metaDataItem.commonKey == .commonKeyAlbumName {
+                album = metaDataItem.value as! String
             }
+            if metaDataItem.commonKey == .id3MetadataKeyYear ||
+                metaDataItem.commonKey == .quickTimeMetadataKeyYear ||
+                metaDataItem.commonKey == .id3MetadataKeyOriginalReleaseYear ||
+                metaDataItem.commonKey == .metadata3GPUserDataKeyRecordingYear {
+                year = metaDataItem.value as! String
+            }
+            if metaDataItem.commonKey == .id3MetadataKeyTrackNumber ||
+                metaDataItem.commonKey == .iTunesMetadataKeyTrackNumber {
+                trackNumber = metaDataItem.value as! String
+            }
+//            if metaDataItem.commonKey == .commonKeyArtwork {
+//                if let data = metaDataItem.dataValue,
+//                let image = NSImage(data: data) {
+//                    nowPlayingInfo[MPMediaItemPropertyArtwork] = MPMediaItemArtwork(boundsSize: image.size) { _ in image }
+//                }
+//            }
         }
+        
+        length = asset.duration.seconds.timeStringFromDouble()
     }
     
     public func getPathToFile() -> String {
@@ -56,18 +76,6 @@ class Song {
     
     public func getFileName() -> String {
         return (pathToFile as NSString).lastPathComponent
-    }
-    
-    public func getTitle() -> String {
-        return title
-    }
-    
-    public func getArtistName() -> String {
-        return artist
-    }
-    
-    public func getAlbumName() -> String {
-        return album
     }
 
 }

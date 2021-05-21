@@ -10,11 +10,13 @@ import Cocoa
 struct SongItem {
     var song: Song?
     var album: String
+    var year: String
     var isGroup: Bool
     
-    init(song: Song?, album: String = "") {
+    init(song: Song?, album: String = "", year: String = "") {
         self.song = song
         self.album = album
+        self.year = year
         self.isGroup = !self.album.isEmpty
     }
 }
@@ -148,11 +150,11 @@ class MainViewController: NSViewController {
         let song = Song(pathToFile: path)
         
         // Create artist if not found
-        if !artists.contains(where: {k, v in k == song.getArtistName()}) {
-            artists[song.getArtistName()] = []
+        if !artists.contains(where: {k, v in k == song.artist}) {
+            artists[song.artist] = []
         }
         // Add song to artist
-        artists[song.getArtistName()]?.append(song)
+        artists[song.artist]?.append(song)
     }
     
     private func addFilesFromDirectory(directory: String) {
@@ -221,7 +223,7 @@ class MainViewController: NSViewController {
     
     func updatePlaybackInfo() {
         if let currentSong = player.getCurrentSong() {
-            songNameLabel.stringValue = currentSong.getArtistName() + " - " + currentSong.getTitle()
+            songNameLabel.stringValue = currentSong.artist + " - " + currentSong.title
             
             // TODO: Set cover art
         } else {
@@ -304,9 +306,14 @@ extension MainViewController: NSTableViewDelegate, NSTableViewDataSource {
             } else {
                 if displayedSongs[row].isGroup {
                     text = displayedSongs[row].album
+                    let year = displayedSongs[row].year
+                    if !year.isEmpty {
+                        text = year + " - " + text
+                    }
+                    
                 } else {
                     guard let song = displayedSongs[row].song else { fatalError("WTF dude") }
-                    text = song.getTitle()
+                    text = song.trackNumber + ": " + song.title + " - " + song.length
                 }
             }
         } else {
@@ -355,16 +362,18 @@ extension MainViewController: NSTableViewDelegate, NSTableViewDataSource {
                 let newDisplayedSongs = artists[artistName]
                 guard var newDisplayedSongs = newDisplayedSongs else { return }
                 
-                // Sort by title
-                newDisplayedSongs.sort {$0.getTitle() < $1.getTitle()}
+                // Sort by track number
+                newDisplayedSongs.sort { $0.trackNumber < $1.trackNumber }
+                // Sort by year
+                newDisplayedSongs.sort { $0.year < $1.year }
                 // Sort by album
-                newDisplayedSongs.sort {$0.getAlbumName() < $1.getAlbumName()}
+                //newDisplayedSongs.sort { $0.album < $1.album }
                 
                 displayedSongs = []
                 for s in newDisplayedSongs {
                     // If the song is first in the array or if the previous song was from different album, create an album group
-                    if displayedSongs.isEmpty || displayedSongs.last?.song?.getAlbumName() != s.getAlbumName(){
-                        displayedSongs.append(SongItem(song: nil, album: s.getAlbumName()))
+                    if displayedSongs.isEmpty || displayedSongs.last?.song?.album != s.album {
+                        displayedSongs.append(SongItem(song: nil, album: s.album, year: s.year))
                     }
                     
                     displayedSongs.append(SongItem(song: s))
