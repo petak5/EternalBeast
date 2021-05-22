@@ -75,7 +75,6 @@
 				D095B20C263E83C100113A8C /* Assets.xcassets */,
 				D095B211263E83C100113A8C /* Info.plist */,
 				D095B212263E83C100113A8C /* EternalBeast.entitlements */,
-				D0ADCDD826552CCB00767ACF /* Player.swift */,
 			);
 			path = EternalBeast;
 			sourceTree = "<group>";
@@ -111,6 +110,7 @@
 			children = (
 				D0ADCDD626552B3800767ACF /* Queue.swift */,
 				D0ADCDDA265577F400767ACF /* PlayerDelegate.swift */,
+				D0ADCDD826552CCB00767ACF /* Player.swift */,
 				D0ADCDDC26557FAD00767ACF /* DoubleToTimeString.swift */,
 			);
 			path = Misc;

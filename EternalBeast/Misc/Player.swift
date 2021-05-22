@@ -7,6 +7,7 @@
 
 import Cocoa
 import AVFoundation
+import MediaPlayer
 
 enum PlaybackMode {
     case RepeatOff
@@ -35,6 +36,35 @@ final class Player: NSObject {
         player.delegate = self
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: update)
         timer?.fire()
+        
+        ConfigureMPRemoteCommands()
+    }
+    
+    // Add actions to MediaPlayer Remote Commands from Now Playing system menu
+    private func ConfigureMPRemoteCommands() {
+        MPRemoteCommandCenter.shared().playCommand.addTarget { [unowned self] event in
+            self.play()
+            return .success
+        }
+        
+        MPRemoteCommandCenter.shared().pauseCommand.addTarget { [unowned self] event in
+            self.pause()
+            return .success
+        }
+        
+        MPRemoteCommandCenter.shared().togglePlayPauseCommand.addTarget { [unowned self] event in
+            if self.isPlaying() {
+                self.pause()
+            } else {
+                self.play()
+            }
+            return .success
+        }
+        
+        MPRemoteCommandCenter.shared().nextTrackCommand.addTarget { [unowned self] event in
+            self.playNext()
+            return .success
+        }
     }
     
     func addToQueue(song: Song) {
@@ -67,6 +97,14 @@ final class Player: NSObject {
             prepare()
         }
         
+        MPNowPlayingInfoCenter.default().playbackState = .playing
+        
+        MPNowPlayingInfoCenter.default().nowPlayingInfo = [
+            MPMediaItemPropertyTitle: currentSong?.title,
+            MPMediaItemPropertyArtist: currentSong?.artist,
+            MPMediaItemPropertyAlbumTitle: currentSong?.album
+        ]
+        
         player.play()
         
         delegate?.playbackStateChanged(currentSong: currentSong, isPlaying: isPlaying(), progress: getProgress())
@@ -89,6 +127,8 @@ final class Player: NSObject {
         if player.isPlaying {
             player.pause()
         }
+        
+        MPNowPlayingInfoCenter.default().playbackState = .paused
         
         delegate?.playbackStateChanged(currentSong: currentSong, isPlaying: isPlaying(), progress: getProgress())
     }
