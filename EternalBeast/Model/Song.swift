@@ -16,6 +16,7 @@ class Song {
     private (set) var year: String
     private (set) var length: String
     private (set) var trackNumber: String
+    private (set) var image: NSImage
     
     public init(pathToFile: String) {
         self.pathToFile = pathToFile
@@ -25,6 +26,7 @@ class Song {
         self.year = ""
         self.length = "0:00"
         self.trackNumber = "0"
+        self.image = NSImage()
         
         retrieveMetadata()
     }
@@ -52,12 +54,12 @@ class Song {
                 metaDataItem.commonKey == .iTunesMetadataKeyTrackNumber {
                 trackNumber = metaDataItem.value as! String
             }
-//            if metaDataItem.commonKey == .commonKeyArtwork {
-//                if let data = metaDataItem.dataValue,
-//                let image = NSImage(data: data) {
-//                    nowPlayingInfo[MPMediaItemPropertyArtwork] = MPMediaItemArtwork(boundsSize: image.size) { _ in image }
-//                }
-//            }
+            if metaDataItem.commonKey == .commonKeyArtwork {
+                if let data = metaDataItem.dataValue,
+                let newImage = NSImage(data: data) {
+                    image = newImage
+                }
+            }
         }
         
         length = asset.duration.seconds.timeStringFromDouble()

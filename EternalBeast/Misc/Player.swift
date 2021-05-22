@@ -93,6 +93,8 @@ final class Player: NSObject {
     }
     
     func play() {
+        guard let currentSong = self.currentSong else { return }
+        
         if player.url == nil {
             prepare()
         }
@@ -100,9 +102,10 @@ final class Player: NSObject {
         MPNowPlayingInfoCenter.default().playbackState = .playing
         
         MPNowPlayingInfoCenter.default().nowPlayingInfo = [
-            MPMediaItemPropertyTitle: currentSong?.title,
-            MPMediaItemPropertyArtist: currentSong?.artist,
-            MPMediaItemPropertyAlbumTitle: currentSong?.album
+            MPMediaItemPropertyTitle: currentSong.title,
+            MPMediaItemPropertyArtist: currentSong.artist,
+            MPMediaItemPropertyAlbumTitle: currentSong.album,
+            MPMediaItemPropertyArtwork: MPMediaItemArtwork(boundsSize: currentSong.image.size) { _ in currentSong.image }
         ]
         
         player.play()
