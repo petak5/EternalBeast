@@ -65,6 +65,12 @@ final class Player: NSObject {
             self.playNext()
             return .success
         }
+        
+        MPRemoteCommandCenter.shared().changePlaybackPositionCommand.addTarget { [unowned self] event in
+            let seconds = (event as? MPChangePlaybackPositionCommandEvent)?.positionTime ?? 0
+            seekToTime(time: seconds)
+            return .success
+        }
     }
     
     func addToQueue(song: Song) {
@@ -105,7 +111,10 @@ final class Player: NSObject {
             MPMediaItemPropertyTitle: currentSong.title,
             MPMediaItemPropertyArtist: currentSong.artist,
             MPMediaItemPropertyAlbumTitle: currentSong.album,
-            MPMediaItemPropertyArtwork: MPMediaItemArtwork(boundsSize: currentSong.image.size) { _ in currentSong.image }
+            MPMediaItemPropertyArtwork: MPMediaItemArtwork(boundsSize: currentSong.image.size) { _ in currentSong.image },
+            MPMediaItemPropertyPlaybackDuration: player.duration,
+            MPNowPlayingInfoPropertyElapsedPlaybackTime: player.currentTime,
+            MPNowPlayingInfoPropertyPlaybackRate: 1
         ]
         
         player.play()
@@ -167,6 +176,16 @@ final class Player: NSObject {
     
     func seekToTime(time: Double) {
         player.currentTime = time
+        
+        // Update playback info in the Now Playing system menu
+        if var nowPlayingInfo = MPNowPlayingInfoCenter.default().nowPlayingInfo {
+            nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = player.currentTime
+            MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
+        }
+        
+        if let timer = timer {
+            update(timer)
+        }
     }
     
     func getPlaybackMode() -> PlaybackMode {
