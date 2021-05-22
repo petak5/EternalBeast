@@ -2,7 +2,6 @@
 <document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="mlO-OP-Edz">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="18122"/>
-        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -715,7 +714,7 @@
                                 <rect key="frame" x="0.0" y="64" width="843" height="360"/>
                                 <subviews>
                                     <customView misplaced="YES" id="LfO-Db-tSI">
-                                        <rect key="frame" x="0.0" y="0.0" width="417" height="360"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="415" height="360"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <subviews>
                                             <scrollView autohidesScrollers="YES" horizontalLineScroll="24" horizontalPageScroll="10" verticalLineScroll="24" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BZ1-nc-1Gj">
@@ -790,7 +789,7 @@
                                         </constraints>
                                     </customView>
                                     <customView misplaced="YES" id="Nhp-Go-2MA">
-                                        <rect key="frame" x="418" y="0.0" width="425" height="360"/>
+                                        <rect key="frame" x="416" y="0.0" width="427" height="360"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <subviews>
                                             <scrollView autohidesScrollers="YES" horizontalLineScroll="24" horizontalPageScroll="10" verticalLineScroll="24" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZRY-Pm-4Qs">
@@ -819,11 +818,11 @@
                                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                                     <prototypeCellViews>
                                                                         <tableCellView identifier="songCell" id="14e-LM-aeg">
-                                                                            <rect key="frame" x="8" y="0.0" width="623" height="24"/>
+                                                                            <rect key="frame" x="8" y="0.0" width="655" height="24"/>
                                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                             <subviews>
                                                                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="2nS-dV-ha9">
-                                                                                    <rect key="frame" x="0.0" y="4" width="623" height="16"/>
+                                                                                    <rect key="frame" x="0.0" y="4" width="655" height="16"/>
                                                                                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="c6e-4b-aIp">
                                                                                         <font key="font" usesAppearanceFont="YES"/>
                                                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -848,7 +847,7 @@
                                                     </subviews>
                                                 </clipView>
                                                 <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="Fdc-S3-hav">
-                                                    <rect key="frame" x="1" y="344" width="598" height="15"/>
+                                                    <rect key="frame" x="1" y="344" width="640" height="15"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </scroller>
                                                 <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="5ok-aA-FvI">
@@ -931,14 +930,12 @@
                                         </connections>
                                     </button>
                                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="c57-BB-FMa" userLabel="Cover art">
-                                        <rect key="frame" x="152" y="3" width="48.5" height="58"/>
+                                        <rect key="frame" x="152" y="8" width="48" height="48"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="48" id="4bf-f6-z2s"/>
                                             <constraint firstAttribute="width" constant="48" id="zEH-7Y-Yy2"/>
                                         </constraints>
-                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="hUY-7W-wBH">
-                                            <imageReference key="image" image="music.note.list" catalog="system" symbolScale="large"/>
-                                        </imageCell>
+                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="hUY-7W-wBH"/>
                                     </imageView>
                                     <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uDH-14-pL0">
                                         <rect key="frame" x="208" y="10" width="603" height="44"/>
@@ -1054,7 +1051,6 @@
     <resources>
         <image name="backward.end.fill" catalog="system" width="15" height="13"/>
         <image name="forward.end.fill" catalog="system" width="15" height="13"/>
-        <image name="music.note.list" catalog="system" width="20" height="19"/>
         <image name="play.fill" catalog="system" width="12" height="13"/>
         <image name="repeat" catalog="system" width="17" height="14"/>
         <namedColor name="AccentColor">

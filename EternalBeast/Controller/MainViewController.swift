@@ -225,11 +225,14 @@ class MainViewController: NSViewController {
         if let currentSong = player.getCurrentSong() {
             songNameLabel.stringValue = currentSong.artist + " - " + currentSong.title
             
-            // TODO: Set cover art
+            if currentSong.image.isValid {
+                coverArtImage.image = currentSong.image
+            } else {
+                coverArtImage.image = nil
+            }
         } else {
             songNameLabel.stringValue = ""
-            
-            // TODO: Set cover art to some placeholder image
+            coverArtImage.image = nil
         }
         
         if player.isPlaying() {
