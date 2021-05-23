@@ -21,15 +21,13 @@ class Song {
         self.pathToFile = pathToFile
         self.title = (pathToFile as NSString).lastPathComponent
         self.artist = "Unknown Artist"
-        self.album = (pathToFile as NSString).deletingLastPathComponent
+        self.album = ((pathToFile as NSString).deletingLastPathComponent as NSString).lastPathComponent
         self.year = ""
         self.length = "0:00"
-        self.trackNumber = "0"
-        
-        retrieveMetadata()
+        self.trackNumber = ""
     }
     
-    private func retrieveMetadata() {
+    public func loadMetadata() {
         let fileUrl = URL(fileURLWithPath: pathToFile)
         let asset = AVAsset(url: fileUrl) as AVAsset
         
@@ -39,8 +37,12 @@ class Song {
                 title = metaDataItem.value as! String
             }
             if metaDataItem.commonKey == .commonKeyArtist {
+                let artistString = metaDataItem.value as! String
                 
-                artist = metaDataItem.value as! String
+                // Replace default value only if some value is provided
+                if !artistString.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                    artist = artistString
+                }
             }
             if metaDataItem.commonKey == .commonKeyAlbumName {
                 album = metaDataItem.value as! String

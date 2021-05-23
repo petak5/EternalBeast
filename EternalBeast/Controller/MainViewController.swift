@@ -148,6 +148,7 @@ class MainViewController: NSViewController {
         }
         
         let song = Song(pathToFile: path)
+        song.loadMetadata()
         
         // Create artist if not found
         if !artists.contains(where: {k, v in k == song.artist}) {
@@ -334,8 +335,13 @@ extension MainViewController: NSTableViewDelegate, NSTableViewDataSource {
                 
                 guard let song = displayedSongs[row].song else { fatalError("WTF dude") }
                 
+                var text = song.title
+                if !song.trackNumber.isEmpty {
+                    text = song.trackNumber + ": " + text
+                }
+                
                 let cell = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier("songCell"), owner: self) as! SongCell
-                cell.songNameLabel.stringValue = song.trackNumber + ": " + song.title
+                cell.songNameLabel.stringValue = text
                 cell.songLengthLabel.stringValue = song.length
                 
                 return cell
