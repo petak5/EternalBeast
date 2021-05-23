@@ -821,21 +821,21 @@
                                                                             <rect key="frame" x="8" y="0.0" width="443" height="63"/>
                                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                             <subviews>
-                                                                                <stackView distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SEP-Ez-TC9">
-                                                                                    <rect key="frame" x="16" y="0.0" width="427" height="63"/>
+                                                                                <stackView distribution="fillEqually" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SEP-Ez-TC9">
+                                                                                    <rect key="frame" x="16" y="24" width="477" height="16"/>
                                                                                     <subviews>
                                                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="FLD-Eh-h64" userLabel="Song name">
-                                                                                            <rect key="frame" x="-114" y="0.0" width="427" height="16"/>
+                                                                                            <rect key="frame" x="-2" y="0.0" width="423" height="16"/>
                                                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                                                            <textFieldCell key="cell" lineBreakMode="clipping" title="Song name" id="X4H-2Y-NTH">
+                                                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" title="Song name" id="X4H-2Y-NTH">
                                                                                                 <font key="font" usesAppearanceFont="YES"/>
                                                                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                                             </textFieldCell>
                                                                                         </textField>
                                                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6VV-Af-0Fh" userLabel="Song length">
-                                                                                            <rect key="frame" x="317" y="47" width="112" height="16"/>
-                                                                                            <textFieldCell key="cell" lineBreakMode="clipping" id="W0n-Qs-Kb4">
+                                                                                            <rect key="frame" x="425" y="0.0" width="54" height="16"/>
+                                                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" baseWritingDirection="rightToLeft" id="W0n-Qs-Kb4">
                                                                                                 <font key="font" metaFont="system"/>
                                                                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>

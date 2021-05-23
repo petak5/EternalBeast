@@ -273,7 +273,7 @@ extension MainViewController: PlayerDelegate {
 // MARK: - TableView Extensions
 
 extension MainViewController: NSTableViewDelegate, NSTableViewDataSource {
-
+    
     func numberOfRows(in tableView: NSTableView) -> Int {
         // Artists
         if tableView == artistsTableView {
@@ -295,7 +295,7 @@ extension MainViewController: NSTableViewDelegate, NSTableViewDataSource {
             return 0
         }
     }
-
+    
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
         
         // Artists table view
@@ -325,7 +325,6 @@ extension MainViewController: NSTableViewDelegate, NSTableViewDataSource {
                 
             // Song cell
             } else {
-                var text = ""
                 let artistSelectedRow = artistsTableView.selectedRow
                 
                 // No row selected
@@ -335,11 +334,8 @@ extension MainViewController: NSTableViewDelegate, NSTableViewDataSource {
                 
                 guard let song = displayedSongs[row].song else { fatalError("WTF dude") }
                 
-                // Add song number to cell title
-                text = song.trackNumber + ": " + song.title
-                
                 let cell = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier("songCell"), owner: self) as! SongCell
-                cell.songNameLabel.stringValue = text
+                cell.songNameLabel.stringValue = song.trackNumber + ": " + song.title
                 cell.songLengthLabel.stringValue = song.length
                 
                 return cell
