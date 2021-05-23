@@ -275,61 +275,84 @@ extension MainViewController: PlayerDelegate {
 extension MainViewController: NSTableViewDelegate, NSTableViewDataSource {
 
     func numberOfRows(in tableView: NSTableView) -> Int {
+        // Artists
         if tableView == artistsTableView {
             return displayedArtists.count
+            
+        // Songs
         } else if tableView == songsTableView {
             let row = artistsTableView.selectedRow
             
             // No row selected
             if row == -1 {
                 return 0
-            } else {
-                return displayedSongs.count
             }
+            
+            return displayedSongs.count
+        
+        // Unknown table view
         } else {
             return 0
         }
     }
 
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
-        var cellName = ""
-        var text = ""
         
+        // Artists table view
         if tableView == artistsTableView {
-            cellName = "artistCell"
-            text = displayedArtists[row]
+            let cell = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier("artistCell"), owner: self) as! NSTableCellView
+            cell.textField!.stringValue = displayedArtists[row]
+            
+            return cell
+            
+        // Songs table view
         } else if tableView == songsTableView {
-            cellName = "songCell"
             
-            let artistSelectedRow = artistsTableView.selectedRow
-            
-            // No row selected
-            if artistSelectedRow == -1 {
-                return nil
-            } else {
-                if displayedSongs[row].isGroup {
-                    text = displayedSongs[row].album
-                    let year = displayedSongs[row].year
-                    if !year.isEmpty {
-                        text = year + " - " + text
-                    }
-                    
-                } else {
-                    guard let song = displayedSongs[row].song else { fatalError("WTF dude") }
-                    text = song.trackNumber + ": " + song.title + " - " + song.length
+            // Album group cell
+            if displayedSongs[row].isGroup {
+                var text = displayedSongs[row].album
+                let year = displayedSongs[row].year
+                
+                // Add year to title if is provided
+                if !year.isEmpty {
+                    text = year + " - " + text
                 }
+                
+                let cell = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier("albumGroupCell"), owner: self) as! AlbumGroupCell
+                cell.albumNameLabel.stringValue = text
+                
+                return cell
+                
+            // Song cell
+            } else {
+                var text = ""
+                let artistSelectedRow = artistsTableView.selectedRow
+                
+                // No row selected
+                if artistSelectedRow == -1 {
+                    return nil
+                }
+                
+                guard let song = displayedSongs[row].song else { fatalError("WTF dude") }
+                
+                // Add song number to cell title
+                text = song.trackNumber + ": " + song.title
+                
+                let cell = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier("songCell"), owner: self) as! SongCell
+                cell.songNameLabel.stringValue = text
+                cell.songLengthLabel.stringValue = song.length
+                
+                return cell
             }
+            
+        // Unknown table view
         } else {
             return nil
         }
-        
-        let cell = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(cellName), owner: self) as! NSTableCellView
-        cell.textField!.stringValue = text
-
-        return cell
     }
     
     func tableView(_ tableView: NSTableView, isGroupRow row: Int) -> Bool {
+        // Songs are divided into groups by album name
         if tableView == songsTableView {
             return displayedSongs[row].isGroup
         } else {
@@ -338,15 +361,27 @@ extension MainViewController: NSTableViewDelegate, NSTableViewDataSource {
     }
     
     func tableView(_ tableView: NSTableView, heightOfRow row: Int) -> CGFloat {
-        var value: CGFloat = 0
-        
+
+        // Artist cell
         if tableView == artistsTableView {
-            value = 52
+            return 52
+            
+        // Songs table view
         } else if tableView == songsTableView {
-            value = 32
+            
+            // Album group cell
+            if displayedSongs[row].isGroup {
+                return 48
+            
+            // Song cell
+            } else {
+                return 32
+            }
+            
+        // Unknown table view
+        } else {
+            return 0
         }
-        
-        return value
     }
     
     func tableViewSelectionDidChange(_ notification: Notification) {
