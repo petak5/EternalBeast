@@ -828,7 +828,7 @@
                                                                                     <subviews>
                                                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bi0-IS-2VN" userLabel="Album name">
                                                                                             <rect key="frame" x="-2" y="0.0" width="385" height="28"/>
-                                                                                            <textFieldCell key="cell" lineBreakMode="clipping" title="Album name" id="JO8-bO-apU">
+                                                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" title="Album name" id="JO8-bO-apU">
                                                                                                 <font key="font" metaFont="system" size="24"/>
                                                                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
