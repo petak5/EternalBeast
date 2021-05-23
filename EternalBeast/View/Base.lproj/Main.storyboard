@@ -706,7 +706,7 @@
         <scene sceneID="cAi-LI-R6b">
             <objects>
                 <viewController id="hrP-Qf-xFH" customClass="MainViewController" customModule="EternalBeast" customModuleProvider="target" sceneMemberID="viewController">
-                    <customView key="view" misplaced="YES" id="N6w-Uo-Wp0">
+                    <customView key="view" id="N6w-Uo-Wp0">
                         <rect key="frame" x="0.0" y="0.0" width="801" height="585"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
@@ -900,6 +900,9 @@
                                                                     </prototypeCellViews>
                                                                 </tableColumn>
                                                             </tableColumns>
+                                                            <connections>
+                                                                <outlet property="menu" destination="yMx-eb-7eN" id="DED-Xh-apc"/>
+                                                            </connections>
                                                         </tableView>
                                                     </subviews>
                                                 </clipView>
@@ -1094,8 +1097,25 @@
                     </connections>
                 </viewController>
                 <customObject id="mfC-Sw-9Us" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+                <menu id="yMx-eb-7eN">
+                    <items>
+                        <menuItem title="Play" id="7u1-ls-cwy">
+                            <modifierMask key="keyEquivalentModifierMask"/>
+                            <connections>
+                                <action selector="playContextMenuClicked:" target="hrP-Qf-xFH" id="SbJ-fv-hoi"/>
+                            </connections>
+                        </menuItem>
+                        <menuItem isSeparatorItem="YES" id="ZL4-0F-2Yq"/>
+                        <menuItem title="Remove" id="Cew-OG-3zn">
+                            <modifierMask key="keyEquivalentModifierMask"/>
+                            <connections>
+                                <action selector="deleteContextMenuClicked:" target="hrP-Qf-xFH" id="Vsg-b5-bI3"/>
+                            </connections>
+                        </menuItem>
+                    </items>
+                </menu>
             </objects>
-            <point key="canvasLocation" x="874.5" y="657.5"/>
+            <point key="canvasLocation" x="872" y="515"/>
         </scene>
     </scenes>
     <resources>

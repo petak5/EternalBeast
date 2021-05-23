@@ -57,13 +57,13 @@ class MainViewController: NSViewController {
     }
     
     @objc func songsTableViewDoubleClicked() {
-        let selectedRow = songsTableView.selectedRow
+        let clickedRow = songsTableView.clickedRow
         
-        if selectedRow == -1 {
+        if clickedRow == -1 {
             return
         }
         
-        if displayedSongs[selectedRow].isGroup {
+        if displayedSongs[clickedRow].isGroup {
             return
         }
         
@@ -71,13 +71,13 @@ class MainViewController: NSViewController {
         player.clearQueue()
         
         // Add songs starting from the selected one
-        for item in displayedSongs[selectedRow...] {
+        for item in displayedSongs[clickedRow...] {
             if !item.isGroup {
                 player.addToQueue(song: item.song!)
             }
         }
         // Add the other songs before the selected one
-        for item in displayedSongs[0..<selectedRow] {
+        for item in displayedSongs[0..<clickedRow] {
             if !item.isGroup {
                 player.addToQueue(song: item.song!)
             }
@@ -385,36 +385,80 @@ extension MainViewController: NSTableViewDelegate, NSTableViewDataSource {
         
         guard let _tableView = tableView else { return }
         if _tableView == artistsTableView {
-            // Get selected artist row
-            let artistRow = artistsTableView.selectedRow
-            
-            if artistRow == -1 {
-                // Do nothing
-                return
-            } else {
-                let artistName = displayedArtists[artistRow]
-                let newDisplayedSongs = artists[artistName]
-                guard var newDisplayedSongs = newDisplayedSongs else { return }
-                
-                // Sort by track number
-                newDisplayedSongs.sort { $0.trackNumber < $1.trackNumber }
-                // Sort by year
-                newDisplayedSongs.sort { $0.year < $1.year }
-                // Sort by album
-                //newDisplayedSongs.sort { $0.album < $1.album }
-                
-                displayedSongs = []
-                for s in newDisplayedSongs {
-                    // If the song is first in the array or if the previous song was from different album, create an album group
-                    if displayedSongs.isEmpty || displayedSongs.last?.song?.album != s.album {
-                        displayedSongs.append(SongItem(song: nil, album: s.album, year: s.year))
-                    }
-                    
-                    displayedSongs.append(SongItem(song: s))
-                }
-                
-                songsTableView.reloadData()
-            }
+            reloadSongsTableData()
         }
     }
+    
+    // Reload selected artist's songs to displayed songs array and update the table view with it
+    func reloadSongsTableData() {
+        // Get selected artist row
+        let artistRow = artistsTableView.selectedRow
+        
+        if artistRow == -1 {
+            // Do nothing
+            return
+        } else {
+            let artistName = displayedArtists[artistRow]
+            let newDisplayedSongs = artists[artistName]
+            guard var newDisplayedSongs = newDisplayedSongs else { return }
+            
+            // Sort by track number
+            newDisplayedSongs.sort { $0.trackNumber < $1.trackNumber }
+            // Sort by year
+            newDisplayedSongs.sort { $0.year < $1.year }
+            // Sort by album
+            //newDisplayedSongs.sort { $0.album < $1.album }
+            
+            displayedSongs = []
+            for s in newDisplayedSongs {
+                // If the song is first in the array or if the previous song was from different album, create an album group
+                if displayedSongs.isEmpty || displayedSongs.last?.song?.album != s.album {
+                    displayedSongs.append(SongItem(song: nil, album: s.album, year: s.year))
+                }
+                
+                displayedSongs.append(SongItem(song: s))
+            }
+            
+            songsTableView.reloadData()
+        }
+    }
+    
+    // MARK: - Songs table view context menu
+    @IBAction func playContextMenuClicked(_ sender: Any) {
+        songsTableViewDoubleClicked()
+    }
+    
+    @IBAction func deleteContextMenuClicked(_ sender: Any) {
+        let clickedRow = songsTableView.clickedRow
+        
+        if clickedRow == -1 {
+            return
+        }
+        
+        if displayedSongs[clickedRow].isGroup {
+            return
+        }
+        
+        guard let song = displayedSongs[clickedRow].song else { return }
+        guard let artistSongs = artists[displayedArtists[artistsTableView.selectedRow]] else { return }
+        
+        guard let index = artistSongs.firstIndex(where: { s in s.getPathToFile() == song.getPathToFile() }) else { return }
+        
+        // Ask user for confirmation
+        let alert = NSAlert.init()
+        alert.messageText = "Remove \"\(song.title)\" from library?"
+        alert.informativeText = "Removing song from the library will not delete the file from your computer."
+        alert.addButton(withTitle: "Remove")
+        alert.addButton(withTitle: "Cancel")
+        
+        // Stop if user clicked "Cancel"
+        if alert.runModal() != NSApplication.ModalResponse.alertFirstButtonReturn {
+            return
+        }
+        
+        // Remove the song and reload table view data
+        artists[displayedArtists[artistsTableView.selectedRow]]?.remove(at: index)
+        reloadSongsTableData()
+    }
+    
 }
