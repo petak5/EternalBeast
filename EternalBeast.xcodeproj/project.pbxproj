@@ -11,7 +11,6 @@
 		D095B209263E83BD00113A8C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D095B208263E83BD00113A8C /* AppDelegate.swift */; };
 		D095B20D263E83C100113A8C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D095B20C263E83C100113A8C /* Assets.xcassets */; };
 		D095B210263E83C100113A8C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D095B20E263E83C100113A8C /* Main.storyboard */; };
-		D095B21C263E8E6200113A8C /* MainWindowControler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D095B21B263E8E6200113A8C /* MainWindowControler.swift */; };
 		D095B21E263E8EE600113A8C /* SidebarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D095B21D263E8EE600113A8C /* SidebarViewController.swift */; };
 		D095B22C263E8FD700113A8C /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D095B22B263E8FD700113A8C /* MainViewController.swift */; };
 		D0ADCDD726552B3800767ACF /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0ADCDD626552B3800767ACF /* Queue.swift */; };
@@ -30,7 +29,6 @@
 		D095B20F263E83C100113A8C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D095B211263E83C100113A8C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D095B212263E83C100113A8C /* EternalBeast.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EternalBeast.entitlements; sourceTree = "<group>"; };
-		D095B21B263E8E6200113A8C /* MainWindowControler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWindowControler.swift; sourceTree = "<group>"; };
 		D095B21D263E8EE600113A8C /* SidebarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarViewController.swift; sourceTree = "<group>"; };
 		D095B22B263E8FD700113A8C /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		D0ADCDD626552B3800767ACF /* Queue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
@@ -86,7 +84,6 @@
 		D095B218263E8E0000113A8C /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				D095B21B263E8E6200113A8C /* MainWindowControler.swift */,
 				D095B22B263E8FD700113A8C /* MainViewController.swift */,
 				D095B21D263E8EE600113A8C /* SidebarViewController.swift */,
 			);
@@ -193,7 +190,6 @@
 			files = (
 				D095B22C263E8FD700113A8C /* MainViewController.swift in Sources */,
 				D0ADCDD726552B3800767ACF /* Queue.swift in Sources */,
-				D095B21C263E8E6200113A8C /* MainWindowControler.swift in Sources */,
 				D0B265582651034A009E0307 /* Song.swift in Sources */,
 				D0AE19BE265A8EBA0074CD44 /* AlbumGroupCell.swift in Sources */,
 				D0ADCDD926552CCB00767ACF /* Player.swift in Sources */,
