@@ -225,8 +225,8 @@ class MainViewController: NSViewController {
         if let currentSong = player.getCurrentSong() {
             songNameLabel.stringValue = currentSong.artist + " - " + currentSong.title
             
-            if currentSong.image.isValid {
-                coverArtImage.image = currentSong.image
+            if let image = player.currentSongArtwork {
+                coverArtImage.image = image
             } else {
                 coverArtImage.image = nil
             }
@@ -424,6 +424,7 @@ extension MainViewController: NSTableViewDelegate, NSTableViewDataSource {
     }
     
     // MARK: - Songs table view context menu
+    
     @IBAction func playContextMenuClicked(_ sender: Any) {
         songsTableViewDoubleClicked()
     }

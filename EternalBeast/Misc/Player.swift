@@ -24,6 +24,10 @@ final class Player: NSObject {
     private var playbackMode: PlaybackMode
     private var timer: Timer?
     
+    // "last song" for checking if artwork needs to be updated
+    private var lastSongForArtwork: Song?
+    private (set) var currentSongArtwork: NSImage?
+    
     var delegate: PlayerDelegate?
     
     private override init() {
@@ -107,19 +111,51 @@ final class Player: NSObject {
         
         MPNowPlayingInfoCenter.default().playbackState = .playing
         
-        MPNowPlayingInfoCenter.default().nowPlayingInfo = [
+        if let lastSong = lastSongForArtwork {
+            if lastSong.getPathToFile() != currentSong.getPathToFile() {
+                lastSongForArtwork = currentSong
+                updateCurrentSongArtwork()
+            }
+        } else {
+            lastSongForArtwork = currentSong
+            updateCurrentSongArtwork()
+        }
+        
+        var nowPlayingInfo: [String: Any] = [
             MPMediaItemPropertyTitle: currentSong.title,
             MPMediaItemPropertyArtist: currentSong.artist,
             MPMediaItemPropertyAlbumTitle: currentSong.album,
-            MPMediaItemPropertyArtwork: MPMediaItemArtwork(boundsSize: currentSong.image.size) { _ in currentSong.image },
             MPMediaItemPropertyPlaybackDuration: player.duration,
             MPNowPlayingInfoPropertyElapsedPlaybackTime: player.currentTime,
             MPNowPlayingInfoPropertyPlaybackRate: 1
         ]
+        if let artwork = currentSongArtwork {
+            nowPlayingInfo[MPMediaItemPropertyArtwork] = MPMediaItemArtwork(boundsSize: artwork.size) { _ in artwork }
+        }
+        
+        MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
         
         player.play()
         
         delegate?.playbackStateChanged(currentSong: currentSong, isPlaying: isPlaying(), progress: getProgress())
+    }
+    
+    func updateCurrentSongArtwork() {
+        if let lastSong = lastSongForArtwork {
+            let fileUrl = URL(fileURLWithPath: lastSong.getPathToFile())
+            let asset = AVAsset(url: fileUrl) as AVAsset
+            
+            // Get metadata
+            for metaDataItem in asset.metadata {
+                // If metadata item is artwork, create image and save it to variable
+                if metaDataItem.commonKey == .commonKeyArtwork {
+                    if let data = metaDataItem.dataValue,
+                    let newImage = NSImage(data: data) {
+                        currentSongArtwork = newImage
+                    }
+                }
+            }
+        }
     }
     
     func playNext() {
