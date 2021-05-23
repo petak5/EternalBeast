@@ -706,31 +706,31 @@
         <scene sceneID="cAi-LI-R6b">
             <objects>
                 <viewController id="hrP-Qf-xFH" customClass="MainViewController" customModule="EternalBeast" customModuleProvider="target" sceneMemberID="viewController">
-                    <stackView key="view" distribution="fill" orientation="vertical" alignment="leading" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" id="Yca-eu-QSV">
-                        <rect key="frame" x="0.0" y="0.0" width="891" height="424"/>
+                    <stackView key="view" distribution="fill" orientation="vertical" alignment="leading" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" misplaced="YES" detachesHiddenViews="YES" id="Yca-eu-QSV">
+                        <rect key="frame" x="0.0" y="0.0" width="891" height="396"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <splitView arrangesAllSubviews="NO" dividerStyle="thin" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YrH-jU-kxH">
-                                <rect key="frame" x="0.0" y="64" width="891" height="360"/>
+                                <rect key="frame" x="0.0" y="64" width="891" height="276"/>
                                 <subviews>
                                     <customView misplaced="YES" id="LfO-Db-tSI">
-                                        <rect key="frame" x="0.0" y="0.0" width="435" height="360"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="435" height="276"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <subviews>
                                             <scrollView autohidesScrollers="YES" horizontalLineScroll="52" horizontalPageScroll="10" verticalLineScroll="52" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BZ1-nc-1Gj">
-                                                <rect key="frame" x="0.0" y="0.0" width="428" height="360"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="428" height="276"/>
                                                 <clipView key="contentView" drawsBackground="NO" id="jEk-L7-2oa">
-                                                    <rect key="frame" x="1" y="1" width="426" height="358"/>
+                                                    <rect key="frame" x="1" y="1" width="426" height="274"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" tableStyle="plain" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="52" viewBased="YES" id="0AA-Hd-3Nc">
-                                                            <rect key="frame" x="0.0" y="0.0" width="426" height="358"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="426" height="274"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <size key="intercellSpacing" width="17" height="0.0"/>
                                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                                             <tableColumns>
-                                                                <tableColumn width="409" minWidth="40" maxWidth="1000" id="wGG-qr-PRl">
+                                                                <tableColumn width="409" minWidth="40" maxWidth="5000" id="wGG-qr-PRl">
                                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border">
                                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
@@ -789,7 +789,7 @@
                                         </constraints>
                                     </customView>
                                     <customView misplaced="YES" id="Nhp-Go-2MA">
-                                        <rect key="frame" x="436" y="0.0" width="455" height="360"/>
+                                        <rect key="frame" x="436" y="0.0" width="455" height="276"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <subviews>
                                             <scrollView autohidesScrollers="YES" horizontalLineScroll="63" horizontalPageScroll="10" verticalLineScroll="63" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZRY-Pm-4Qs">
@@ -805,7 +805,7 @@
                                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                                             <tableColumns>
-                                                                <tableColumn width="443" minWidth="40" maxWidth="1000" id="BIp-pX-Y2l">
+                                                                <tableColumn width="443" minWidth="40" maxWidth="5000" id="BIp-pX-Y2l">
                                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border">
                                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
