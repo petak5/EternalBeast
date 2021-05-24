@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		D001E6A9265A443C00E01AFB /* SongCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D001E6A8265A443C00E01AFB /* SongCell.swift */; };
+		D036A062265B8B1F000806FC /* EternalBeastCoreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D036A060265B8B1F000806FC /* EternalBeastCoreData.xcdatamodeld */; };
 		D095B209263E83BD00113A8C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D095B208263E83BD00113A8C /* AppDelegate.swift */; };
 		D095B20D263E83C100113A8C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D095B20C263E83C100113A8C /* Assets.xcassets */; };
 		D095B210263E83C100113A8C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D095B20E263E83C100113A8C /* Main.storyboard */; };
@@ -23,6 +24,7 @@
 
 /* Begin PBXFileReference section */
 		D001E6A8265A443C00E01AFB /* SongCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongCell.swift; sourceTree = "<group>"; };
+		D036A061265B8B1F000806FC /* EternalBeastCoreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = EternalBeastCoreData.xcdatamodel; sourceTree = "<group>"; };
 		D095B205263E83BD00113A8C /* EternalBeast.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EternalBeast.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D095B208263E83BD00113A8C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D095B20C263E83C100113A8C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -77,6 +79,7 @@
 				D095B20C263E83C100113A8C /* Assets.xcassets */,
 				D095B211263E83C100113A8C /* Info.plist */,
 				D095B212263E83C100113A8C /* EternalBeast.entitlements */,
+				D036A060265B8B1F000806FC /* EternalBeastCoreData.xcdatamodeld */,
 			);
 			path = EternalBeast;
 			sourceTree = "<group>";
@@ -191,6 +194,7 @@
 				D095B22C263E8FD700113A8C /* MainViewController.swift in Sources */,
 				D0ADCDD726552B3800767ACF /* Queue.swift in Sources */,
 				D0B265582651034A009E0307 /* Song.swift in Sources */,
+				D036A062265B8B1F000806FC /* EternalBeastCoreData.xcdatamodeld in Sources */,
 				D0AE19BE265A8EBA0074CD44 /* AlbumGroupCell.swift in Sources */,
 				D0ADCDD926552CCB00767ACF /* Player.swift in Sources */,
 				D095B209263E83BD00113A8C /* AppDelegate.swift in Sources */,
@@ -394,6 +398,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		D036A060265B8B1F000806FC /* EternalBeastCoreData.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				D036A061265B8B1F000806FC /* EternalBeastCoreData.xcdatamodel */,
+			);
+			currentVersion = D036A061265B8B1F000806FC /* EternalBeastCoreData.xcdatamodel */;
+			path = EternalBeastCoreData.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = D095B1FD263E83BD00113A8C /* Project object */;
 }

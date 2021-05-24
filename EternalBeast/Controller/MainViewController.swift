@@ -51,39 +51,11 @@ class MainViewController: NSViewController {
         
         songsTableView.delegate = self
         songsTableView.dataSource = self
-        songsTableView.doubleAction = #selector(songsTableViewDoubleClicked)
+        songsTableView.doubleAction = #selector(playClickedSong)
         
         player.delegate = self
-    }
-    
-    @objc func songsTableViewDoubleClicked() {
-        let clickedRow = songsTableView.clickedRow
         
-        if clickedRow == -1 {
-            return
-        }
-        
-        if displayedSongs[clickedRow].isGroup {
-            return
-        }
-        
-        player.stop()
-        player.clearQueue()
-        
-        // Add songs starting from the selected one
-        for item in displayedSongs[clickedRow...] {
-            if !item.isGroup {
-                player.addToQueue(song: item.song!)
-            }
-        }
-        // Add the other songs before the selected one
-        for item in displayedSongs[0..<clickedRow] {
-            if !item.isGroup {
-                player.addToQueue(song: item.song!)
-            }
-        }
-        
-        player.play()
+        loadSongs()
     }
     
     func add() -> [String] {
@@ -147,9 +119,16 @@ class MainViewController: NSViewController {
             return
         }
         
-        let song = Song(pathToFile: path)
-        song.loadMetadata()
+        let appDelegate = NSApplication.shared.delegate as! AppDelegate
+        let cdContext = appDelegate.persistentContainer.viewContext
         
+        let song = Song(context: cdContext)
+        song.loadMetadata(pathToFile: path)
+        
+        addSongObjectToArtistsDisctionary(song: song)
+    }
+    
+    func addSongObjectToArtistsDisctionary(song: Song) {
         // Create artist if not found
         if !artists.contains(where: {k, v in k == song.artist}) {
             artists[song.artist] = []
@@ -183,6 +162,28 @@ class MainViewController: NSViewController {
                 addFile(path: path)
             }
         }
+    }
+    
+    // MARK: - CoreData
+    
+    func loadSongs() {
+        let appDelegate = NSApplication.shared.delegate as! AppDelegate
+        let cdContext = appDelegate.persistentContainer.viewContext
+        
+        let request : NSFetchRequest<Song> = NSFetchRequest(entityName: "Song")
+        do {
+            let songs = try cdContext.fetch(request)
+            for song in songs {
+                addSongObjectToArtistsDisctionary(song: song)
+            }
+        } catch {
+            print("Error loading songs, \(error)")
+        }
+        
+        displayedArtists = Array(artists.keys).sorted()
+
+        artistsTableView.reloadData()
+        songsTableView.reloadData()
     }
     
     // MARK: - Playback controls
@@ -413,7 +414,7 @@ extension MainViewController: NSTableViewDelegate, NSTableViewDataSource {
             // Sort by year
             newDisplayedSongs.sort { $0.year < $1.year }
             // Sort by album
-            //newDisplayedSongs.sort { $0.album < $1.album }
+            newDisplayedSongs.sort { $0.album < $1.album }
             
             displayedSongs = []
             for s in newDisplayedSongs {
@@ -429,10 +430,41 @@ extension MainViewController: NSTableViewDelegate, NSTableViewDataSource {
         }
     }
     
+    // Double clicking song will play the file
+    @objc func playClickedSong() {
+        let clickedRow = songsTableView.clickedRow
+        
+        if clickedRow == -1 {
+            return
+        }
+        
+        if displayedSongs[clickedRow].isGroup {
+            return
+        }
+        
+        player.stop()
+        player.clearQueue()
+        
+        // Add songs starting from the selected one
+        for item in displayedSongs[clickedRow...] {
+            if !item.isGroup {
+                player.addToQueue(song: item.song!)
+            }
+        }
+        // Add the other songs before the selected one
+        for item in displayedSongs[0..<clickedRow] {
+            if !item.isGroup {
+                player.addToQueue(song: item.song!)
+            }
+        }
+        
+        player.play()
+    }
+    
     // MARK: - Songs table view context menu
     
     @IBAction func playContextMenuClicked(_ sender: Any) {
-        songsTableViewDoubleClicked()
+        playClickedSong()
     }
     
     @IBAction func deleteContextMenuClicked(_ sender: Any) {
@@ -462,6 +494,11 @@ extension MainViewController: NSTableViewDelegate, NSTableViewDataSource {
         if alert.runModal() != NSApplication.ModalResponse.alertFirstButtonReturn {
             return
         }
+        
+        let appDelegate = NSApplication.shared.delegate as! AppDelegate
+        let cdContext = appDelegate.persistentContainer.viewContext
+        
+        cdContext.delete(song)
         
         // Remove the song and reload table view data
         artists[displayedArtists[artistsTableView.selectedRow]]?.remove(at: index)

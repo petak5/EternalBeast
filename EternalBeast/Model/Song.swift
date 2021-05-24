@@ -8,16 +8,23 @@
 import Cocoa
 import AVFoundation
 
-class Song {
-    private let pathToFile: String
-    private (set) var title: String
-    private (set) var artist: String
-    private (set) var album: String
-    private (set) var year: String
-    private (set) var length: String
-    private (set) var trackNumber: String
+@objc(Song)
+public class Song: NSManagedObject, Identifiable {
+    @NSManaged private var pathToFile: String
+    @NSManaged private (set) var title: String
+    @NSManaged private (set) var artist: String
+    @NSManaged private (set) var album: String
+    @NSManaged private (set) var year: String
+    @NSManaged private (set) var length: String
+    @NSManaged private (set) var trackNumber: String
     
-    public init(pathToFile: String) {
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<Song> {
+        return NSFetchRequest<Song>(entityName: "Song")
+    }
+    
+    public func loadMetadata(pathToFile: String) {
+        
+        // Default values
         self.pathToFile = pathToFile
         self.title = (pathToFile as NSString).lastPathComponent
         self.artist = "Unknown Artist"
@@ -25,9 +32,8 @@ class Song {
         self.year = ""
         self.length = "0:00"
         self.trackNumber = ""
-    }
-    
-    public func loadMetadata() {
+        
+        
         let fileUrl = URL(fileURLWithPath: pathToFile)
         let asset = AVAsset(url: fileUrl) as AVAsset
         
