@@ -503,6 +503,14 @@ extension MainViewController: NSTableViewDelegate, NSTableViewDataSource {
         // Remove the song and reload table view data
         artists[displayedArtists[artistsTableView.selectedRow]]?.remove(at: index)
         reloadSongsTableData()
+        
+        // If artist has just one last song, remove the artist
+        if artistSongs.count == 1 {
+            artists.removeValue(forKey: displayedArtists[artistsTableView.selectedRow])
+            
+            displayedArtists = Array(artists.keys).sorted()
+            artistsTableView.reloadData()
+        }
     }
     
 }

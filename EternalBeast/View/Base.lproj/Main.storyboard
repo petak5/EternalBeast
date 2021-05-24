@@ -1097,7 +1097,18 @@
                     </connections>
                 </viewController>
                 <customObject id="mfC-Sw-9Us" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-                <menu id="yMx-eb-7eN">
+                <menu id="yCl-gw-E1N" userLabel="Artist Context Menu">
+                    <items>
+                        <menuItem title="Play artist's songs" id="HvL-sc-Vor" userLabel="Play artist's songs">
+                            <modifierMask key="keyEquivalentModifierMask"/>
+                        </menuItem>
+                        <menuItem isSeparatorItem="YES" id="zmD-3V-CzD"/>
+                        <menuItem title="Remove Artist's songs" id="9xY-af-HUJ" userLabel="Remove Artist's songs">
+                            <modifierMask key="keyEquivalentModifierMask"/>
+                        </menuItem>
+                    </items>
+                </menu>
+                <menu id="yMx-eb-7eN" userLabel="Song Context Menu">
                     <items>
                         <menuItem title="Play" id="7u1-ls-cwy">
                             <modifierMask key="keyEquivalentModifierMask"/>
