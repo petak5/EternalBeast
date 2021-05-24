@@ -7,6 +7,7 @@
 
 import Cocoa
 
+// Song item represents a row in songs table view, where each album has a group cell
 struct SongItem {
     var song: Song?
     var album: String
@@ -26,7 +27,6 @@ class MainViewController: NSViewController {
     @IBOutlet weak var artistsTableView: NSTableView!
     @IBOutlet weak var songsTableView: NSTableView!
     
-    
     @IBOutlet weak var playButton: NSButton!
     @IBOutlet weak var repeatButton: NSButton!
     @IBOutlet weak var coverArtImage: NSImageView!
@@ -39,8 +39,10 @@ class MainViewController: NSViewController {
     private var displayedArtists = [String]()
     private var displayedSongs = [SongItem]()
     
+    // Supported file extensions
     private let supportedFileTypes = [".mp3", ".flac", ".alac", ".m4a", ".mp4a", ".wav"]
     
+    // Player singleton
     private var player = Player.shared
     
     override func viewDidLoad() {
@@ -58,51 +60,26 @@ class MainViewController: NSViewController {
         loadSongs()
     }
     
-    func add() -> [String] {
+    // Add selected files or folders to library
+    @IBAction func addToLibrary(_ sender: Any) {
         let dialog = NSOpenPanel();
         dialog.showsResizeIndicator    = true;
         dialog.showsHiddenFiles        = false;
         dialog.canChooseFiles          = true;
         dialog.canChooseDirectories    = true;
         dialog.allowsMultipleSelection = true;
-
-        var paths = [String]()
         
-        if (dialog.runModal() == NSApplication.ModalResponse.OK) {
-            let urls = dialog.urls
-            
-            for url in urls {
-                // Add all music files from subdirectories (recursively)
-                if let enumerator = FileManager.default.enumerator(at: url, includingPropertiesForKeys: [.isRegularFileKey], options: [.skipsHiddenFiles, .skipsPackageDescendants]) {
-                    for case let fileURL as URL in enumerator {
-                        do {
-                            let fileAttributes = try fileURL.resourceValues(forKeys:[.isRegularFileKey])
-                            if fileAttributes.isRegularFile! {
-                                let path = fileURL.path
-                                
-                                if supportedFileTypes.contains(where: { s in path.hasSuffix(s) }) {
-                                    paths.append(path)
-                                }
-                            }
-                        } catch {
-                            print(error, fileURL)
-                        }
-                    }
-                }
-            }
-            
-            return paths
-        } else {
-            // User clicked on "Cancel"
-            return paths
+        // Run the modal, exit if user cancels
+        if dialog.runModal() != NSApplication.ModalResponse.OK {
+            return
         }
-    }
-    
-    @IBAction func addToLibrary(_ sender: Any) {
-        let paths = add()
         
+        // Get all files
+        let paths = getPathsfromUrlsRecursive(urls: dialog.urls)
+        
+        // Add all files to library
         for path in paths {
-            addSongs(fromPath: path)
+            addSong(fromPath: path)
         }
         
         displayedArtists = Array(artists.keys).sorted()
@@ -111,7 +88,48 @@ class MainViewController: NSViewController {
         songsTableView.reloadData()
     }
     
-    private func addFile(path: String) {
+    // Get all files from URLs, exploring directories recursively
+    // The files are filtered and only files with extensions defined in 'supportedFileTypes' array are returned
+    func getPathsfromUrlsRecursive(urls: [URL]) -> [String] {
+        var paths = [String]()
+        
+        for url in urls {
+            var isDir: ObjCBool = false
+            if FileManager.default.fileExists(atPath: url.path, isDirectory: &isDir) {
+                
+                // URL path is direcotry
+                if isDir.boolValue {
+                    // Add all music files from subdirectories (recursively)
+                    if let enumerator = FileManager.default.enumerator(at: url, includingPropertiesForKeys: [.isRegularFileKey], options: [.skipsHiddenFiles, .skipsPackageDescendants]) {
+                        for case let fileURL as URL in enumerator {
+                            do {
+                                let fileAttributes = try fileURL.resourceValues(forKeys:[.isRegularFileKey])
+                                if fileAttributes.isRegularFile! {
+                                    let path = fileURL.path
+                                    
+                                    if supportedFileTypes.contains(where: { s in path.hasSuffix(s) }) {
+                                        paths.append(path)
+                                    }
+                                }
+                            } catch {
+                                print(error, fileURL)
+                            }
+                        }
+                    }
+                    
+                // URL path is file
+                } else {
+                    if supportedFileTypes.contains(where: { s in url.path.hasSuffix(s) }) {
+                        paths.append(url.path)
+                    }
+                }
+            }
+        }
+        
+        return paths
+    }
+    
+    public func addSong(fromPath path: String) {
         let fileManager = FileManager.default
 
         if !fileManager.fileExists(atPath: path) || !fileManager.isReadableFile(atPath: path) {
@@ -125,10 +143,11 @@ class MainViewController: NSViewController {
         let song = Song(context: cdContext)
         song.loadMetadata(pathToFile: path)
         
-        addSongObjectToArtistsDisctionary(song: song)
+        addSongObjectToArtistsDictionary(song: song)
     }
     
-    func addSongObjectToArtistsDisctionary(song: Song) {
+    // Adds song instance to local dictionary 'artists' holding all songs
+    func addSongObjectToArtistsDictionary(song: Song) {
         // Create artist if not found
         if !artists.contains(where: {k, v in k == song.artist}) {
             artists[song.artist] = []
@@ -137,35 +156,9 @@ class MainViewController: NSViewController {
         artists[song.artist]?.append(song)
     }
     
-    private func addFilesFromDirectory(directory: String) {
-        let fileManager = FileManager.default
-        
-        do {
-            let items = try fileManager.contentsOfDirectory(atPath: directory)
-            
-            for item in items {
-                addFile(path: directory + "/" + item)
-            }
-        } catch let error {
-            NSResponder().presentError(error)
-            print("Failed to retreive contents of directory: '" + directory + "'")
-        }
-    }
-    
-    public func addSongs(fromPath path: String) {
-        var isDir: ObjCBool = false
-        
-        if FileManager.default.fileExists(atPath: path, isDirectory: &isDir) {
-            if isDir.boolValue {
-                addFilesFromDirectory(directory: path)
-            } else {
-                addFile(path: path)
-            }
-        }
-    }
-    
     // MARK: - CoreData
     
+    // Load songs from CoreData container
     func loadSongs() {
         let appDelegate = NSApplication.shared.delegate as! AppDelegate
         let cdContext = appDelegate.persistentContainer.viewContext
@@ -174,7 +167,7 @@ class MainViewController: NSViewController {
         do {
             let songs = try cdContext.fetch(request)
             for song in songs {
-                addSongObjectToArtistsDisctionary(song: song)
+                addSongObjectToArtistsDictionary(song: song)
             }
         } catch {
             print("Error loading songs, \(error)")
@@ -251,6 +244,7 @@ class MainViewController: NSViewController {
 }
 
 // MARK: - PlayerDelegate
+
 extension MainViewController: PlayerDelegate {
     func progressChanged(progress: Double) {
         playbackSlider.doubleValue = progress
@@ -409,10 +403,15 @@ extension MainViewController: NSTableViewDelegate, NSTableViewDataSource {
             let newDisplayedSongs = artists[artistName]
             guard var newDisplayedSongs = newDisplayedSongs else { return }
             
+            // MARK: Sorting is not as good as desired but it is not possible to sort songs in any useful manner without track number and sort albums by year.
+            //       Unfortunately it's not that simple to get this information from song files.
+            
             // Sort by track number
-            newDisplayedSongs.sort { $0.trackNumber < $1.trackNumber }
+            //newDisplayedSongs.sort { $0.trackNumber < $1.trackNumber }
             // Sort by year
-            newDisplayedSongs.sort { $0.year < $1.year }
+            //newDisplayedSongs.sort { $0.year < $1.year }
+            // Sort by title
+            newDisplayedSongs.sort { $0.title < $1.title }
             // Sort by album
             newDisplayedSongs.sort { $0.album < $1.album }
             
