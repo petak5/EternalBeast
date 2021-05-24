@@ -9,7 +9,7 @@ GitHub: https://github.com/petak5/EternalBeast
 
 ## Features:
   - Now Playing system menu integration
-  - Repeat all, repat one and stop after this song modes
+  - Repeat all, repat one and stop after this song modes (works only on macOS 11.0 and higher)
 
 ## Limitations:
   - Files must be located in users music foler (`~/Music`) to allow the application to read them after restart. This is because of App Sandbox allows to read only user selected files or files from the music folder.
@@ -17,4 +17,3 @@ GitHub: https://github.com/petak5/EternalBeast
   - Files without metadata will show alternate info
     - for example songs without album name use dictionary name as the album name and file name as the song tile
   - Loading many files at once can consume lot of memory, even GBs. There is some reference counting problem with `AVAsset` and its `.metadata` property that stops it from dealocating until all songs are added. A simple demo project showing this behaviour can be found at https://github.com/petak5/MemoryNotFreeing-macOS
-  

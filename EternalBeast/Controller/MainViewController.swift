@@ -48,6 +48,11 @@ class MainViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Repeat button is available from macOS 11
+        if #available(macOS 11.0, *) {
+            repeatButton.image = NSImage(systemSymbolName: "repeat", accessibilityDescription: "Repeat all")
+        }
+        
         artistsTableView.delegate = self
         artistsTableView.dataSource = self
         
@@ -203,15 +208,27 @@ class MainViewController: NSViewController {
     @IBAction func repeatButtonClicked(_ sender: Any) {
         if player.getPlaybackMode() == .RepeatOff {
             player.setPlaybackMode(.RepeatAll)
-            repeatButton.image = NSImage(systemSymbolName: "repeat", accessibilityDescription: "Repeat all")
+            if #available(macOS 11.0, *) {
+                repeatButton.image = NSImage(systemSymbolName: "repeat", accessibilityDescription: "Repeat all")
+            } else {
+                // TODO: Fallback on earlier versions
+            }
             repeatButton.contentTintColor = .controlAccentColor
         } else if player.getPlaybackMode() == .RepeatAll {
             player.setPlaybackMode(.RepeatOne)
-            repeatButton.image = NSImage(systemSymbolName: "repeat.1", accessibilityDescription: "Repeat one")
+            if #available(macOS 11.0, *) {
+                repeatButton.image = NSImage(systemSymbolName: "repeat.1", accessibilityDescription: "Repeat one")
+            } else {
+                // TODO: Fallback on earlier versions
+            }
             repeatButton.contentTintColor = .controlAccentColor
         } else {
             player.setPlaybackMode(.RepeatOff)
-            repeatButton.image = NSImage(systemSymbolName: "repeat", accessibilityDescription: "Repeat off")
+            if #available(macOS 11.0, *) {
+                repeatButton.image = NSImage(systemSymbolName: "repeat", accessibilityDescription: "Repeat off")
+            } else {
+                // TODO: Fallback on earlier versions
+            }
             repeatButton.contentTintColor = nil
         }
     }
@@ -231,9 +248,9 @@ class MainViewController: NSViewController {
         }
         
         if player.isPlaying() {
-            playButton.image = NSImage(systemSymbolName: "pause.fill", accessibilityDescription: "Pause")
+            playButton.image = NSImage(named: NSImage.touchBarPauseTemplateName)
         } else {
-            playButton.image = NSImage(systemSymbolName: "play.fill", accessibilityDescription: "Play")
+            playButton.image = NSImage(named: NSImage.touchBarPlayTemplateName)
         }
     }
     
