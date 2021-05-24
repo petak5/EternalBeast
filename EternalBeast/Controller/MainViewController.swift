@@ -461,6 +461,73 @@ extension MainViewController: NSTableViewDelegate, NSTableViewDataSource {
         player.play()
     }
     
+    // MARK: - Artists table view context menu
+    
+    @IBAction func playArtistContextMenuClicked(_ sender: Any) {
+        playClickedArtistSongs()
+    }
+    
+    // Play all clicked artist's songs
+    func playClickedArtistSongs() {
+        let clickedRow = artistsTableView.clickedRow
+        
+        if clickedRow == -1 {
+            return
+        }
+        
+        player.stop()
+        player.clearQueue()
+        
+        guard let songs = artists[displayedArtists[clickedRow]] else { return }
+        
+        // Add all artist's songs
+        for song in songs {
+            player.addToQueue(song: song)
+        }
+        
+        player.play()
+    }
+    
+    @IBAction func deleteArtistContextMenuClicked(_ sender: Any) {
+        let clickedRow = artistsTableView.clickedRow
+        
+        if clickedRow == -1 {
+            return
+        }
+        
+        let artistName = displayedArtists[clickedRow]
+        guard let artistSongs = artists[artistName] else { return }
+        
+        // Ask user for confirmation
+        let alert = NSAlert.init()
+        alert.messageText = "Remove all \"\(artistName)\"'s songs from library?"
+        alert.informativeText = "Removing songs from library will not delete the files from your computer."
+        alert.addButton(withTitle: "Remove")
+        alert.addButton(withTitle: "Cancel")
+        
+        // Stop if user clicked "Cancel"
+        if alert.runModal() != NSApplication.ModalResponse.alertFirstButtonReturn {
+            return
+        }
+        
+        let appDelegate = NSApplication.shared.delegate as! AppDelegate
+        let cdContext = appDelegate.persistentContainer.viewContext
+        
+        for song in artistSongs {
+            cdContext.delete(song)
+        }
+        
+        artists.removeValue(forKey: artistName)
+        
+        // Reload songs table
+        displayedSongs = []
+        songsTableView.reloadData()
+        
+        // Reload artist table
+        displayedArtists = Array(artists.keys).sorted()
+        artistsTableView.reloadData()
+    }
+    
     // MARK: - Songs table view context menu
     
     @IBAction func playContextMenuClicked(_ sender: Any) {
@@ -486,7 +553,7 @@ extension MainViewController: NSTableViewDelegate, NSTableViewDataSource {
         // Ask user for confirmation
         let alert = NSAlert.init()
         alert.messageText = "Remove \"\(song.title)\" from library?"
-        alert.informativeText = "Removing song from the library will not delete the file from your computer."
+        alert.informativeText = "Removing song from library will not delete the file from your computer."
         alert.addButton(withTitle: "Remove")
         alert.addButton(withTitle: "Cancel")
         

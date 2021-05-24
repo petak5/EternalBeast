@@ -767,6 +767,9 @@
                                                                     </prototypeCellViews>
                                                                 </tableColumn>
                                                             </tableColumns>
+                                                            <connections>
+                                                                <outlet property="menu" destination="yCl-gw-E1N" id="WgK-tV-bMl"/>
+                                                            </connections>
                                                         </tableView>
                                                     </subviews>
                                                     <nil key="backgroundColor"/>
@@ -1101,10 +1104,16 @@
                     <items>
                         <menuItem title="Play artist's songs" id="HvL-sc-Vor" userLabel="Play artist's songs">
                             <modifierMask key="keyEquivalentModifierMask"/>
+                            <connections>
+                                <action selector="playArtistContextMenuClicked:" target="hrP-Qf-xFH" id="gsh-N8-edm"/>
+                            </connections>
                         </menuItem>
                         <menuItem isSeparatorItem="YES" id="zmD-3V-CzD"/>
                         <menuItem title="Remove Artist's songs" id="9xY-af-HUJ" userLabel="Remove Artist's songs">
                             <modifierMask key="keyEquivalentModifierMask"/>
+                            <connections>
+                                <action selector="deleteArtistContextMenuClicked:" target="hrP-Qf-xFH" id="5Wc-cQ-5Fr"/>
+                            </connections>
                         </menuItem>
                     </items>
                 </menu>
