@@ -9,6 +9,7 @@ import Cocoa
 
 class SongCell: NSTableCellView {
 
+    @IBOutlet weak var trackNumberLabel: NSTextField!
     @IBOutlet weak var songNameLabel: NSTextField!
     @IBOutlet weak var songLengthLabel: NSTextField!
     

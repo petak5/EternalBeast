@@ -347,14 +347,10 @@ extension MainViewController: NSTableViewDelegate, NSTableViewDataSource {
                 
                 guard let song = displayedSongs[row].song else { fatalError("WTF dude") }
                 
-                var text = song.title
-                if !song.trackNumber.isEmpty {
-                    text = song.trackNumber + ": " + text
-                }
-                
                 let cell = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier("songCell"), owner: self) as! SongCell
-                cell.songNameLabel.stringValue = text
+                cell.songNameLabel.stringValue = song.title
                 cell.songLengthLabel.stringValue = song.length
+                cell.trackNumberLabel.stringValue = song.trackNumber
                 
                 return cell
             }
@@ -420,17 +416,14 @@ extension MainViewController: NSTableViewDelegate, NSTableViewDataSource {
             let newDisplayedSongs = artists[artistName]
             guard var newDisplayedSongs = newDisplayedSongs else { return }
             
-            // MARK: Sorting is not as good as desired but it is not possible to sort songs in any useful manner without track number and sort albums by year.
-            //       Unfortunately it's not that simple to get this information from song files.
-            
             // Sort by track number
-            //newDisplayedSongs.sort { $0.trackNumber < $1.trackNumber }
-            // Sort by year
-            //newDisplayedSongs.sort { $0.year < $1.year }
-            // Sort by title
-            newDisplayedSongs.sort { $0.title < $1.title }
+            newDisplayedSongs.sort { Int($0.trackNumber) ?? 0 < Int($1.trackNumber) ?? 0 }
+            // Sort by disc number
+            newDisplayedSongs.sort { Int($0.discNumber) ?? 0 < Int($1.discNumber) ?? 0 }
             // Sort by album
             newDisplayedSongs.sort { $0.album < $1.album }
+            // Sort by year
+            newDisplayedSongs.sort { $0.year < $1.year }
             
             displayedSongs = []
             for s in newDisplayedSongs {

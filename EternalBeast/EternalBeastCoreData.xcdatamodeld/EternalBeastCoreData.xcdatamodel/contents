@@ -3,6 +3,7 @@
     <entity name="Song" representedClassName="Song" syncable="YES">
         <attribute name="album" attributeType="String" defaultValueString=""/>
         <attribute name="artist" attributeType="String" defaultValueString=""/>
+        <attribute name="discNumber" attributeType="String" defaultValueString=""/>
         <attribute name="length" attributeType="String" defaultValueString=""/>
         <attribute name="pathToFile" attributeType="String" defaultValueString=""/>
         <attribute name="title" attributeType="String" defaultValueString=""/>
@@ -10,6 +11,6 @@
         <attribute name="year" attributeType="String" defaultValueString=""/>
     </entity>
     <elements>
-        <element name="Song" positionX="-63" positionY="-18" width="128" height="134"/>
+        <element name="Song" positionX="-63" positionY="-18" width="128" height="149"/>
     </elements>
 </model>

@@ -863,6 +863,17 @@
                                                                                 <stackView distribution="fillEqually" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SEP-Ez-TC9">
                                                                                     <rect key="frame" x="16" y="23" width="477" height="16"/>
                                                                                     <subviews>
+                                                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dHt-xM-kbm" userLabel="Track number">
+                                                                                            <rect key="frame" x="-60" y="0.0" width="54" height="16"/>
+                                                                                            <constraints>
+                                                                                                <constraint firstAttribute="width" constant="30" id="p2D-wM-v0F"/>
+                                                                                            </constraints>
+                                                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" id="8Yk-oh-gEk">
+                                                                                                <font key="font" metaFont="system"/>
+                                                                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                                            </textFieldCell>
+                                                                                        </textField>
                                                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="FLD-Eh-h64" userLabel="Song name">
                                                                                             <rect key="frame" x="-2" y="0.0" width="423" height="16"/>
                                                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -884,8 +895,10 @@
                                                                                     <visibilityPriorities>
                                                                                         <integer value="1000"/>
                                                                                         <integer value="1000"/>
+                                                                                        <integer value="1000"/>
                                                                                     </visibilityPriorities>
                                                                                     <customSpacing>
+                                                                                        <real value="3.4028234663852886e+38"/>
                                                                                         <real value="3.4028234663852886e+38"/>
                                                                                         <real value="3.4028234663852886e+38"/>
                                                                                     </customSpacing>
@@ -899,6 +912,7 @@
                                                                             <connections>
                                                                                 <outlet property="songLengthLabel" destination="6VV-Af-0Fh" id="SPB-Ee-uA9"/>
                                                                                 <outlet property="songNameLabel" destination="FLD-Eh-h64" id="tKj-ym-fuE"/>
+                                                                                <outlet property="trackNumberLabel" destination="dHt-xM-kbm" id="qX3-UK-oIf"/>
                                                                             </connections>
                                                                         </tableCellView>
                                                                     </prototypeCellViews>

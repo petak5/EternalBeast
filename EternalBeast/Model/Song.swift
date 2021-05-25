@@ -17,6 +17,7 @@ public class Song: NSManagedObject, Identifiable {
     @NSManaged private (set) var year: String
     @NSManaged private (set) var length: String
     @NSManaged private (set) var trackNumber: String
+    @NSManaged private (set) var discNumber: String
     
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Song> {
         return NSFetchRequest<Song>(entityName: "Song")
@@ -32,7 +33,7 @@ public class Song: NSManagedObject, Identifiable {
         self.year = ""
         self.length = "0:00"
         self.trackNumber = ""
-        
+        self.discNumber = ""
         
         let fileUrl = URL(fileURLWithPath: pathToFile)
         let asset = AVAsset(url: fileUrl) as AVAsset
@@ -53,12 +54,21 @@ public class Song: NSManagedObject, Identifiable {
             if metaDataItem.commonKey == .commonKeyAlbumName {
                 album = metaDataItem.value as! String
             }
-            if metaDataItem.commonKey == .id3MetadataKeyYear {
-                year = metaDataItem.value as! String
-            }
-            if metaDataItem.commonKey == .id3MetadataKeyTrackNumber ||
-                metaDataItem.commonKey == .iTunesMetadataKeyTrackNumber {
-                trackNumber = metaDataItem.value as! String
+
+            // MARK: ID3 metadata
+            if metaDataItem.keySpace == .id3, let key = metaDataItem.key {
+                // Track number
+                if key.description == "TRCK" {
+                    let values = metaDataItem.stringValue!.split(separator: "/")
+                    trackNumber = String(values[0])
+                // Part of a set (number of CD disc, etc.)
+                } else if key.description == "TPOS" {
+                    let values = metaDataItem.stringValue!.split(separator: "/")
+                    discNumber = String(values[0])
+                // Year
+                } else if key.description == "TYER" {
+                    year = metaDataItem.stringValue ?? ""
+                }
             }
         }
         
