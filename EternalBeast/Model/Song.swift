@@ -70,6 +70,73 @@ public class Song: NSManagedObject, Identifiable {
                     year = metaDataItem.stringValue ?? ""
                 }
             }
+            
+            // MARK: iTunes metadata (ALAC in .m4a files)
+            if metaDataItem.keySpace == .iTunes {
+                // Year
+                if metaDataItem.identifier == .iTunesMetadataReleaseDate {
+                    let releaseDate = metaDataItem.stringValue!
+                    // Get year from yyyy-mm-dd format
+                    let dateSplitted = releaseDate.split(separator: "-")
+                    let year = String(dateSplitted[0])
+                    
+                    self.year = year
+                    
+                // Track number
+                } else if metaDataItem.identifier == .iTunesMetadataTrackNumber {
+                    // Oh boy, where to begin...
+                    // Data of this metadata item is 8 bytes long but only 2 bytes represent the track number
+                    // The 2 bytes are also offset by 2 bytes
+                    
+                    let trackNumberData = metaDataItem.dataValue!
+                    // Convert the data to 64 bit unsigned integer (8 bytes)
+                    let num: UInt64 = trackNumberData.withUnsafeBytes { $0.load(as: UInt64.self) }
+                    // Split the number into bytes
+                    let dataBytes = withUnsafeBytes(of: num.littleEndian) {
+                        Array($0)
+                    }
+                    
+                    // Fisrt and second bytes representing the track number (offset by 2)
+                    let firstByte: UInt8 = dataBytes[2]
+                    let secondByte: UInt8 = dataBytes[3]
+                    // Track number is 16 bit unsigned int (2 * 1 byte)
+                    // Assign first byte and shift it to it's position
+                    var trackNumber: UInt16 = UInt16(firstByte)
+                    trackNumber = trackNumber << 8
+                    // Add second byte
+                    trackNumber += UInt16(secondByte)
+                    
+                    // Here the track number should be correctly extracted from the data
+                    self.trackNumber = String(trackNumber)
+                    
+                // Disc number
+                } else if metaDataItem.identifier == .iTunesMetadataDiscNumber {
+                    // Oh boy, where to begin...
+                    // Data of this metadata item is 8 bytes long but only 2 bytes represent the disc number
+                    // The 2 bytes are also offset by 2 bytes
+                    
+                    let discNumberData = metaDataItem.dataValue!
+                    // Convert the data to 64 bit unsigned integer (8 bytes)
+                    let num: UInt64 = discNumberData.withUnsafeBytes { $0.load(as: UInt64.self) }
+                    // Split the number into bytes
+                    let dataBytes = withUnsafeBytes(of: num.littleEndian) {
+                        Array($0)
+                    }
+                    
+                    // Fisrt and second bytes representing the disc number (offset by 2)
+                    let firstByte: UInt8 = dataBytes[2]
+                    let secondByte: UInt8 = dataBytes[3]
+                    // Disc number is 16 bit unsigned int (2 * 1 byte)
+                    // Assign first byte and shift it to it's position
+                    var discNumber: UInt16 = UInt16(firstByte)
+                    discNumber = discNumber << 8
+                    // Add second byte
+                    discNumber += UInt16(secondByte)
+                    
+                    // Here the disc number should be correctly extracted from the data
+                    self.discNumber = String(discNumber)
+                }
+            }
         }
         
         length = asset.duration.seconds.timeStringFromDouble()
