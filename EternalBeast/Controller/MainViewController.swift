@@ -45,6 +45,9 @@ class MainViewController: NSViewController {
     // Player singleton
     private var player = Player.shared
     
+    var appDelegate: AppDelegate { NSApplication.shared.delegate as! AppDelegate }
+    var coreDataContext: NSManagedObjectContext { appDelegate.persistentContainer.viewContext }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -142,10 +145,7 @@ class MainViewController: NSViewController {
             return
         }
         
-        let appDelegate = NSApplication.shared.delegate as! AppDelegate
-        let cdContext = appDelegate.persistentContainer.viewContext
-        
-        let song = Song(context: cdContext)
+        let song = Song(context: coreDataContext)
         song.loadMetadata(pathToFile: path)
         
         addSongObjectToArtistsDictionary(song: song)
@@ -161,16 +161,46 @@ class MainViewController: NSViewController {
         artists[song.artist]?.append(song)
     }
     
+    // Reload songs' metadata
+    @IBAction func reloadLibrary(_ sender: Any) {
+        let oldArtists = artists
+        artists = [:]
+        
+        displayedArtists = []
+        displayedSongs = []
+        
+        let fileManager = FileManager.default
+        
+        for artist in oldArtists {
+            for song in artist.value {
+                let path = song.getPathToFile()
+                
+                if !fileManager.fileExists(atPath: path) || !fileManager.isReadableFile(atPath: path) {
+                    print("File '\(path)' does not exist or is not readable.")
+                    
+                    // TODO: remove song because the original file is missing
+                    
+                } else {
+                    song.loadMetadata(pathToFile: song.getPathToFile())
+                }
+                
+                addSongObjectToArtistsDictionary(song: song)
+            }
+        }
+        
+        displayedArtists = Array(artists.keys).sorted()
+        
+        artistsTableView.reloadData()
+        songsTableView.reloadData()
+    }
+    
     // MARK: - CoreData
     
     // Load songs from CoreData container
     func loadSongs() {
-        let appDelegate = NSApplication.shared.delegate as! AppDelegate
-        let cdContext = appDelegate.persistentContainer.viewContext
-        
-        let request : NSFetchRequest<Song> = NSFetchRequest(entityName: "Song")
+        let request = NSFetchRequest<Song>(entityName: "Song")
         do {
-            let songs = try cdContext.fetch(request)
+            let songs = try coreDataContext.fetch(request)
             for song in songs {
                 addSongObjectToArtistsDictionary(song: song)
             }
@@ -182,6 +212,17 @@ class MainViewController: NSViewController {
 
         artistsTableView.reloadData()
         songsTableView.reloadData()
+    }
+    
+    // Delete all Songs from CoreData (when something is f*cked up, this can fix it)
+    func deleteAllSongsFromCodeData() {
+        let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: NSFetchRequest(entityName: "Song"))
+        
+        do {
+            try coreDataContext.execute(batchDeleteRequest)
+        } catch {
+            print("Failed to delete all songs from CoreData: \(error)")
+        }
     }
     
     // MARK: - Playback controls
@@ -519,11 +560,8 @@ extension MainViewController: NSTableViewDelegate, NSTableViewDataSource {
             return
         }
         
-        let appDelegate = NSApplication.shared.delegate as! AppDelegate
-        let cdContext = appDelegate.persistentContainer.viewContext
-        
         for song in artistSongs {
-            cdContext.delete(song)
+            coreDataContext.delete(song)
         }
         
         artists.removeValue(forKey: artistName)
@@ -571,10 +609,7 @@ extension MainViewController: NSTableViewDelegate, NSTableViewDataSource {
             return
         }
         
-        let appDelegate = NSApplication.shared.delegate as! AppDelegate
-        let cdContext = appDelegate.persistentContainer.viewContext
-        
-        cdContext.delete(song)
+        coreDataContext.delete(song)
         
         // Remove the song and reload table view data
         artists[displayedArtists[artistsTableView.selectedRow]]?.remove(at: index)

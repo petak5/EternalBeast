@@ -79,6 +79,13 @@
                                                 </items>
                                             </menu>
                                         </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="e0d-gj-dqD"/>
+                                        <menuItem title="Reload library" id="pOb-zB-7Qi">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="reloadLibrary:" target="Ady-hI-5gd" id="8Yc-hw-Fxh"/>
+                                            </connections>
+                                        </menuItem>
                                         <menuItem isSeparatorItem="YES" id="m54-Is-iLE"/>
                                         <menuItem title="Close" keyEquivalent="w" id="DVo-aG-piG">
                                             <connections>
