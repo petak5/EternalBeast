@@ -112,12 +112,12 @@ public class Song: NSManagedObject, Identifiable {
                 // Disc number
                 } else if metaDataItem.identifier == .iTunesMetadataDiscNumber {
                     // Oh boy, where to begin...
-                    // Data of this metadata item is 8 bytes long but only 2 bytes represent the disc number
+                    // Data of this metadata item is 6 bytes long but only 2 bytes represent the disc number
                     // The 2 bytes are also offset by 2 bytes
                     
                     let discNumberData = metaDataItem.dataValue!
-                    // Convert the data to 64 bit unsigned integer (8 bytes)
-                    let num: UInt64 = discNumberData.withUnsafeBytes { $0.load(as: UInt64.self) }
+                    // Convert the data to 32 bit unsigned integer (4 bytes)
+                    let num: UInt32 = discNumberData.withUnsafeBytes { $0.load(as: UInt32.self) }
                     // Split the number into bytes
                     let dataBytes = withUnsafeBytes(of: num.littleEndian) {
                         Array($0)
