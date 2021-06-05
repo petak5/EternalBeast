@@ -441,6 +441,9 @@ extension MainViewController: NSTableViewDelegate, NSTableViewDataSource {
         guard let _tableView = tableView else { return }
         if _tableView == artistsTableView {
             reloadSongsTableData()
+            
+            // Scroll to top
+            songsTableView.scrollRowToVisible(0)
         }
     }
     
