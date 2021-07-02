@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		D001E6A9265A443C00E01AFB /* SongCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D001E6A8265A443C00E01AFB /* SongCell.swift */; };
+		D03822C9268F45E200891D8B /* EternalBeastApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03822C8268F45E200891D8B /* EternalBeastApp.swift */; };
+		D03822CB268F45E300891D8B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03822CA268F45E300891D8B /* ContentView.swift */; };
+		D03822CD268F45E400891D8B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D03822CC268F45E400891D8B /* Assets.xcassets */; };
+		D03822D0268F45E400891D8B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D03822CF268F45E400891D8B /* Preview Assets.xcassets */; };
+		D03822D2268F45E400891D8B /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03822D1268F45E400891D8B /* Persistence.swift */; };
 		D095B209263E83BD00113A8C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D095B208263E83BD00113A8C /* AppDelegate.swift */; };
 		D095B20D263E83C100113A8C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D095B20C263E83C100113A8C /* Assets.xcassets */; };
 		D095B210263E83C100113A8C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D095B20E263E83C100113A8C /* Main.storyboard */; };
@@ -20,11 +25,20 @@
 		D0ADCDDD26557FAD00767ACF /* DoubleToTimeString.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0ADCDDC26557FAD00767ACF /* DoubleToTimeString.swift */; };
 		D0AE19BE265A8EBA0074CD44 /* AlbumGroupCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0AE19BD265A8EBA0074CD44 /* AlbumGroupCell.swift */; };
 		D0B265582651034A009E0307 /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B265572651034A009E0307 /* Song.swift */; };
+		D0BB944E268F47080098996C /* EternalBeast.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D0BB944C268F47080098996C /* EternalBeast.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		D001E6A8265A443C00E01AFB /* SongCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongCell.swift; sourceTree = "<group>"; };
-		D095B205263E83BD00113A8C /* EternalBeast.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EternalBeast.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D03822C6268F45E200891D8B /* EternalBeast.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EternalBeast.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D03822C8268F45E200891D8B /* EternalBeastApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EternalBeastApp.swift; sourceTree = "<group>"; };
+		D03822CA268F45E300891D8B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		D03822CC268F45E400891D8B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		D03822CF268F45E400891D8B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		D03822D1268F45E400891D8B /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
+		D03822D5268F45E400891D8B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D03822D6268F45E400891D8B /* EternalBeast.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EternalBeast.entitlements; sourceTree = "<group>"; };
+		D095B205263E83BD00113A8C /* EternalBeast old.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "EternalBeast old.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D095B208263E83BD00113A8C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D095B20C263E83C100113A8C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D095B20F263E83C100113A8C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -39,9 +53,17 @@
 		D0ADCDDC26557FAD00767ACF /* DoubleToTimeString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleToTimeString.swift; sourceTree = "<group>"; };
 		D0AE19BD265A8EBA0074CD44 /* AlbumGroupCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumGroupCell.swift; sourceTree = "<group>"; };
 		D0B265572651034A009E0307 /* Song.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Song.swift; sourceTree = "<group>"; };
+		D0BB944D268F47080098996C /* EternalBeast.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = EternalBeast.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		D03822C3268F45E200891D8B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D095B202263E83BD00113A8C /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -52,10 +74,34 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D03822C7268F45E200891D8B /* EternalBeast */ = {
+			isa = PBXGroup;
+			children = (
+				D03822C8268F45E200891D8B /* EternalBeastApp.swift */,
+				D03822CA268F45E300891D8B /* ContentView.swift */,
+				D03822CC268F45E400891D8B /* Assets.xcassets */,
+				D03822D1268F45E400891D8B /* Persistence.swift */,
+				D03822D5268F45E400891D8B /* Info.plist */,
+				D03822D6268F45E400891D8B /* EternalBeast.entitlements */,
+				D0BB944C268F47080098996C /* EternalBeast.xcdatamodeld */,
+				D03822CE268F45E400891D8B /* Preview Content */,
+			);
+			path = EternalBeast;
+			sourceTree = "<group>";
+		};
+		D03822CE268F45E400891D8B /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				D03822CF268F45E400891D8B /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
 		D095B1FC263E83BD00113A8C = {
 			isa = PBXGroup;
 			children = (
-				D095B207263E83BD00113A8C /* EternalBeast */,
+				D095B207263E83BD00113A8C /* EternalBeast old */,
+				D03822C7268F45E200891D8B /* EternalBeast */,
 				D095B206263E83BD00113A8C /* Products */,
 			);
 			sourceTree = "<group>";
@@ -63,12 +109,13 @@
 		D095B206263E83BD00113A8C /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				D095B205263E83BD00113A8C /* EternalBeast.app */,
+				D095B205263E83BD00113A8C /* EternalBeast old.app */,
+				D03822C6268F45E200891D8B /* EternalBeast.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		D095B207263E83BD00113A8C /* EternalBeast */ = {
+		D095B207263E83BD00113A8C /* EternalBeast old */ = {
 			isa = PBXGroup;
 			children = (
 				D0ADCDD526552B2600767ACF /* Misc */,
@@ -81,7 +128,7 @@
 				D0AD2557265D795100FE5431 /* EternalBeastCoreData.xcdatamodeld */,
 				D095B212263E83C100113A8C /* EternalBeast.entitlements */,
 			);
-			path = EternalBeast;
+			path = "EternalBeast old";
 			sourceTree = "<group>";
 		};
 		D095B218263E8E0000113A8C /* Controller */ = {
@@ -125,9 +172,26 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		D095B204263E83BD00113A8C /* EternalBeast */ = {
+		D03822C5268F45E200891D8B /* EternalBeast */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D095B215263E83C100113A8C /* Build configuration list for PBXNativeTarget "EternalBeast" */;
+			buildConfigurationList = D03822D7268F45E400891D8B /* Build configuration list for PBXNativeTarget "EternalBeast" */;
+			buildPhases = (
+				D03822C2268F45E200891D8B /* Sources */,
+				D03822C3268F45E200891D8B /* Frameworks */,
+				D03822C4268F45E200891D8B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = EternalBeast;
+			productName = EternalBeast;
+			productReference = D03822C6268F45E200891D8B /* EternalBeast.app */;
+			productType = "com.apple.product-type.application";
+		};
+		D095B204263E83BD00113A8C /* EternalBeast old */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D095B215263E83C100113A8C /* Build configuration list for PBXNativeTarget "EternalBeast old" */;
 			buildPhases = (
 				D095B201263E83BD00113A8C /* Sources */,
 				D095B202263E83BD00113A8C /* Frameworks */,
@@ -137,9 +201,9 @@
 			);
 			dependencies = (
 			);
-			name = EternalBeast;
+			name = "EternalBeast old";
 			productName = EternalBeast;
-			productReference = D095B205263E83BD00113A8C /* EternalBeast.app */;
+			productReference = D095B205263E83BD00113A8C /* EternalBeast old.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -151,6 +215,9 @@
 				LastSwiftUpdateCheck = 1250;
 				LastUpgradeCheck = 1250;
 				TargetAttributes = {
+					D03822C5268F45E200891D8B = {
+						CreatedOnToolsVersion = 12.5.1;
+					};
 					D095B204263E83BD00113A8C = {
 						CreatedOnToolsVersion = 12.5;
 					};
@@ -169,12 +236,22 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				D095B204263E83BD00113A8C /* EternalBeast */,
+				D095B204263E83BD00113A8C /* EternalBeast old */,
+				D03822C5268F45E200891D8B /* EternalBeast */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		D03822C4268F45E200891D8B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D03822D0268F45E400891D8B /* Preview Assets.xcassets in Resources */,
+				D03822CD268F45E400891D8B /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D095B203263E83BD00113A8C /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -187,6 +264,17 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		D03822C2268F45E200891D8B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D03822D2268F45E400891D8B /* Persistence.swift in Sources */,
+				D03822CB268F45E300891D8B /* ContentView.swift in Sources */,
+				D03822C9268F45E200891D8B /* EternalBeastApp.swift in Sources */,
+				D0BB944E268F47080098996C /* EternalBeast.xcdatamodeld in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D095B201263E83BD00113A8C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -219,6 +307,54 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		D03822D8268F45E400891D8B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = EternalBeast/EternalBeast.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_ASSET_PATHS = "\"EternalBeast/Preview Content\"";
+				DEVELOPMENT_TEAM = B8BDLHDMTH;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = EternalBeast/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.peterurgos.EternalBeast;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		D03822D9268F45E400891D8B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = EternalBeast/EternalBeast.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_ASSET_PATHS = "\"EternalBeast/Preview Content\"";
+				DEVELOPMENT_TEAM = B8BDLHDMTH;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = EternalBeast/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.peterurgos.EternalBeast;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 		D095B213263E83C100113A8C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -383,6 +519,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		D03822D7268F45E400891D8B /* Build configuration list for PBXNativeTarget "EternalBeast" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D03822D8268F45E400891D8B /* Debug */,
+				D03822D9268F45E400891D8B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		D095B200263E83BD00113A8C /* Build configuration list for PBXProject "EternalBeast" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -392,7 +537,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D095B215263E83C100113A8C /* Build configuration list for PBXNativeTarget "EternalBeast" */ = {
+		D095B215263E83C100113A8C /* Build configuration list for PBXNativeTarget "EternalBeast old" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D095B216263E83C100113A8C /* Debug */,
@@ -411,6 +556,16 @@
 			);
 			currentVersion = D0AD2558265D795100FE5431 /* EternalBeastCoreData.xcdatamodel */;
 			path = EternalBeastCoreData.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+		D0BB944C268F47080098996C /* EternalBeast.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				D0BB944D268F47080098996C /* EternalBeast.xcdatamodel */,
+			);
+			currentVersion = D0BB944D268F47080098996C /* EternalBeast.xcdatamodel */;
+			path = EternalBeast.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};
