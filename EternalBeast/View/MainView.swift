@@ -21,22 +21,64 @@ struct MainView: View {
 
     //@State var artists: [Artist] = [Artist]()
     @State var library = Library.shared
+    
+    @State var selection: Set<NavigationItem> = [NavigationItem.Artists]
 
     var body: some View {
         NavigationView {
-            List {
-                NavigationLink("Artists") {
-                    ArtistsView(artists: library.artists)
+            List(selection: $selection) {
+                Section(header: Text("Library")) {
+                    NavigationLink(destination: ArtistsView(artists: library.artists)) {
+                        Label("Artists", systemImage: "music.mic")
+                    }
+                    .tag(NavigationItem.Artists)
+
+                    NavigationLink(destination: Text("List of albums...")) {
+                        Label("Albums", systemImage: "square.stack")
+                    }
+                    .tag(NavigationItem.Albums)
+
+                    NavigationLink(destination: Text("List of all songs")) {
+                        Label("Songs", systemImage: "music.note")
+                    }
+                    .tag(NavigationItem.Songs)
                 }
-                NavigationLink("Albums") {
-                    Text("List of albums...")
+                .collapsible(false)
+
+                Section(header: Text("Playlists"), footer: Text("asdf")) {
+                    NavigationLink(destination: Text("Songs of playlist 1")) {
+                        Label("Playlist 1", systemImage: "music.note.list")
+                    }
+                    NavigationLink(destination: Text("Songs of playlist 2")) {
+                        Label("Playlist 2", systemImage: "music.note.list")
+                    }
                 }
             }
+            .listStyle(SidebarListStyle())
         }
         .toolbar {
             ToolbarItem(placement: .navigation) {
                 Button(action: toggleSidebar) {
                     Image(systemName: "sidebar.left")
+                }
+            }
+            ToolbarItem(placement: .principal) {
+                HStack {
+                    Image(systemName: "music.note")
+                    VStack {
+                        Text("Slider ------------------------")
+                        Text("Artist - Album - Song")
+                    }
+                    Button(action: {
+                        Player.shared.play()
+                    }) {
+                        Image(systemName: "play.fill")
+                    }
+                    Button(action: {
+                        Player.shared.pause()
+                    }) {
+                        Image(systemName: "pause.fill")
+                    }
                 }
             }
         }
@@ -84,6 +126,12 @@ struct MainView: View {
             fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
         }
     }
+}
+
+enum NavigationItem {
+    case Artists
+    case Albums
+    case Songs
 }
 
 struct Artist: Hashable {
