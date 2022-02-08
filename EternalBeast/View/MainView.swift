@@ -22,7 +22,7 @@ struct MainView: View {
     //@State var artists: [Artist] = [Artist]()
     @State var library = Library.shared
     
-    @State var selection: Set<NavigationItem> = [NavigationItem.Artists]
+    @State var selection: Set<NavigationItem> = [.Artists]
 
     var body: some View {
         NavigationView {
@@ -63,23 +63,7 @@ struct MainView: View {
                 }
             }
             ToolbarItem(placement: .principal) {
-                HStack {
-                    Image(systemName: "music.note")
-                    VStack {
-                        Text("Slider ------------------------")
-                        Text("Artist - Album - Song")
-                    }
-                    Button(action: {
-                        Player.shared.play()
-                    }) {
-                        Image(systemName: "play.fill")
-                    }
-                    Button(action: {
-                        Player.shared.pause()
-                    }) {
-                        Image(systemName: "pause.fill")
-                    }
-                }
+                MediaControlsView()
             }
         }
         .onAppear {
@@ -89,6 +73,8 @@ struct MainView: View {
             for song in songs {
                 library.addSong(song: song)
             }
+
+//            Player.shared.setupStuff()
         }
     }
 

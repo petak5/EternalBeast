@@ -40,6 +40,14 @@ class Queue<T> {
         return queue.first
     }
 
+    func items() -> [T] {
+        return queue
+    }
+
+    func insert(_ item: T, at index: Int) {
+        queue.insert(item, at: index)
+    }
+
     // Return true if the queue is empty, false otherwise
     func isEmpty() -> Bool {
         return queue.isEmpty

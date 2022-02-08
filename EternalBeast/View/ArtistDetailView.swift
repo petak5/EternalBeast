@@ -22,10 +22,7 @@ struct ArtistDetailView: View {
                     ForEach(album.songs, id: \.self) { song in
                         HStack {
                             Button(action: {
-                                player.stop()
-                                player.clearQueue()
-                                player.addToQueue(song: song)
-                                player.play()
+                                player.playSong(song)
                             }, label: {
                                 Image(systemName: "play.fill")
                             })
