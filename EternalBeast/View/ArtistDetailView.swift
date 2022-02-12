@@ -11,22 +11,27 @@ struct ArtistDetailView: View {
     @State var selectKeeper = Set<String>()
     @State var player = Player.shared
 
-    let albums: [Album]
+    let artist: Artist
 
     var body: some View {
-        List(selection: $selectKeeper) {
-            // MARK: - Albums
-            ForEach(albums, id: \.self) { album in
-                Section(header: Text(album.name)) {
-                    // MARK: - Songs
-                    ForEach(album.songs, id: \.self) { song in
-                        HStack {
-                            Button(action: {
-                                player.playSong(song)
-                            }, label: {
-                                Image(systemName: "play.fill")
-                            })
-                            Text(song.title ?? "")
+        VStack {
+            Text(artist.name)
+                .font(.title)
+
+            List(selection: $selectKeeper) {
+                // MARK: - Albums
+                ForEach(artist.albums, id: \.self) { album in
+                    Section(header: Text(album.name)) {
+                        // MARK: - Songs
+                        ForEach(album.songs, id: \.self) { song in
+                            HStack {
+                                Button(action: {
+                                    player.playSong(song)
+                                }, label: {
+                                    Image(systemName: "play.fill")
+                                })
+                                Text(song.title ?? "")
+                            }
                         }
                     }
                 }

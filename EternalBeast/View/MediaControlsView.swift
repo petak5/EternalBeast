@@ -10,7 +10,6 @@ import SwiftUI
 struct MediaControlsView: View {
 
     @ObservedObject var player = Player.shared
-//    @ObservedObject var song = Player.shared.currentSong ?? Library.shared.artists[0].albums[0].songs[0]
 
     var body: some View {
         HStack {
@@ -41,11 +40,23 @@ struct MediaControlsView: View {
                 Image(systemName: "forward.fill")
             }
 
+            // MARK: - Image
             Image(systemName: "music.note")
-            VStack {
-                Text("Slider ------------------------")
-                Text("Artist - Album - Song")
+
+            // MARK: - Info
+            if let s = player.currentSong {
+                Text("\(s.artist ?? "") - \(s.album ?? "") - \(s.title ?? "")")
+            } else {
+                Text("")
             }
+
+            // MARK: - Progress
+            Slider(value: Binding(get: {
+                return player.playbackProgress
+            }, set: { newValue in
+                player.playbackProgress = newValue
+                player.seekToTime(seconds: newValue * player.duration)
+            }))
         }
     }
 }

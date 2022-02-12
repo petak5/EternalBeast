@@ -9,6 +9,7 @@ import Cocoa
 import Combine
 import AVFoundation
 import MediaPlayer
+import Combine
 
 enum PlaybackMode {
     case RepeatOff
@@ -25,9 +26,42 @@ final class Player: ObservableObject {
     @Published private (set) var currentSong: Song?
     @Published var playbackMode: PlaybackMode = .RepeatAll
     @Published var isPlaying = false
+    @Published var playbackProgress = 0.0
+    @Published var duration = 0.0
+    private var itemStatusCancellable: AnyCancellable?
+
+    var timer: Timer? = nil
 
     init() {
+        setupObserving()
+
         ConfigureMPRemoteCommands()
+
+        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
+            if let item = self.player.currentItem {
+                self.playbackProgress = item.currentTime().seconds / item.duration.seconds
+            } else {
+                self.playbackProgress = 0.0
+            }
+        }
+    }
+
+    // Set up property observing
+    private func setupObserving() {
+        // Observe change of current AVPlayerItem 's status, when readyToPlay, duration can be read
+        // Status changes to readyToPlay when resources are loaded (including metadata such as duration)
+        itemStatusCancellable = player.publisher(for: \.currentItem?.status, options: [.new, .initial]).sink { newStatus in
+            if newStatus == .readyToPlay {
+                if let item = self.player.currentItem {
+                    self.duration = item.duration.seconds
+                } else {
+                    self.duration = 0.0
+                }
+            } else {
+                self.playbackProgress = 0.0
+                self.duration = 0.0
+            }
+        }
     }
 
     // Add actions to MediaPlayer Remote Commands from Now Playing system menu
@@ -63,7 +97,7 @@ final class Player: ObservableObject {
 
         MPRemoteCommandCenter.shared().changePlaybackPositionCommand.addTarget { [unowned self] event in
             let seconds = (event as? MPChangePlaybackPositionCommandEvent)?.positionTime ?? 0
-            seekToTime(time: seconds)
+                seekToTime(seconds: seconds)
             return .success
         }
     }
@@ -83,6 +117,7 @@ final class Player: ObservableObject {
     }
 
     private func prepare(withSong song: Song) {
+        currentSong = song
         let url = URL(fileURLWithPath: song.getPathToFile())
         let item = AVPlayerItem(url: url)
         player.replaceCurrentItem(with: item)
@@ -153,13 +188,18 @@ final class Player: ObservableObject {
 
     func stop() {
         player.replaceCurrentItem(with: nil)
+        currentSong = nil
 
         MPNowPlayingInfoCenter.default().playbackState = .stopped
 
         isPlaying = false
     }
 
-    func seekToTime(time: Double) {
-        player.seek(to: CMTime(seconds: time, preferredTimescale: .max))
+    func seekToTime(seconds: Double) {
+        if seconds < 0 || seconds > duration {
+            return
+        }
+
+        player.seek(to: CMTime(seconds: seconds, preferredTimescale: .max))
     }
 }

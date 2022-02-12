@@ -15,7 +15,7 @@ struct ArtistsView: View {
     var body: some View {
         NavigationView {
             List(artists, id: \.name) { artist in
-                NavigationLink(destination: ArtistDetailView(albums: artist.albums)) {
+                NavigationLink(destination: ArtistDetailView(artist: artist)) {
                     Text(artist.name)
                 }
             }

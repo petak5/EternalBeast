@@ -21,7 +21,7 @@ struct MainView: View {
 
     //@State var artists: [Artist] = [Artist]()
     @State var library = Library.shared
-    
+
     @State var selection: Set<NavigationItem> = [.Artists]
 
     var body: some View {
