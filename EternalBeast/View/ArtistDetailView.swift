@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ArtistDetailView: View {
-    @State var selectKeeper = Set<String>()
+    @State private var selectedSong: Song?
     @State var player = Player.shared
 
     let artist: Artist
@@ -18,20 +18,18 @@ struct ArtistDetailView: View {
             Text(artist.name)
                 .font(.title)
 
-            List(selection: $selectKeeper) {
-                // MARK: - Albums
-                ForEach(artist.albums, id: \.self) { album in
-                    Section(header: Text(album.name)) {
-                        // MARK: - Songs
-                        ForEach(album.songs, id: \.self) { song in
-                            HStack {
-                                Button(action: {
-                                    player.playSong(song)
-                                }, label: {
-                                    Image(systemName: "play.fill")
-                                })
-                                Text(song.title ?? "")
-                            }
+            // MARK: - Albums
+            List(artist.albums, id: \.self, selection: $selectedSong) { album in
+                Section(header: Text(album.name)) {
+                    // MARK: - Songs
+                    ForEach(album.songs, id: \.self) { song in
+                        HStack {
+                            Button(action: {
+                                player.playSong(song)
+                            }, label: {
+                                Image(systemName: "play.fill")
+                            })
+                            Text(song.title ?? "")
                         }
                     }
                 }
