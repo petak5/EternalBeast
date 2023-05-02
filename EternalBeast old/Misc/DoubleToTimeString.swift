@@ -1,8 +1,8 @@
 //
-//  DoubleToTimeString.swift
+//  TimeIntervalToString.swift
 //  EternalBeast
 //
-//  Created by Peter Urgoš on 05/07/2021.
+//  Created by Peter Urgoš on 19/05/2021.
 //
 
 import Foundation
@@ -10,12 +10,7 @@ import Foundation
 extension Double {
     // Format time for music player
     func timeStringFromDouble() -> String {
-        var time: Int
-        if self.isNaN || self.isInfinite {
-            time = 0
-        } else {
-            time = Int(self)
-        }
+        let time = Int(self)
 
         //let ms = Int((self.truncatingRemainder(dividingBy: 1)) * 1000)
         let seconds = time % 60

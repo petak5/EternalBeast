@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="mlO-OP-Edz">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="mlO-OP-Edz">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="18122"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19455"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -678,7 +678,7 @@
                         <outlet property="delegate" destination="Voe-Tx-rLC" id="PrD-fu-P6m"/>
                     </connections>
                 </application>
-                <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="EternalBeast" customModuleProvider="target"/>
+                <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="EternalBeast_old" customModuleProvider="target"/>
                 <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -713,7 +713,7 @@
         <!--Main View Controller-->
         <scene sceneID="cAi-LI-R6b">
             <objects>
-                <viewController id="hrP-Qf-xFH" customClass="MainViewController" customModule="EternalBeast" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="hrP-Qf-xFH" customClass="MainViewController" customModule="EternalBeast_old" customModuleProvider="target" sceneMemberID="viewController">
                     <customView key="view" id="N6w-Uo-Wp0">
                         <rect key="frame" x="0.0" y="0.0" width="801" height="585"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -830,7 +830,7 @@
                                                                     </textFieldCell>
                                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                                     <prototypeCellViews>
-                                                                        <tableCellView identifier="albumGroupCell" id="Mmv-uO-mt6" userLabel="Album Group Cell" customClass="AlbumGroupCell" customModule="EternalBeast" customModuleProvider="target">
+                                                                        <tableCellView identifier="albumGroupCell" id="Mmv-uO-mt6" userLabel="Album Group Cell" customClass="AlbumGroupCell" customModule="EternalBeast_old" customModuleProvider="target">
                                                                             <rect key="frame" x="8" y="0.0" width="381" height="32"/>
                                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                             <subviews>
@@ -863,7 +863,7 @@
                                                                                 <outlet property="albumNameLabel" destination="bi0-IS-2VN" id="EBn-r3-OGK"/>
                                                                             </connections>
                                                                         </tableCellView>
-                                                                        <tableCellView identifier="songCell" misplaced="YES" id="14e-LM-aeg" customClass="SongCell" customModule="EternalBeast" customModuleProvider="target">
+                                                                        <tableCellView identifier="songCell" misplaced="YES" id="14e-LM-aeg" customClass="SongCell" customModule="EternalBeast_old" customModuleProvider="target">
                                                                             <rect key="frame" x="8" y="32" width="381" height="62"/>
                                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                             <subviews>
@@ -871,7 +871,7 @@
                                                                                     <rect key="frame" x="16" y="23" width="477" height="16"/>
                                                                                     <subviews>
                                                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dHt-xM-kbm" userLabel="Track number">
-                                                                                            <rect key="frame" x="-2" y="0.0" width="54" height="16"/>
+                                                                                            <rect key="frame" x="-60" y="0.0" width="54" height="16"/>
                                                                                             <constraints>
                                                                                                 <constraint firstAttribute="width" constant="30" id="p2D-wM-v0F"/>
                                                                                             </constraints>
