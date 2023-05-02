@@ -134,6 +134,12 @@ final class Player: ObservableObject {
         }
     }
 
+    func addToQueue(songs: [Song]) {
+        for song in songs {
+            addToQueue(song: song)
+        }
+    }
+
     func addToQueue(song: Song) {
         queue.push(song)
     }
@@ -192,11 +198,21 @@ final class Player: ObservableObject {
         isPlaying = true
     }
 
+    func playSongs(songs: [Song]) {
+        stop()
+
+        queue.clear()
+        addToQueue(songs: songs)
+
+        prepare()
+        play()
+    }
+
     func playSong(_ song: Song) {
         stop()
 
         queue.clear()
-        queue.push(song)
+        addToQueue(song: song)
 
         prepare()
         play()
@@ -223,6 +239,7 @@ final class Player: ObservableObject {
         }
         history.insert(song, at: 0)
 
+        prepare()
         play()
     }
 

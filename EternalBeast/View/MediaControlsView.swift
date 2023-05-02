@@ -88,7 +88,6 @@ struct MediaControlsView: View {
                         .resizable()
                         .frame(width: 42, height: 42)
                         .onTapGesture {
-                            print("TAP")
                             openWindow(id: "artwork-image")
                         }
                 } else {
@@ -106,7 +105,7 @@ struct MediaControlsView: View {
                             let artist = s.artist ?? ""
                             let album = s.album ?? ""
                             VStack(spacing: 0) {
-                                Text(title.appending(title))
+                                Text(title)
                                     .font(.headline)
                                 Text("\(artist) - \(album)")
                                     .font(.subheadline)

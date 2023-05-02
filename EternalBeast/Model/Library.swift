@@ -66,7 +66,7 @@ class Library: ObservableObject {
         }
     }
 
-    /// Clear the whole library
+    /// Clear the whole library (and DB)
     func clear(moc: NSManagedObjectContext) {
         for artist in Library.shared.artists {
             for album in artist.albums {
@@ -80,6 +80,50 @@ class Library: ObservableObject {
             try moc.save()
             artists = []
             Player.shared.stop()
+        } catch {
+            // Replace this implementation with code to handle the error appropriately.
+            // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+            let nsError = error as NSError
+            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+        }
+    }
+
+    /// Delete artist from library and DB
+    func delete(artist: Artist, moc: NSManagedObjectContext) {
+        for album in artist.albums {
+            for song in album.songs {
+                moc.delete(song)
+            }
+        }
+
+        do {
+            try moc.save()
+            artists.removeAll(where: {$0.name == artist.name})
+        } catch {
+            // Replace this implementation with code to handle the error appropriately.
+            // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+            let nsError = error as NSError
+            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+        }
+    }
+
+    /// Delete song from library and DB
+    func delete(song: Song, moc: NSManagedObjectContext) {
+        moc.delete(song)
+
+        do {
+            try moc.save()
+            for artist in artists {
+                for album in artist.albums {
+                    for s in album.songs {
+                        if s.artist == artist.name && s.album == album.name {
+                            guard let artistIdx = artists.firstIndex(of: artist) else { return }
+                            guard let albumIdx = artists[artistIdx].albums.firstIndex(of: album) else { return }
+                            artists[artistIdx].albums[albumIdx].songs.removeAll(where: {$0.title == song.title})
+                        }
+                    }
+                }
+            }
         } catch {
             // Replace this implementation with code to handle the error appropriately.
             // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.

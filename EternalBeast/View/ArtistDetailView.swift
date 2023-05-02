@@ -8,8 +8,15 @@
 import SwiftUI
 
 struct ArtistDetailView: View {
+    @Environment(\.managedObjectContext)
+    private var moc
+
     @State
     private var selectedSong: Song?
+    @State
+    private var deleteConfirmationShown = false
+    @State
+    private var songToDelete: Song? = nil
     @EnvironmentObject
     var player: Player
 
@@ -33,12 +40,32 @@ struct ArtistDetailView: View {
                             })
                             Text(song.title ?? "")
                         }
+                        .contextMenu() {
+                            Button("Play") {
+                                player.playSong(song)
+                            }
+                            Button("Delete") {
+                                songToDelete = song
+                                deleteConfirmationShown = true
+                            }
+                        }
+                    }
+                    .alert("Are you sure you want to delete the song \"\(songToDelete?.title ?? "")\" from library?", isPresented: $deleteConfirmationShown) {
+                        Button("No", role: .cancel) { }
+                        Button("Yes", role: .destructive) {
+                            withAnimation {
+                                if let songToDelete = songToDelete {
+                                    if songToDelete == player.currentSong {
+                                        player.stop()
+                                    }
+                                    Library.shared.delete(song: songToDelete, moc: moc)
+                                }
+                                deleteConfirmationShown = false
+                                songToDelete = nil
+                            }
+                        }
                     }
                 }
-            }
-            .contextMenu() {
-                Button("Action 3") {}
-                Button("Action 4") {}
             }
         }
     }
