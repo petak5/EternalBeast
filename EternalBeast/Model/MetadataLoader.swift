@@ -7,6 +7,7 @@
 
 import Foundation
 import AVFoundation
+import Cocoa
 
 struct Metadata {
     var pathToFile: String
@@ -140,5 +141,24 @@ struct MetadataLoader {
         //length = asset.duration.seconds.timeStringFromDouble()
 
         return metadata
+    }
+
+    public static func getSongArtwork(song: Song) -> NSImage? {
+        let fileUrl = URL(fileURLWithPath: song.getPathToFile())
+        let asset = AVAsset(url: fileUrl) as AVAsset
+
+        var artwork: NSImage?
+        // Get metadata
+        for metaDataItem in asset.metadata {
+            // If metadata item is artwork, create image and save it to variable
+            if metaDataItem.commonKey == .commonKeyArtwork {
+                if let data = metaDataItem.dataValue,
+                let image = NSImage(data: data) {
+                    artwork = image
+                }
+            }
+        }
+
+        return artwork
     }
 }

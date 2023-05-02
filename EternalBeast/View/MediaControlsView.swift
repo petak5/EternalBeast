@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct MediaControlsView: View {
+    @Environment(\.openWindow) var openWindow
 
     @EnvironmentObject
     private var player: Player
@@ -80,60 +81,75 @@ struct MediaControlsView: View {
                 }
             }
 
-            // MARK: - Image
-            Image(systemName: "music.note")
-                .padding()
-
-            VStack(spacing: 0) {
-                // MARK: - Info
-                HStack(spacing: 0) {
-                    if let s = player.currentSong {
-                        let title = s.title ?? ""
-                        let artist = s.artist ?? ""
-                        let album = s.album ?? ""
-                        VStack(spacing: 0) {
-                            Text(title.appending(title))
-                                .font(.headline)
-                            Text("\(artist) - \(album)")
-                                .font(.subheadline)
+            HStack(spacing: 0) {
+                // MARK: - Artwork Image
+                if let artwork = player.artwork {
+                    Image(nsImage: artwork)
+                        .resizable()
+                        .frame(width: 42, height: 42)
+                        .onTapGesture {
+                            print("TAP")
+                            openWindow(id: "artwork-image")
                         }
-                        .help("\(title)\n\(artist) - \(album)")
-                    } else {
-                        VStack(spacing: 0) {
-                            Text(" ")
-                                .font(.headline)
-                            Text(" ")
-                                .font(.subheadline)
+                } else {
+                    VStack {
+                        Image(systemName: "music.note")
+                    }
+                    .frame(width: 42)
+                }
+
+                VStack(spacing: 0) {
+                    // MARK: - Info
+                    HStack(spacing: 0) {
+                        if let s = player.currentSong {
+                            let title = s.title ?? ""
+                            let artist = s.artist ?? ""
+                            let album = s.album ?? ""
+                            VStack(spacing: 0) {
+                                Text(title.appending(title))
+                                    .font(.headline)
+                                Text("\(artist) - \(album)")
+                                    .font(.subheadline)
+                            }
+                            .help("\(title)\n\(artist) - \(album)")
+                        } else {
+                            VStack(spacing: 0) {
+                                Text(" ")
+                                    .font(.headline)
+                                Text(" ")
+                                    .font(.subheadline)
+                            }
                         }
                     }
-                }
-                .frame(width: 250)
-
-                HStack(spacing: 0) {
-                    Text((player.playbackProgress * player.duration).timeStringFromDouble())
-                        .font(.subheadline)
-                        .monospacedDigit()
-                        .frame(width: 60, alignment: .trailing)
-                        .padding(.horizontal, 5)
-
-                    // MARK: - Progress
-                    Slider(value: Binding(get: {
-                        return player.playbackProgress
-                    }, set: { newValue in
-                        player.playbackProgress = newValue
-                        player.seekToTime(seconds: newValue * player.duration)
-                    }))
-                    .disabled(player.currentSong == nil)
                     .frame(width: 250)
 
-                    Text(player.duration.timeStringFromDouble())
-                        .font(.subheadline)
-                        .monospacedDigit()
-                        .frame(width: 60, alignment: .leading)
-                        .padding(.horizontal, 5)
+                    HStack(spacing: 0) {
+                        Text((player.playbackProgress * player.duration).timeStringFromDouble())
+                            .font(.subheadline)
+                            .monospacedDigit()
+                            .frame(idealWidth: 40, alignment: .trailing)
+                            .padding(.horizontal, 5)
+
+                        // MARK: - Progress
+                        Slider(value: Binding(get: {
+                            return player.playbackProgress
+                        }, set: { newValue in
+                            player.playbackProgress = newValue
+                            player.seekToTime(seconds: newValue * player.duration)
+                        }))
+                        .disabled(player.currentSong == nil)
+                        .frame(width: 250)
+
+                        Text(player.duration.timeStringFromDouble())
+                            .font(.subheadline)
+                            .monospacedDigit()
+                            .frame(idealWidth: 40, alignment: .leading)
+                            .padding(.horizontal, 5)
+                    }
                 }
+                .frame(idealWidth: 350)
             }
-            .frame(width: 390)
+            .padding(.horizontal, 20)
         }
     }
 }

@@ -28,6 +28,7 @@ final class Player: ObservableObject {
     @Published var isPlaying = false
     @Published var playbackProgress = 0.0
     @Published var duration = 0.0
+    @Published var artwork: NSImage?
     private var itemStatusCancellable: AnyCancellable?
 
     var timer: Timer? = nil
@@ -86,10 +87,7 @@ final class Player: ObservableObject {
 
     @objc func playerItemDidReachEnd(notification: Notification) {
         if playbackMode == .RepeatOff {
-            isPlaying = false
-            duration = 0
-            playbackProgress = 0
-            currentSong = nil
+            stop()
         } else if playbackMode == .RepeatOne {
             seekToTime(seconds: 0)
             player.play()
@@ -174,8 +172,10 @@ final class Player: ObservableObject {
             prepare()
         }
 
+        artwork = MetadataLoader.getSongArtwork(song: currentSong)
+
         MPNowPlayingInfoCenter.default().playbackState = .playing
-        let nowPlayingInfo: [String: Any] = [
+        var nowPlayingInfo: [String: Any] = [
             MPMediaItemPropertyTitle: currentSong.title,
             MPMediaItemPropertyArtist: currentSong.artist,
             MPMediaItemPropertyAlbumTitle: currentSong.album,
@@ -183,8 +183,9 @@ final class Player: ObservableObject {
             MPNowPlayingInfoPropertyElapsedPlaybackTime: player.currentItem?.currentTime(),
             MPNowPlayingInfoPropertyPlaybackRate: 1
         ]
-        let x = player.currentItem?.duration
-        let y = player.currentItem?.currentTime()
+        if let artwork = artwork {
+            nowPlayingInfo[MPMediaItemPropertyArtwork] = MPMediaItemArtwork(boundsSize: artwork.size) { _ in artwork }
+        }
         MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
 
         player.play()
@@ -238,6 +239,7 @@ final class Player: ObservableObject {
     func stop() {
         player.replaceCurrentItem(with: nil)
         currentSong = nil
+        artwork = nil
 
         MPNowPlayingInfoCenter.default().playbackState = .stopped
 

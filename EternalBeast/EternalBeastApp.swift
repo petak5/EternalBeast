@@ -16,6 +16,10 @@ struct EternalBeastApp: App {
 
     @State
     private var deleteConfirmationShown = false
+    @StateObject
+    var library = Library.shared
+    @StateObject
+    var player = Player.shared
 
     var body: some Scene {
         WindowGroup {
@@ -31,6 +35,8 @@ struct EternalBeastApp: App {
                         deleteConfirmationShown = false
                     }
                 }
+                .environmentObject(player)
+                .environmentObject(library)
         }
         .windowToolbarStyle(.unified(showsTitle: false))
         .commands {
@@ -61,6 +67,18 @@ struct EternalBeastApp: App {
         }
         .onChange(of: scenePhase) { _ in
             persistenceController.save()
+        }
+
+        Window("Artwork", id: "artwork-image") {
+            HStack {
+                if let artwork = player.artwork {
+                    Image(nsImage: artwork)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                } else {
+                    Text("No artwork")
+                }
+            }
         }
     }
 }

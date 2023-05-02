@@ -26,10 +26,10 @@ struct MainView: View {
         animation: .default)
     private var songs: FetchedResults<Song>
 
-    @State
-    var library = Library.shared
-    @StateObject
-    var player = Player.shared
+    @EnvironmentObject
+    var library: Library
+    @EnvironmentObject
+    var player: Player
 
     @State
     var selection: NavigationItem? = .Artists
