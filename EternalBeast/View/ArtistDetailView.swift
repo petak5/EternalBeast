@@ -31,27 +31,10 @@ struct ArtistDetailView: View {
                 .padding(.vertical, 10)
 
             // MARK: - Albums
-            List(artist.albums, id: \.self, selection: $selectedSong) { album in
+            List(artist.albums.sorted(using: .keyPath(\.name)), id: \.self, selection: $selectedSong) { album in
                 Section(header: Text(album.name)) {
                     // MARK: - Songs
-                    ForEach(album.songs.sorted(by: { fst, snd in
-                        if let fstTrackNumber = fst.trackNumber,
-                           let sndTrackNumber = snd.trackNumber {
-                            if let fstDiscNumber = fst.discNumber,
-                               let sndDiscNumber = snd.discNumber {
-                                return fstDiscNumber.intValue < sndDiscNumber.intValue || fstTrackNumber.intValue < sndTrackNumber.intValue
-                            } else {
-                                return fstTrackNumber.intValue < sndTrackNumber.intValue
-                            }
-                        } else {
-                            if let fstTitle = fst.title,
-                               let sndTitle = snd.title {
-                                return fstTitle < sndTitle
-                            } else {
-                                return true
-                            }
-                        }
-                    }), id: \.self) { song in
+                    ForEach(album.songs.sorted(using: .keyPath(\.discNumber!.intValue), .keyPath(\.trackNumber!.intValue)), id: \.self) { song in
                         ArtistDetailSongView(deleteConfirmationShown: $deleteConfirmationShown, songToDelete: $songToDelete, song: song, isHovered: hoveredSong == song)
                             .onHover { isHovered in
                                 if isHovered {

@@ -85,7 +85,7 @@ struct MainView: View {
                 library.addSong(song: song)
             }
         }
-        .frame(minWidth: 800)
+        .frame(minWidth: 800, minHeight: 100)
     }
 
     func toggleSidebar() {

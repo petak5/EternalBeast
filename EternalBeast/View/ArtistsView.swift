@@ -21,10 +21,12 @@ struct ArtistsView: View {
     private var library: Library
     @EnvironmentObject
     private var player: Player
+    @State
+    private var artistSortDescriptor: SortDescriptor<Artist> = .keyPath(\.name)
 
     var body: some View {
         NavigationView {
-            List(library.artists, id: \.name, selection: $selection) { artist in
+            List(library.artists.sorted(using: artistSortDescriptor), id: \.name, selection: $selection) { artist in
                 NavigationLink(destination: ArtistDetailView(artist: artist)) {
                     Text(artist.name)
                 }
