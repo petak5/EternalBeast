@@ -8,8 +8,15 @@
 import SwiftUI
 import CoreData
 
+enum NavigationItem {
+    case Artists
+    case Albums
+    case Songs
+}
+
 struct MainView: View {
-    @Environment(\.managedObjectContext) private var viewContext
+    @Environment(\.managedObjectContext)
+    private var viewContext
 
     @FetchRequest(
         sortDescriptors: [
@@ -19,16 +26,21 @@ struct MainView: View {
         animation: .default)
     private var songs: FetchedResults<Song>
 
-    //@State var artists: [Artist] = [Artist]()
-    @State var library = Library.shared
+    @State
+    var library = Library.shared
+    @StateObject
+    var player = Player.shared
 
-    @State var selection: Set<NavigationItem> = [.Artists]
+    @State
+    var selection: NavigationItem? = .Artists
+    @State
+    var selectedArtist: String? = nil
 
     var body: some View {
         NavigationView {
             List(selection: $selection) {
                 Section(header: Text("Library")) {
-                    NavigationLink(destination: ArtistsView(artists: library.artists)) {
+                    NavigationLink(destination: ArtistsView(selection: $selectedArtist)) {
                         Label("Artists", systemImage: "music.mic")
                     }
                     .tag(NavigationItem.Artists)
@@ -45,14 +57,14 @@ struct MainView: View {
                 }
                 .collapsible(false)
 
-                Section(header: Text("Playlists"), footer: Text("asdf")) {
-                    NavigationLink(destination: Text("Songs of playlist 1")) {
-                        Label("Playlist 1", systemImage: "music.note.list")
-                    }
-                    NavigationLink(destination: Text("Songs of playlist 2")) {
-                        Label("Playlist 2", systemImage: "music.note.list")
-                    }
-                }
+//                Section(header: Text("Playlists"), footer: Text("asdf")) {
+//                    NavigationLink(destination: Text("Songs of playlist 1")) {
+//                        Label("Playlist 1", systemImage: "music.note.list")
+//                    }
+//                    NavigationLink(destination: Text("Songs of playlist 2")) {
+//                        Label("Playlist 2", systemImage: "music.note.list")
+//                    }
+//                }
             }
             .listStyle(SidebarListStyle())
         }
@@ -66,90 +78,18 @@ struct MainView: View {
                 MediaControlsView()
             }
         }
+        .environmentObject(player)
+        .environmentObject(library)
         .onAppear {
-//            addSongs()
-//            deleteAllSongs()
-
             for song in songs {
                 library.addSong(song: song)
             }
-
-//            Player.shared.setupStuff()
         }
+        .frame(minWidth: 800)
     }
 
     func toggleSidebar() {
         NSApp.keyWindow?.firstResponder?.tryToPerform(#selector(NSSplitViewController.toggleSidebar(_:)), with: nil)
-    }
-
-    func addSongs() {
-        let filePath = "/Users/peter/Desktop/Music/Unleash the Archers/2015 - Time Stands Still/04 - Tonight We Ride.mp3"
-
-        let s = Song(context: viewContext)
-        s.loadMetadata(pathToFile: filePath)
-
-        do {
-            try viewContext.save()
-        } catch {
-            // Replace this implementation with code to handle the error appropriately.
-            // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            let nsError = error as NSError
-            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-        }
-    }
-
-    func deleteAllSongs() {
-        for song in songs {
-            viewContext.delete(song)
-        }
-
-        do {
-            try viewContext.save()
-        } catch {
-            // Replace this implementation with code to handle the error appropriately.
-            // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            let nsError = error as NSError
-            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-        }
-    }
-}
-
-enum NavigationItem {
-    case Artists
-    case Albums
-    case Songs
-}
-
-struct Artist: Hashable {
-    let name: String
-    var albums: [Album]
-}
-
-struct Album: Hashable {
-    let name: String
-    var songs: [Song]
-}
-
-struct Library {
-    public static let shared = Library()
-
-    var artists: [Artist] = [Artist]()
-
-    mutating func addSong(song: Song) {
-        // Artist index
-        if let artistIndex = artists.firstIndex(where: { artist in artist.name == song.artist }) {
-            // Album index
-            if let albumIndex = artists[artistIndex].albums.firstIndex(where: { album in album.name == song.album }) {
-                artists[artistIndex].albums[albumIndex].songs.append(song)
-            } else {
-                let album = Album(name: song.album ?? "Unknown", songs: [song])
-                artists[artistIndex].albums.append(album)
-            }
-        } else {
-            let album = Album(name: song.album ?? "Unknown", songs: [song])
-            let artist = Artist(name: song.artist ?? "Unknown", albums: [album])
-            artists.append(artist)
-        }
     }
 }
 

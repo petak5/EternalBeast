@@ -40,6 +40,17 @@ final class Player: ObservableObject {
         timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
             if let item = self.player.currentItem {
                 self.playbackProgress = item.currentTime().seconds / item.duration.seconds
+                
+                
+                // MOVE UPDATING THE NOWPLAYBACKINFO TO RELEVANT PROPERTIES' SETTERS?
+                
+                
+                // Update playback info in the Now Playing system menu
+                if var nowPlayingInfo = MPNowPlayingInfoCenter.default().nowPlayingInfo {
+                    nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = self.player.currentItem?.currentTime().seconds
+//                    nowPlayingInfo[MPMediaItemPropertyPlaybackDuration] = self.player.currentItem?.duration
+                    MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
+                }
             } else {
                 self.playbackProgress = 0.0
             }
@@ -48,7 +59,7 @@ final class Player: ObservableObject {
 
     // Set up property observing
     private func setupObserving() {
-        // Observe change of current AVPlayerItem 's status, when readyToPlay, duration can be read
+        // Observe change of current AVPlayerItem's status, when readyToPlay, duration can be read
         // Status changes to readyToPlay when resources are loaded (including metadata such as duration)
         itemStatusCancellable = player.publisher(for: \.currentItem?.status, options: [.new, .initial]).sink { newStatus in
             if newStatus == .readyToPlay {
@@ -60,6 +71,10 @@ final class Player: ObservableObject {
             } else {
                 self.playbackProgress = 0.0
                 self.duration = 0.0
+            }
+            if var nowPlayingInfo = MPNowPlayingInfoCenter.default().nowPlayingInfo {
+                nowPlayingInfo[MPMediaItemPropertyPlaybackDuration] = self.duration
+                MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
             }
         }
     }
@@ -97,7 +112,7 @@ final class Player: ObservableObject {
 
         MPRemoteCommandCenter.shared().changePlaybackPositionCommand.addTarget { [unowned self] event in
             let seconds = (event as? MPChangePlaybackPositionCommandEvent)?.positionTime ?? 0
-                seekToTime(seconds: seconds)
+            seekToTime(seconds: seconds)
             return .success
         }
     }
@@ -132,11 +147,26 @@ final class Player: ObservableObject {
             return
         }
 
+        guard let currentSong = currentSong else {
+            return
+        }
+
         if player.status != .readyToPlay {
             prepare()
         }
 
         MPNowPlayingInfoCenter.default().playbackState = .playing
+        let nowPlayingInfo: [String: Any] = [
+            MPMediaItemPropertyTitle: currentSong.title,
+            MPMediaItemPropertyArtist: currentSong.artist,
+            MPMediaItemPropertyAlbumTitle: currentSong.album,
+            MPMediaItemPropertyPlaybackDuration: player.currentItem?.duration.seconds,
+            MPNowPlayingInfoPropertyElapsedPlaybackTime: player.currentItem?.currentTime(),
+            MPNowPlayingInfoPropertyPlaybackRate: 1
+        ]
+        let x = player.currentItem?.duration
+        let y = player.currentItem?.currentTime()
+        MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
 
         player.play()
         isPlaying = true

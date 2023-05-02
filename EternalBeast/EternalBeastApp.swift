@@ -9,17 +9,55 @@ import SwiftUI
 
 @main
 struct EternalBeastApp: App {
-    let persistenceController = PersistenceController.shared
+    private let persistenceController = PersistenceController.shared
 
-    @Environment(\.scenePhase) var scenePhase
+    @Environment(\.scenePhase)
+    private var scenePhase
+
+    @State
+    private var deleteConfirmationShown = false
 
     var body: some Scene {
         WindowGroup {
             MainView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                .alert("Are you sure you want to clear the whole library?", isPresented: $deleteConfirmationShown) {
+                    Button("No", role: .cancel) { }
+                    Button("Yes", role: .destructive) {
+                        withAnimation {
+                            let moc = persistenceController.container.viewContext
+                            Library.shared.clear(moc: moc)
+                        }
+                        deleteConfirmationShown = false
+                    }
+                }
         }
+        .windowToolbarStyle(.unified(showsTitle: false))
         .commands {
             SidebarCommands()
+            CommandGroup(after: .importExport) {
+                Button("Add songs") {
+                    let openPanel = NSOpenPanel()
+                    openPanel.allowedFileTypes = ["mp3", "flac"]
+                    openPanel.canChooseFiles = true
+                    openPanel.canChooseDirectories = false
+                    openPanel.allowsMultipleSelection = true
+                    openPanel.begin { result in
+                        if result.rawValue == NSApplication.ModalResponse.OK.rawValue {
+                            for url in openPanel.urls {
+                                do {
+                                    let moc = persistenceController.container.viewContext
+                                    Library.shared.loadSong(filePath: url.path, moc: moc)
+                                }
+                            }
+                        }
+                    }
+                }
+                .keyboardShortcut("O", modifiers: [.command])
+                Button("Clear Library") {
+                    deleteConfirmationShown = true
+                }
+            }
         }
         .onChange(of: scenePhase) { _ in
             persistenceController.save()

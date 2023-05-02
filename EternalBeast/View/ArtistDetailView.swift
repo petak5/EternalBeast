@@ -8,8 +8,10 @@
 import SwiftUI
 
 struct ArtistDetailView: View {
-    @State private var selectedSong: Song?
-    @State var player = Player.shared
+    @State
+    private var selectedSong: Song?
+    @EnvironmentObject
+    var player: Player
 
     let artist: Artist
 
@@ -33,6 +35,10 @@ struct ArtistDetailView: View {
                         }
                     }
                 }
+            }
+            .contextMenu() {
+                Button("Action 3") {}
+                Button("Action 4") {}
             }
         }
     }

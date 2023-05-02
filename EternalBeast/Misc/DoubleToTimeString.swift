@@ -10,7 +10,12 @@ import Foundation
 extension Double {
     // Format time for music player
     func timeStringFromDouble() -> String {
-        let time = Int(self)
+        var time: Int
+        if self.isNaN || self.isInfinite {
+            time = 0
+        } else {
+            time = Int(self)
+        }
 
         //let ms = Int((self.truncatingRemainder(dividingBy: 1)) * 1000)
         let seconds = time % 60

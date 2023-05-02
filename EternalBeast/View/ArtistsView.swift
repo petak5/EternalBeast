@@ -8,16 +8,22 @@
 import SwiftUI
 
 struct ArtistsView: View {
-    @State var selectKeeper = Set<String>()
-
-    let artists: [Artist]
+    @Binding
+    var selection: String?
+    @EnvironmentObject
+    private var library: Library
 
     var body: some View {
         NavigationView {
-            List(artists, id: \.name) { artist in
+            List(library.artists, id: \.name, selection: $selection) { artist in
                 NavigationLink(destination: ArtistDetailView(artist: artist)) {
                     Text(artist.name)
                 }
+                .tag(artist.name)
+            }
+            .contextMenu() {
+                Button("Action 1") {}
+                Button("Action 2") {}
             }
         }
     }
