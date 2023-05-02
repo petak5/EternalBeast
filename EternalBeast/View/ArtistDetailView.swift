@@ -33,16 +33,46 @@ struct ArtistDetailView: View {
                     // MARK: - Songs
                     ForEach(album.songs, id: \.self) { song in
                         HStack {
-                            Button(action: {
-                                player.playSong(song)
-                            }, label: {
+                            if song == player.currentSong {
+                                if player.isPlaying {
+                                    Image(systemName: "pause.fill")
+                                        .onTapGesture {
+                                            player.pause()
+                                        }
+                                } else {
+                                    Image(systemName: "play.fill")
+                                        .onTapGesture {
+                                            player.play()
+                                        }
+                                }
+                            } else {
                                 Image(systemName: "play.fill")
-                            })
-                            Text(song.title ?? "")
+                                    .onTapGesture {
+                                        player.playSong(song)
+                                    }
+                            }
+                            if song == player.currentSong {
+                                Text(song.title ?? "")
+                                    .bold()
+                            } else {
+                                Text(song.title ?? "")
+                            }
                         }
                         .contextMenu() {
-                            Button("Play") {
-                                player.playSong(song)
+                            if song == player.currentSong {
+                                if player.isPlaying {
+                                    Button("Pause") {
+                                        player.pause()
+                                    }
+                                } else {
+                                    Button("Resume") {
+                                        player.play()
+                                    }
+                                }
+                            } else {
+                                Button("Play") {
+                                    player.playSong(song)
+                                }
                             }
                             Button("Delete") {
                                 songToDelete = song
