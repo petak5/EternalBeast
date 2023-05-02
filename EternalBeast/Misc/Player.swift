@@ -86,14 +86,7 @@ final class Player: ObservableObject {
     }
 
     @objc func playerItemDidReachEnd(notification: Notification) {
-        if playbackMode == .RepeatOff {
-            stop()
-        } else if playbackMode == .RepeatOne {
-            seekToTime(seconds: 0)
-            player.play()
-        } else if playbackMode == .RepeatAll {
-            playNext()
-        }
+        playNext()
     }
 
     // Add actions to MediaPlayer Remote Commands from Now Playing system menu
@@ -146,6 +139,7 @@ final class Player: ObservableObject {
 
     func clearQueue() {
         queue.clear()
+        history.clear()
     }
 
     private func prepare() {
@@ -201,7 +195,7 @@ final class Player: ObservableObject {
     func playSongs(songs: [Song]) {
         stop()
 
-        queue.clear()
+        clearQueue()
         addToQueue(songs: songs)
 
         prepare()
@@ -211,7 +205,7 @@ final class Player: ObservableObject {
     func playSong(_ song: Song) {
         stop()
 
-        queue.clear()
+        clearQueue()
         addToQueue(song: song)
 
         prepare()
@@ -219,28 +213,52 @@ final class Player: ObservableObject {
     }
 
     func playPrevious() {
-        stop()
+        // Seek to start if less that 5s elapsed
+        if duration * playbackProgress > 5 {
+            replayFromStart()
+        } else {
+            if playbackMode == .RepeatOff {
+                replayFromStart()
+            } else if playbackMode == .RepeatOne {
+                replayFromStart()
+            } else if playbackMode == .RepeatAll {
+                stop()
 
-        // If there is a song in history, put it to front of queue
-        if let song = history.pop() {
-            queue.insert(song, at: 0)
+                // If there is a song in history, put it to front of queue
+                if let song = history.pop() {
+                    queue.insert(song, at: 0)
+                }
+
+                // Play first song from queue
+                prepare()
+                play()
+            }
         }
-
-        // Play first song from queue
-        prepare()
-        play()
     }
 
     func playNext() {
-        stop()
+        if playbackMode == .RepeatOff {
+            pause()
+            seekToTime(seconds: 0)
+        } else if playbackMode == .RepeatOne {
+            replayFromStart()
+        } else if playbackMode == .RepeatAll {
+            stop()
 
-        guard let song = queue.pop() else {
-            return
+            guard let song = queue.pop() else {
+                return
+            }
+
+            history.insert(song, at: 0)
+
+            if queue.isEmpty() && playbackMode == .RepeatAll {
+                addToQueue(songs: history.items().reversed())
+                history.clear()
+            }
+
+            prepare()
+            play()
         }
-        history.insert(song, at: 0)
-
-        prepare()
-        play()
     }
 
     func pause() {
@@ -261,6 +279,11 @@ final class Player: ObservableObject {
         MPNowPlayingInfoCenter.default().playbackState = .stopped
 
         isPlaying = false
+    }
+
+    func replayFromStart() {
+        seekToTime(seconds: 0)
+        play()
     }
 
     func seekToTime(seconds: Double) {
