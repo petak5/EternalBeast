@@ -39,7 +39,7 @@ struct PersistenceController {
 
         // !!! Caution !!! this will delete all data stored in the CoreData persistent store container
         // Delete persistent store when automatic migration fails and we don't care about the stored data
-        //try! container.persistentStoreCoordinator.destroyPersistentStore(at: container.persistentStoreDescriptions.first!.url!, ofType: container.persistentStoreDescriptions.first!.type, options: nil)
+//        try! container.persistentStoreCoordinator.destroyPersistentStore(at: container.persistentStoreDescriptions.first!.url!, ofType: container.persistentStoreDescriptions.first!.type, options: nil)
 
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {

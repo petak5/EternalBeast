@@ -16,8 +16,8 @@ struct Metadata {
     var album: String?
     var year: String?
     var length: String?
-    var trackNumber: String?
-    var discNumber: String?
+    var trackNumber: Int?
+    var discNumber: Int?
 }
 
 struct MetadataLoader {
@@ -31,8 +31,8 @@ struct MetadataLoader {
         metadata.album = ((pathToFile as NSString).deletingLastPathComponent as NSString).lastPathComponent
         metadata.year = ""
         metadata.length = "0"
-        metadata.trackNumber = "0"
-        metadata.discNumber = "0"
+        metadata.trackNumber = 0
+        metadata.discNumber = 0
 
         let fileUrl = URL(fileURLWithPath: pathToFile)
         let asset = AVAsset(url: fileUrl) as AVAsset
@@ -59,11 +59,11 @@ struct MetadataLoader {
                 // Track number
                 if key.description == "TRCK" {
                     let values = metaDataItem.stringValue!.split(separator: "/")
-                    metadata.trackNumber = String(values[0])
+                    metadata.trackNumber = Int(String(values[0])) ?? 0
                 // Part of a set (number of CD disc, etc.)
                 } else if key.description == "TPOS" {
                     let values = metaDataItem.stringValue!.split(separator: "/")
-                    metadata.discNumber = String(values[0])
+                    metadata.discNumber = Int(String(values[0])) ?? 0
                 // Year
                 } else if key.description == "TYER" {
                     metadata.year = metaDataItem.stringValue ?? ""
@@ -106,7 +106,7 @@ struct MetadataLoader {
                     trackNumber += UInt16(secondByte)
 
                     // Here the track number should be correctly extracted from the data
-                    metadata.trackNumber = String(trackNumber)
+                    metadata.trackNumber = Int(trackNumber)
 
                 // Disc number
                 } else if metaDataItem.identifier == .iTunesMetadataDiscNumber {
@@ -133,7 +133,7 @@ struct MetadataLoader {
                     discNumber += UInt16(secondByte)
 
                     // Here the disc number should be correctly extracted from the data
-                    metadata.discNumber = String(discNumber)
+                    metadata.discNumber = Int(discNumber)
                 }
             }
         }

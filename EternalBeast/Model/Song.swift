@@ -15,8 +15,8 @@ public class Song: NSManagedObject, Identifiable {
     @NSManaged private (set) var album: String?
     @NSManaged private (set) var year: String?
     @NSManaged private (set) var length: String?
-    @NSManaged private (set) var trackNumber: String?
-    @NSManaged private (set) var discNumber: String?
+    @NSManaged private (set) var trackNumber: NSNumber?
+    @NSManaged private (set) var discNumber: NSNumber?
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Song> {
         return NSFetchRequest<Song>(entityName: "Song")
@@ -32,8 +32,8 @@ public class Song: NSManagedObject, Identifiable {
         self.album = metadata.album
         self.year = metadata.year
         self.length = metadata.length
-        self.trackNumber = metadata.trackNumber
-        self.discNumber = metadata.discNumber
+        self.trackNumber = NSNumber(value: metadata.trackNumber ?? 0)
+        self.discNumber = NSNumber(value: metadata.discNumber ?? 0)
     }
 
     public func getPathToFile() -> String {

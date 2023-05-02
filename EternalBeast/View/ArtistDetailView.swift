@@ -17,68 +17,49 @@ struct ArtistDetailView: View {
     private var deleteConfirmationShown = false
     @State
     private var songToDelete: Song? = nil
+    @State
+    private var hoveredSong: Song? = nil
     @EnvironmentObject
     var player: Player
 
     let artist: Artist
 
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             Text(artist.name)
                 .font(.title)
+                .padding(.vertical, 10)
 
             // MARK: - Albums
             List(artist.albums, id: \.self, selection: $selectedSong) { album in
                 Section(header: Text(album.name)) {
                     // MARK: - Songs
-                    ForEach(album.songs, id: \.self) { song in
-                        HStack {
-                            if song == player.currentSong {
-                                if player.isPlaying {
-                                    Image(systemName: "pause.fill")
-                                        .onTapGesture {
-                                            player.pause()
-                                        }
-                                } else {
-                                    Image(systemName: "play.fill")
-                                        .onTapGesture {
-                                            player.play()
-                                        }
-                                }
+                    ForEach(album.songs.sorted(by: { fst, snd in
+                        if let fstTrackNumber = fst.trackNumber,
+                           let sndTrackNumber = snd.trackNumber {
+                            if let fstDiscNumber = fst.discNumber,
+                               let sndDiscNumber = snd.discNumber {
+                                return fstDiscNumber.intValue < sndDiscNumber.intValue || fstTrackNumber.intValue < sndTrackNumber.intValue
                             } else {
-                                Image(systemName: "play.fill")
-                                    .onTapGesture {
-                                        player.playSong(song)
-                                    }
+                                return fstTrackNumber.intValue < sndTrackNumber.intValue
                             }
-                            if song == player.currentSong {
-                                Text(song.title ?? "")
-                                    .bold()
+                        } else {
+                            if let fstTitle = fst.title,
+                               let sndTitle = snd.title {
+                                return fstTitle < sndTitle
                             } else {
-                                Text(song.title ?? "")
+                                return true
                             }
                         }
-                        .contextMenu() {
-                            if song == player.currentSong {
-                                if player.isPlaying {
-                                    Button("Pause") {
-                                        player.pause()
-                                    }
+                    }), id: \.self) { song in
+                        ArtistDetailSongView(deleteConfirmationShown: $deleteConfirmationShown, songToDelete: $songToDelete, song: song, isHovered: hoveredSong == song)
+                            .onHover { isHovered in
+                                if isHovered {
+                                    hoveredSong = song
                                 } else {
-                                    Button("Resume") {
-                                        player.play()
-                                    }
-                                }
-                            } else {
-                                Button("Play") {
-                                    player.playSong(song)
+                                    hoveredSong = nil
                                 }
                             }
-                            Button("Delete") {
-                                songToDelete = song
-                                deleteConfirmationShown = true
-                            }
-                        }
                     }
                     .alert("Are you sure you want to delete the song \"\(songToDelete?.title ?? "")\" from library?", isPresented: $deleteConfirmationShown) {
                         Button("No", role: .cancel) { }

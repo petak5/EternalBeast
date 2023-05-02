@@ -19,6 +19,7 @@
 		D03822D0268F45E400891D8B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D03822CF268F45E400891D8B /* Preview Assets.xcassets */; };
 		D03822D2268F45E400891D8B /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03822D1268F45E400891D8B /* Persistence.swift */; };
 		D092DFBF2A010AF0008675F2 /* Library.swift in Sources */ = {isa = PBXBuildFile; fileRef = D092DFBE2A010AF0008675F2 /* Library.swift */; };
+		D092DFC32A01970F008675F2 /* ArtistDetailSongView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D092DFC22A01970F008675F2 /* ArtistDetailSongView.swift */; };
 		D095B209263E83BD00113A8C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D095B208263E83BD00113A8C /* AppDelegate.swift */; };
 		D095B20D263E83C100113A8C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D095B20C263E83C100113A8C /* Assets.xcassets */; };
 		D095B210263E83C100113A8C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D095B20E263E83C100113A8C /* Main.storyboard */; };
@@ -51,6 +52,7 @@
 		D03822D5268F45E400891D8B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D03822D6268F45E400891D8B /* EternalBeast.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EternalBeast.entitlements; sourceTree = "<group>"; };
 		D092DFBE2A010AF0008675F2 /* Library.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Library.swift; sourceTree = "<group>"; };
+		D092DFC22A01970F008675F2 /* ArtistDetailSongView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistDetailSongView.swift; sourceTree = "<group>"; };
 		D095B205263E83BD00113A8C /* EternalBeast old.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "EternalBeast old.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D095B208263E83BD00113A8C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D095B20C263E83C100113A8C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = "EternalBeast old/Assets.xcassets"; sourceTree = SOURCE_ROOT; };
@@ -198,6 +200,7 @@
 				D0A4A6E027A3F442002C24F2 /* MediaControlsView.swift */,
 				D0BB9450268F4F560098996C /* ArtistsView.swift */,
 				D0BB9452268F4F5E0098996C /* ArtistDetailView.swift */,
+				D092DFC22A01970F008675F2 /* ArtistDetailSongView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -331,6 +334,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D092DFC32A01970F008675F2 /* ArtistDetailSongView.swift in Sources */,
 				D0F769F826939A1600D3B8D3 /* Song.swift in Sources */,
 				D092DFBF2A010AF0008675F2 /* Library.swift in Sources */,
 				D03822D2268F45E400891D8B /* Persistence.swift in Sources */,
