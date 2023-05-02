@@ -77,6 +77,25 @@ final class Player: ObservableObject {
                 MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
             }
         }
+
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(playerItemDidReachEnd(notification:)),
+                                               name: .AVPlayerItemDidPlayToEndTime,
+                                               object: player.currentItem)
+    }
+
+    @objc func playerItemDidReachEnd(notification: Notification) {
+        if playbackMode == .RepeatOff {
+            isPlaying = false
+            duration = 0
+            playbackProgress = 0
+            currentSong = nil
+        } else if playbackMode == .RepeatOne {
+            seekToTime(seconds: 0)
+            player.play()
+        } else if playbackMode == .RepeatAll {
+            playNext()
+        }
     }
 
     // Add actions to MediaPlayer Remote Commands from Now Playing system menu

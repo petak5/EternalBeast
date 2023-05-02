@@ -49,6 +49,37 @@ struct MediaControlsView: View {
             }
             .disabled(player.currentSong == nil)
 
+            // MARK: - Playback Mode
+            Button {
+                if player.playbackMode == .RepeatAll {
+                    player.playbackMode = .RepeatOne
+                } else if player.playbackMode == .RepeatOne {
+                    player.playbackMode = .RepeatOff
+                } else if player.playbackMode == .RepeatOff {
+                    player.playbackMode = .RepeatAll
+                }
+            } label: {
+                ZStack {
+                    // Hidden images to preseerve constant size
+                    Image(systemName: "repeat").hidden()
+                    Image(systemName: "repeat.1").hidden()
+                    Image(systemName: "repeat").hidden()
+
+                    if player.playbackMode == .RepeatAll {
+                        Image(systemName: "repeat")
+                            .help("Repeat All")
+                            .foregroundColor(.accentColor)
+                    } else if player.playbackMode == .RepeatOne {
+                        Image(systemName: "repeat.1")
+                            .help("Repeat One")
+                            .foregroundColor(.accentColor)
+                    } else if player.playbackMode == .RepeatOff {
+                        Image(systemName: "repeat")
+                            .help("Repeat Off")
+                    }
+                }
+            }
+
             // MARK: - Image
             Image(systemName: "music.note")
                 .padding()
