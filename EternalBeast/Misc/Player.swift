@@ -259,8 +259,8 @@ final class Player: ObservableObject {
     }
 
     func playPrevious() {
-        // Seek to start if less that 5s elapsed
-        if duration * playbackProgress > 5 {
+        // Seek to start if less that 2s elapsed
+        if duration * playbackProgress > 2 {
             replayFromStart()
         } else {
             if playbackMode == .RepeatOff {

@@ -14,8 +14,8 @@ struct SongsView: View {
     @EnvironmentObject
     var player: Player
 
-    @State
-    private var sortOrder = [KeyPathComparator(\Song.title!)]
+    @Binding
+    var sortOrder: [KeyPathComparator<Song>]
     @Binding
     var selection: Set<Song.ID>
 
@@ -39,10 +39,22 @@ struct SongsView: View {
             TableColumn("Disc", value: \.discNumber!.intValue) { song in
                 Text(song.discNumber?.stringValue ?? " ")
             }
-
         } rows: {
             ForEach(library.songs.sorted(using: sortOrder), id: \.self) { song in
                 TableRow(song)
+                    .contextMenu {
+                        Button("Play This") {
+                            player.playSong(song)
+                            player.playSongs(songs: library.songs.sorted(using: sortOrder), from: song)
+                        }
+                        Button("Play Selected") {
+                            let songs = library.songs.filter({ selection.contains($0.id) })
+                            player.playSongs(songs: songs.sorted(using: sortOrder))
+                        }
+                        Button("Play All") {
+                            player.playSongs(songs: library.songs.sorted(using: sortOrder))
+                        }
+                    }
             }
         }
         .onChange(of: sortOrder) { newValue in

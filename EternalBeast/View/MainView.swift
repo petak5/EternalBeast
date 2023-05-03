@@ -35,6 +35,9 @@ struct MainView: View {
     var selection: NavigationItem? = .Artists
     @State
     var selectedArtist: String? = nil
+
+    @State
+    private var sortOrder: [KeyPathComparator<Song>] = [KeyPathComparator(\Song.title!)]
     @State
     private var selectedSongs = Set<Song.ID>()
 
@@ -52,7 +55,7 @@ struct MainView: View {
 //                    }
 //                    .tag(NavigationItem.Albums)
 
-                    NavigationLink(destination: SongsView(selection: $selectedSongs)) {
+                    NavigationLink(destination: SongsView(sortOrder: $sortOrder, selection: $selectedSongs)) {
                         Label("Songs", systemImage: "music.note")
                     }
                     .tag(NavigationItem.Songs)
