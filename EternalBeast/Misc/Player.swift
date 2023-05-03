@@ -18,10 +18,11 @@ enum PlaybackMode {
     case RepeatOne
 }
 
-final class Player: ObservableObject {
+final class Player: ObservableObject, HasAudioEngine {
     static let shared = Player()
 
-    private var player = AVPlayer()
+    private var player = AudioPlayer()
+    public var engine = AudioEngine()
     @Published private (set) var queue = Queue<Song>()
     @Published private (set) var history = Queue<Song>()
     @Published private (set) var currentSong: Song?
@@ -31,63 +32,37 @@ final class Player: ObservableObject {
     @Published var playbackProgress = 0.0
     @Published var duration = 0.0
     @Published var artwork: NSImage?
-    private var itemStatusCancellable: AnyCancellable?
 
     var timer: Timer? = nil
 
-    init() {
-        setupObserving()
+    private let SMOL_NUMBER = 0.000001
 
+    init() {
         ConfigureMPRemoteCommands()
 
         timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
-            if let item = self.player.currentItem {
-                self.playbackProgress = item.currentTime().seconds / item.duration.seconds
-                
-                
-                // MOVE UPDATING THE NOWPLAYBACKINFO TO RELEVANT PROPERTIES' SETTERS?
-                
-                
-                // Update playback info in the Now Playing system menu
-                if var nowPlayingInfo = MPNowPlayingInfoCenter.default().nowPlayingInfo {
-                    nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = self.player.currentItem?.currentTime().seconds
-//                    nowPlayingInfo[MPMediaItemPropertyPlaybackDuration] = self.player.currentItem?.duration
-                    MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
-                }
-            } else {
-                self.playbackProgress = 0.0
-            }
-        }
-    }
+            self.playbackProgress = self.player.currentPosition
+            self.duration = self.player.duration
 
-    // Set up property observing
-    private func setupObserving() {
-        // Observe change of current AVPlayerItem's status, when readyToPlay, duration can be read
-        // Status changes to readyToPlay when resources are loaded (including metadata such as duration)
-        itemStatusCancellable = player.publisher(for: \.currentItem?.status, options: [.new, .initial]).sink { newStatus in
-            if newStatus == .readyToPlay {
-                if let item = self.player.currentItem {
-                    self.duration = item.duration.seconds
-                } else {
-                    self.duration = 0.0
-                }
-            } else {
-                self.playbackProgress = 0.0
-                self.duration = 0.0
-            }
+            // Update playback info in the Now Playing system menu
             if var nowPlayingInfo = MPNowPlayingInfoCenter.default().nowPlayingInfo {
-                nowPlayingInfo[MPMediaItemPropertyPlaybackDuration] = self.duration
+                nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = self.player.currentTime
+//                nowPlayingInfo[MPMediaItemPropertyPlaybackDuration] = self.audioPlayer.duration
                 MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
             }
         }
 
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(playerItemDidReachEnd(notification:)),
-                                               name: .AVPlayerItemDidPlayToEndTime,
-                                               object: player.currentItem)
+        engine.output = player
+        player.completionHandler = audioPlayerPlaybackCompletionHandler
+        do { try engine.start() } catch let err { Log(err) }
     }
 
-    @objc func playerItemDidReachEnd(notification: Notification) {
+    deinit {
+        player.stop()
+        engine.stop()
+    }
+
+    private func audioPlayerPlaybackCompletionHandler() {
         playNext()
     }
 
@@ -153,8 +128,17 @@ final class Player: ObservableObject {
     private func prepare(withSong song: Song) {
         currentSong = song
         let url = URL(fileURLWithPath: song.getPathToFile())
-        let item = AVPlayerItem(url: url)
-        player.replaceCurrentItem(with: item)
+        do {
+            try player.load(url: url)
+            // THIS IS SOME NICE MAGIC
+            // WITHOUT THIS SEEK BEFORE PLAYING, THE STATE IS STUCK IN 'STOPPED' STATE AND NEXT ACTION DOES NOTHIN.
+            // SO TO PAUSE THE SONG YOU HAVE TO PAUSE, PLAY AND PAUSE AGAIN
+            // NO IDEA WHY
+            player.seek(time: TimeInterval(integerLiteral: SMOL_NUMBER))
+            // MAGIC END
+        } catch {
+            Log(error.localizedDescription, type: .error)
+        }
     }
 
     func play() {
@@ -170,10 +154,6 @@ final class Player: ObservableObject {
             return
         }
 
-        if player.status != .readyToPlay {
-            prepare()
-        }
-
         artwork = MetadataLoader.getSongArtwork(song: currentSong)
 
         MPNowPlayingInfoCenter.default().playbackState = .playing
@@ -181,8 +161,8 @@ final class Player: ObservableObject {
             MPMediaItemPropertyTitle: currentSong.title,
             MPMediaItemPropertyArtist: currentSong.artist,
             MPMediaItemPropertyAlbumTitle: currentSong.album,
-            MPMediaItemPropertyPlaybackDuration: player.currentItem?.duration.seconds,
-            MPNowPlayingInfoPropertyElapsedPlaybackTime: player.currentItem?.currentTime(),
+            MPMediaItemPropertyPlaybackDuration: player.duration,
+            MPNowPlayingInfoPropertyElapsedPlaybackTime: player.currentTime,
             MPNowPlayingInfoPropertyPlaybackRate: 1
         ]
         if let artwork = artwork {
@@ -286,11 +266,12 @@ final class Player: ObservableObject {
 
     func playNext() {
         if playbackMode == .RepeatOff {
-            pause()
             seekToTime(seconds: 0)
+            pause()
         } else if playbackMode == .RepeatOne {
             replayFromStart()
         } else if playbackMode == .RepeatAll {
+            // TODO: For some reason when song ends, it can get stuck here (infinite loop, program freezes)
             stop()
 
             guard let song = queue.pop() else {
@@ -325,7 +306,8 @@ final class Player: ObservableObject {
     }
 
     func stop() {
-        player.replaceCurrentItem(with: nil)
+        // TODO: For some reason when song ends, it can get stuck here (infinite loop, program freezes)
+        player.stop()
         currentSong = nil
         artwork = nil
 
@@ -348,6 +330,12 @@ final class Player: ObservableObject {
             return
         }
 
-        player.seek(to: CMTime(seconds: seconds, preferredTimescale: .max))
+        var s = seconds
+        if s == 0 {
+            s = SMOL_NUMBER
+        }
+
+        let time = s - player.currentTime
+        player.seek(time: TimeInterval(integerLiteral: time))
     }
 }
