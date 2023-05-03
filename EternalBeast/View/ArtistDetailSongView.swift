@@ -51,14 +51,11 @@ struct ArtistDetailSongView: View {
                     }
                 } else {
                     Text(song.trackNumber?.stringValue ?? " ")
+                        .bold(song == player.currentSong)
                 }
             }
-            if song == player.currentSong {
-                Text(song.title ?? "")
-                    .bold()
-            } else {
-                Text(song.title ?? "")
-            }
+            Text(song.title ?? "")
+                .bold(song == player.currentSong)
         }
         .contextMenu() {
             if song == player.currentSong {

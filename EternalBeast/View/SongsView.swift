@@ -23,21 +23,27 @@ struct SongsView: View {
         Table(of: Song.self, selection: $selection, sortOrder: $sortOrder) {
             TableColumn("Title", value: \.title!) { song in
                 Text(song.title ?? " ")
+                    .bold(song == player.currentSong)
             }
             TableColumn("Album", value: \.album!) { song in
                 Text(song.album ?? " ")
+                    .bold(song == player.currentSong)
             }
             TableColumn("Artist", value: \.artist!) { song in
                 Text(song.artist ?? " ")
+                    .bold(song == player.currentSong)
             }
             TableColumn("Year", value: \.year!) { song in
                 Text(song.year ?? " ")
+                    .bold(song == player.currentSong)
             }
             TableColumn("Track", value: \.trackNumber!.intValue) { song in
                 Text(song.trackNumber?.stringValue ?? " ")
+                    .bold(song == player.currentSong)
             }
             TableColumn("Disc", value: \.discNumber!.intValue) { song in
                 Text(song.discNumber?.stringValue ?? " ")
+                    .bold(song == player.currentSong)
             }
         } rows: {
             ForEach(library.songs.sorted(using: sortOrder), id: \.self) { song in
@@ -59,9 +65,6 @@ struct SongsView: View {
         }
         .onChange(of: sortOrder) { newValue in
             sortOrder = newValue
-            print(newValue.count)
-            print(newValue.first!.keyPath)
-            print(newValue.first!.order)
         }
     }
 }
