@@ -149,13 +149,28 @@ struct MediaControlsView: View {
                 .frame(idealWidth: 350)
             }
             .padding(.horizontal, 20)
+
+            // MARK: - Volume Slider
+            HStack(spacing: 0) {
+                Image(systemName: "speaker")
+
+                Slider(value: Binding(get: {
+                    return player.volume
+                }, set: { newValue in
+                    player.volume = newValue
+                    player.setVolume(value: newValue)
+                }))
+
+                Image(systemName: "speaker.wave.3")
+            }
+            .frame(width: 110)
         }
     }
 }
 
-struct MediaControlsView_Previews: PreviewProvider {
-    static var previews: some View {
-        MediaControlsView()
-            .environmentObject(Player.shared)
-    }
-}
+//struct MediaControlsView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        MediaControlsView()
+//            .environmentObject(Player.shared)
+//    }
+//}

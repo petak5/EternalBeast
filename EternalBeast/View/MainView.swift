@@ -32,9 +32,9 @@ struct MainView: View {
     var player: Player
 
     @State
-    var selection: NavigationItem? = .Artists
+    private var selection: NavigationItem? = .Artists
     @State
-    var selectedArtist: String? = nil
+    private var selectedArtist: String? = nil
 
     @State
     private var sortOrder: [KeyPathComparator<Song>] = [KeyPathComparator(\Song.title!)]
@@ -90,7 +90,7 @@ struct MainView: View {
                 library.addSong(song: song)
             }
         }
-        .frame(minWidth: 800, minHeight: 100)
+        .frame(minWidth: 910, minHeight: 100)
     }
 
     func toggleSidebar() {

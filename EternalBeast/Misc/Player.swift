@@ -26,6 +26,7 @@ final class Player: ObservableObject {
     @Published private (set) var currentSong: Song?
     @Published var playbackMode: PlaybackMode = .RepeatAll
     @Published var isPlaying = false
+    @Published var volume: Float = 1.0
     @Published var playbackProgress = 0.0
     @Published var duration = 0.0
     @Published var artwork: NSImage?
@@ -330,6 +331,10 @@ final class Player: ObservableObject {
         MPNowPlayingInfoCenter.default().playbackState = .stopped
 
         isPlaying = false
+    }
+
+    func setVolume(value: Float) {
+        player.volume = max(min(value, 1.0), 0.0)
     }
 
     func replayFromStart() {
