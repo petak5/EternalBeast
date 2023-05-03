@@ -35,6 +35,8 @@ struct MainView: View {
     var selection: NavigationItem? = .Artists
     @State
     var selectedArtist: String? = nil
+    @State
+    private var selectedSongs = Set<Song.ID>()
 
     var body: some View {
         NavigationView {
@@ -45,12 +47,12 @@ struct MainView: View {
                     }
                     .tag(NavigationItem.Artists)
 
-                    NavigationLink(destination: Text("List of albums...")) {
-                        Label("Albums", systemImage: "square.stack")
-                    }
-                    .tag(NavigationItem.Albums)
+//                    NavigationLink(destination: Text("List of albums...")) {
+//                        Label("Albums", systemImage: "square.stack")
+//                    }
+//                    .tag(NavigationItem.Albums)
 
-                    NavigationLink(destination: Text("List of all songs")) {
+                    NavigationLink(destination: SongsView(selection: $selectedSongs)) {
                         Label("Songs", systemImage: "music.note")
                     }
                     .tag(NavigationItem.Songs)

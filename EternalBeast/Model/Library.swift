@@ -25,8 +25,11 @@ class Library: ObservableObject {
 
     @Published
     var artists: [Artist] = [Artist]()
+    @Published
+    var songs: [Song] = [Song]()
 
     func addSong(song: Song) {
+        songs.append(song)
         // Artist index
         if let artistIndex = artists.firstIndex(where: { artist in artist.name == song.artist }) {
             // Album index
@@ -80,6 +83,7 @@ class Library: ObservableObject {
         do {
             try moc.save()
             artists = []
+            songs = []
             Player.shared.stop()
         } catch {
             // Replace this implementation with code to handle the error appropriately.
@@ -100,6 +104,7 @@ class Library: ObservableObject {
         do {
             try moc.save()
             artists.removeAll(where: {$0.name == artist.name})
+            songs.removeAll(where: {$0.artist == artist.name})
         } catch {
             // Replace this implementation with code to handle the error appropriately.
             // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
@@ -121,6 +126,7 @@ class Library: ObservableObject {
                             guard let artistIdx = artists.firstIndex(of: artist) else { return }
                             guard let albumIdx = artists[artistIdx].albums.firstIndex(of: album) else { return }
                             artists[artistIdx].albums[albumIdx].songs.removeAll(where: {$0.title == song.title})
+                            songs.removeAll(where: {$0 == song})
                         }
                     }
                 }
