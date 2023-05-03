@@ -19,10 +19,15 @@ struct ArtistDetailView: View {
     private var songToDelete: Song? = nil
     @State
     private var hoveredSong: Song? = nil
+    @Binding
+    var songSortDescriptors: [SortDescriptor<Song>]
     @EnvironmentObject
     var player: Player
 
     let artist: Artist
+    var sortedAlbums: [Album] {
+        artist.albums.sorted(using: .keyPath(\.year))
+    }
 
     var body: some View {
         VStack(spacing: 0) {
@@ -31,11 +36,12 @@ struct ArtistDetailView: View {
                 .padding(.vertical, 10)
 
             // MARK: - Albums
-            List(artist.albums.sorted(using: .keyPath(\.name)), id: \.self, selection: $selectedSong) { album in
+            List(sortedAlbums, id: \.self, selection: $selectedSong) { album in
                 Section(header: Text(album.name)) {
                     // MARK: - Songs
-                    ForEach(album.songs.sorted(using: .keyPath(\.discNumber!.intValue), .keyPath(\.trackNumber!.intValue)), id: \.self) { song in
-                        ArtistDetailSongView(deleteConfirmationShown: $deleteConfirmationShown, songToDelete: $songToDelete, song: song, isHovered: hoveredSong == song)
+                    ForEach(album.songs.sorted(using: songSortDescriptors), id: \.self) { song in
+                        ArtistDetailSongView(deleteConfirmationShown: $deleteConfirmationShown, songToDelete: $songToDelete, song: song, isHovered: hoveredSong == song, sortedAlbums: sortedAlbums, songSortDescriptors: $songSortDescriptors)
+                            // TODO: find out why is .onHover disabling context menus in the view :/
                             .onHover { isHovered in
                                 if isHovered {
                                     hoveredSong = song

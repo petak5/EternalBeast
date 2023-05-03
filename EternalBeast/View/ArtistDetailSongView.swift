@@ -18,6 +18,9 @@ struct ArtistDetailSongView: View {
 
     public let song: Song
     public var isHovered: Bool
+    public let sortedAlbums: [Album]
+    @Binding
+    var songSortDescriptors: [SortDescriptor<Song>]
 
     var body: some View {
         HStack {
@@ -43,7 +46,7 @@ struct ArtistDetailSongView: View {
                     } else {
                         Image(systemName: "play.fill")
                             .onTapGesture {
-                                player.playSong(song)
+                                player.playSongs(albums: sortedAlbums, from: song, songSortDescriptors: songSortDescriptors)
                             }
                     }
                 } else {
@@ -70,7 +73,7 @@ struct ArtistDetailSongView: View {
                 }
             } else {
                 Button("Play") {
-                    player.playSong(song)
+                    player.playSongs(albums: sortedAlbums, from: song, songSortDescriptors: songSortDescriptors)
                 }
             }
             Button("Delete") {

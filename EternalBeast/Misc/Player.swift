@@ -192,6 +192,52 @@ final class Player: ObservableObject {
         isPlaying = true
     }
 
+    func playSongs(albums: [Album], from currentSong: Song, songSortDescriptors: [SortDescriptor<Song>] = []) {
+        stop()
+
+        clearQueue()
+
+        var isHistory = true
+        for album in albums {
+            for song in album.songs.sorted(using: songSortDescriptors) {
+                if isHistory {
+                    if song == currentSong {
+                        addToQueue(song: song)
+                        prepare()
+                        play()
+                        isHistory = false
+                    } else {
+                        addToHistory(song: song)
+                    }
+                } else {
+                    addToQueue(song: song)
+                }
+            }
+        }
+    }
+
+    func playSongs(songs: [Song], from currentSong: Song) {
+        stop()
+
+        clearQueue()
+
+        var isHistory = true
+        for song in songs {
+            if isHistory {
+                if song == currentSong {
+                    addToQueue(song: song)
+                    prepare()
+                    play()
+                    isHistory = false
+                } else {
+                    addToHistory(song: song)
+                }
+            } else {
+                addToQueue(song: song)
+            }
+        }
+    }
+
     func playSongs(songs: [Song]) {
         stop()
 
@@ -249,7 +295,7 @@ final class Player: ObservableObject {
                 return
             }
 
-            history.insert(song, at: 0)
+            addToHistory(song: song)
 
             if queue.isEmpty() && playbackMode == .RepeatAll {
                 addToQueue(songs: history.items().reversed())
@@ -259,6 +305,11 @@ final class Player: ObservableObject {
             prepare()
             play()
         }
+    }
+
+    /// Adds song to history (as most recent)
+    private func addToHistory(song: Song) {
+        history.insert(song, at: 0)
     }
 
     func pause() {

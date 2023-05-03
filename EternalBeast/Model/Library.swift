@@ -16,6 +16,7 @@ struct Artist: Hashable, Identifiable {
 
 struct Album: Hashable {
     let name: String
+    let year: String
     var songs: [Song]
 }
 
@@ -34,11 +35,11 @@ class Library: ObservableObject {
                     artists[artistIndex].albums[albumIndex].songs.append(song)
                 }
             } else {
-                let album = Album(name: song.album ?? "Unknown", songs: [song])
+                let album = Album(name: song.album ?? "Unknown", year: song.year ?? "0", songs: [song])
                 artists[artistIndex].albums.append(album)
             }
         } else {
-            let album = Album(name: song.album ?? "Unknown", songs: [song])
+            let album = Album(name: song.album ?? "Unknown", year: song.year ?? "0", songs: [song])
             let artist = Artist(name: song.artist ?? "Unknown", albums: [album])
             artists.append(artist)
         }

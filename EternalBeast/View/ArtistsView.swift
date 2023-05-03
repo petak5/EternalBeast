@@ -23,11 +23,13 @@ struct ArtistsView: View {
     private var player: Player
     @State
     private var artistSortDescriptor: SortDescriptor<Artist> = .keyPath(\.name)
+    @State
+    private var songSortDescriptors: [SortDescriptor<Song>] = [.keyPath(\.discNumber!.intValue), .keyPath(\.trackNumber!.intValue)]
 
     var body: some View {
         NavigationView {
             List(library.artists.sorted(using: artistSortDescriptor), id: \.name, selection: $selection) { artist in
-                NavigationLink(destination: ArtistDetailView(artist: artist)) {
+                NavigationLink(destination: ArtistDetailView(songSortDescriptors: $songSortDescriptors, artist: artist)) {
                     Text(artist.name)
                 }
                 .tag(artist.name)
@@ -49,7 +51,7 @@ struct ArtistsView: View {
                     Button("Yes", role: .destructive) {
                         withAnimation {
                             if let artistToDelete = artistToDelete {
-                                Library.shared.delete(artist: artistToDelete, moc: moc)
+                                library.delete(artist: artistToDelete, moc: moc)
                             }
                             deleteConfirmationShown = false
                             artistToDelete = nil
