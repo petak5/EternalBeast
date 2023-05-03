@@ -37,7 +37,6 @@ final class Player: ObservableObject, HasAudioEngine {
 
     private var timer: Timer? = nil
 
-    private var numberOfBars: Int = 50
     private var maxAmplitude: Float = 0.0
     private var minAmplitude: Float = -70.0
     private var referenceValueForFFT: Float = 12.0
@@ -68,7 +67,7 @@ final class Player: ObservableObject, HasAudioEngine {
         // TODO: Stop this when the view is not displayed
         nodeTap = FFTTap(engine.output!, fftValidBinCount: fftValidBinCount, callbackQueue: .main) { fftData in
             let currentTime = NSDate.timeIntervalSinceReferenceDate
-            let frequency = 10.0
+            let frequency = 20.0
             let distance = currentTime - self.previousTime
             if distance > 1.0/frequency {
                 self.updateAmplitudes(fftData)

@@ -11,6 +11,8 @@ import SwiftUI
 struct EternalBeastApp: App {
     private let persistenceController = PersistenceController.shared
 
+    @Environment(\.openWindow)
+    var openWindow
     @Environment(\.scenePhase)
     private var scenePhase
 
@@ -64,6 +66,11 @@ struct EternalBeastApp: App {
                     deleteConfirmationShown = true
                 }
             }
+            CommandGroup(after: .importExport) {
+                Button("Show Visualizer") {
+                    openWindow(id: "visualizer")
+                }
+            }
         }
         .onChange(of: scenePhase) { _ in
             persistenceController.save()
@@ -80,5 +87,10 @@ struct EternalBeastApp: App {
                 }
             }
         }
+
+        Window("Visualizer", id: "visualizer") {
+            VisualizerView(amplitudes: $player.amplitudes)
+        }
+        .windowStyle(.hiddenTitleBar)
     }
 }
