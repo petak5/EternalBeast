@@ -24,26 +24,37 @@ struct SongsView: View {
             TableColumn("Title", value: \.title!) { song in
                 Text(song.title ?? " ")
                     .bold(song == player.currentSong)
+                    .help(song.title ?? " ")
             }
             TableColumn("Album", value: \.album!) { song in
                 Text(song.album ?? " ")
                     .bold(song == player.currentSong)
+                    .help(song.album ?? " ")
             }
             TableColumn("Artist", value: \.artist!) { song in
                 Text(song.artist ?? " ")
                     .bold(song == player.currentSong)
+                    .help(song.artist ?? " ")
             }
             TableColumn("Year", value: \.year!) { song in
                 Text(song.year ?? " ")
                     .bold(song == player.currentSong)
+                    .help(song.year ?? " ")
             }
             TableColumn("Track", value: \.trackNumber!.intValue) { song in
                 Text(song.trackNumber?.stringValue ?? " ")
                     .bold(song == player.currentSong)
+                    .help(song.trackNumber?.stringValue ?? " ")
             }
             TableColumn("Disc", value: \.discNumber!.intValue) { song in
                 Text(song.discNumber?.stringValue ?? " ")
                     .bold(song == player.currentSong)
+                    .help(song.discNumber?.stringValue ?? " ")
+            }
+            TableColumn("File", value: \.filePath) { song in
+                Text(song.filePath)
+                    .bold(song == player.currentSong)
+                    .help(song.filePath)
             }
         } rows: {
             ForEach(library.songs.sorted(using: sortOrder), id: \.self) { song in

@@ -108,6 +108,7 @@ final class Player: ObservableObject, HasAudioEngine {
         // swap the amplitude array
         DispatchQueue.main.async {
             // TODO: Downsample the array (this just uses portion of the values)
+            // TODO: Move this to a different view model so that it does not force refresh of every view that uses player
             self.amplitudes = Array(decibels.prefix(self.amplitudes.count))
         }
     }

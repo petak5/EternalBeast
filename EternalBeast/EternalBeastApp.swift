@@ -46,7 +46,7 @@ struct EternalBeastApp: App {
             CommandGroup(after: .importExport) {
                 Button("Add songs") {
                     let openPanel = NSOpenPanel()
-                    openPanel.allowedFileTypes = ["mp3", "flac"]
+                    openPanel.allowedFileTypes = ["mp3", "flac", "m4a"]
                     openPanel.canChooseFiles = true
                     openPanel.canChooseDirectories = false
                     openPanel.allowsMultipleSelection = true

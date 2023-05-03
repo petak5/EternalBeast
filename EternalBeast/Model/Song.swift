@@ -9,7 +9,7 @@ import Cocoa
 
 @objc(Song)
 public class Song: NSManagedObject, Identifiable {
-    @NSManaged private var filePath: String
+    @NSManaged private (set) var filePath: String
     @NSManaged private (set) var title: String?
     @NSManaged private (set) var artist: String?
     @NSManaged private (set) var album: String?
