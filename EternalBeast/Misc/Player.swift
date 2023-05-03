@@ -11,6 +11,7 @@ import AVFoundation
 import MediaPlayer
 import Combine
 import AudioKit
+import Accelerate
 
 enum PlaybackMode {
     case RepeatOff
@@ -32,8 +33,17 @@ final class Player: ObservableObject, HasAudioEngine {
     @Published var playbackProgress = 0.0
     @Published var duration = 0.0
     @Published var artwork: NSImage?
+    @Published var amplitudes: [Float?] = Array(repeating: nil, count: 50)
 
-    var timer: Timer? = nil
+    private var timer: Timer? = nil
+
+    private var numberOfBars: Int = 50
+    private var maxAmplitude: Float = 0.0
+    private var minAmplitude: Float = -70.0
+    private var referenceValueForFFT: Float = 12.0
+    private let fftValidBinCount = FFTValidBinCount(rawValue: 10)
+    private var nodeTap: FFTTap?
+    private var previousTime = NSDate.timeIntervalSinceReferenceDate
 
     private let SMOL_NUMBER = 0.000001
 
@@ -54,7 +64,52 @@ final class Player: ObservableObject, HasAudioEngine {
 
         engine.output = player
         player.completionHandler = audioPlayerPlaybackCompletionHandler
+
+        // TODO: Stop this when the view is not displayed
+        nodeTap = FFTTap(engine.output!, fftValidBinCount: fftValidBinCount, callbackQueue: .main) { fftData in
+            let currentTime = NSDate.timeIntervalSinceReferenceDate
+            let frequency = 10.0
+            let distance = currentTime - self.previousTime
+            if distance > 1.0/frequency {
+                self.updateAmplitudes(fftData)
+                self.previousTime = currentTime
+            }
+        }
+        nodeTap?.isNormalized = false
+        nodeTap?.start()
+
         do { try engine.start() } catch let err { Log(err) }
+    }
+
+    // This function is taken from: https://github.com/AudioKit/Cookbook
+    func updateAmplitudes(_ fftFloats: [Float]) {
+        var fftData = fftFloats
+        for index in 0 ..< fftData.count {
+            if fftData[index].isNaN { fftData[index] = 0.0 }
+        }
+
+        var one = Float(1.0)
+        var zero = Float(0.0)
+        var decibelNormalizationFactor = Float(1.0 / (maxAmplitude - minAmplitude))
+        var decibelNormalizationOffset = Float(-minAmplitude / (maxAmplitude - minAmplitude))
+
+        var decibels = [Float](repeating: 0, count: fftData.count)
+        vDSP_vdbcon(fftData, 1, &referenceValueForFFT, &decibels, 1, vDSP_Length(fftData.count), 0)
+
+        vDSP_vsmsa(decibels,
+                   1,
+                   &decibelNormalizationFactor,
+                   &decibelNormalizationOffset,
+                   &decibels,
+                   1,
+                   vDSP_Length(decibels.count))
+
+        vDSP_vclip(decibels, 1, &zero, &one, &decibels, 1, vDSP_Length(decibels.count))
+
+        // swap the amplitude array
+        DispatchQueue.main.async {
+            self.amplitudes = decibels
+        }
     }
 
     deinit {
