@@ -10,6 +10,7 @@ import Combine
 import AVFoundation
 import MediaPlayer
 import Combine
+import AudioKit
 
 enum PlaybackMode {
     case RepeatOff

@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -22,6 +22,7 @@
 		D092DFC32A01970F008675F2 /* ArtistDetailSongView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D092DFC22A01970F008675F2 /* ArtistDetailSongView.swift */; };
 		D092DFC52A01B6E3008675F2 /* Sorting.swift in Sources */ = {isa = PBXBuildFile; fileRef = D092DFC42A01B6E3008675F2 /* Sorting.swift */; };
 		D092DFC72A024654008675F2 /* SongsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D092DFC62A024654008675F2 /* SongsView.swift */; };
+		D092DFCA2A029CD5008675F2 /* AudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = D092DFC92A029CD5008675F2 /* AudioKit */; };
 		D095B209263E83BD00113A8C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D095B208263E83BD00113A8C /* AppDelegate.swift */; };
 		D095B20D263E83C100113A8C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D095B20C263E83C100113A8C /* Assets.xcassets */; };
 		D095B210263E83C100113A8C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D095B20E263E83C100113A8C /* Main.storyboard */; };
@@ -88,6 +89,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D092DFCA2A029CD5008675F2 /* AudioKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -257,6 +259,9 @@
 			dependencies = (
 			);
 			name = EternalBeast;
+			packageProductDependencies = (
+				D092DFC92A029CD5008675F2 /* AudioKit */,
+			);
 			productName = EternalBeast;
 			productReference = D03822C6268F45E200891D8B /* EternalBeast.app */;
 			productType = "com.apple.product-type.application";
@@ -304,6 +309,9 @@
 				Base,
 			);
 			mainGroup = D095B1FC263E83BD00113A8C;
+			packageReferences = (
+				D092DFC82A029CD5008675F2 /* XCRemoteSwiftPackageReference "AudioKit" */,
+			);
 			productRefGroup = D095B206263E83BD00113A8C /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -638,6 +646,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		D092DFC82A029CD5008675F2 /* XCRemoteSwiftPackageReference "AudioKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AudioKit/AudioKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		D092DFC92A029CD5008675F2 /* AudioKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D092DFC82A029CD5008675F2 /* XCRemoteSwiftPackageReference "AudioKit" */;
+			productName = AudioKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		D0AD2557265D795100FE5431 /* EternalBeastCoreData.xcdatamodeld */ = {
