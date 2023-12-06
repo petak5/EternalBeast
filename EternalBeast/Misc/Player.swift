@@ -260,6 +260,8 @@ final class Player: ObservableObject {
     }
 
     func playPrevious() {
+        let wasPlaying = isPlaying
+
         // Seek to start if less that 2s elapsed
         if duration * playbackProgress > 2 {
             replayFromStart()
@@ -278,12 +280,16 @@ final class Player: ObservableObject {
 
                 // Play first song from queue
                 prepare()
-                play()
+                if wasPlaying {
+                    play()
+                }
             }
         }
     }
 
     func playNext() {
+        let wasPlaying = isPlaying
+
         if playbackMode == .RepeatOff {
             pause()
             seekToTime(seconds: 0)
@@ -304,7 +310,9 @@ final class Player: ObservableObject {
             }
 
             prepare()
-            play()
+            if wasPlaying {
+                play()
+            }
         }
     }
 
@@ -339,7 +347,9 @@ final class Player: ObservableObject {
 
     func replayFromStart() {
         seekToTime(seconds: 0)
-        play()
+        if isPlaying {
+            play()
+        }
     }
 
     func seekToTime(seconds: Double) {
