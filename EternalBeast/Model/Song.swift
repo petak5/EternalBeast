@@ -12,6 +12,7 @@ public class Song: NSManagedObject, Identifiable {
     @NSManaged private var filePath: String
     @NSManaged private (set) var title: String?
     @NSManaged private (set) var artist: String?
+    @NSManaged private (set) var albumArtist: String?
     @NSManaged private (set) var album: String?
     @NSManaged private (set) var year: String?
     @NSManaged private (set) var length: String?
@@ -29,6 +30,7 @@ public class Song: NSManagedObject, Identifiable {
 
         self.title = metadata.title
         self.artist = metadata.artist
+        self.albumArtist = metadata.albumArtist
         self.album = metadata.album
         self.year = metadata.year
         self.length = metadata.length

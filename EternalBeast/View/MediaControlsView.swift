@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct MediaControlsView: View {
-    @Environment(\.openWindow) var openWindow
+    @Environment(\.openWindow)
+    var openWindow
 
     @EnvironmentObject
     private var player: Player

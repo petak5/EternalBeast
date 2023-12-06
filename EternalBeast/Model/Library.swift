@@ -31,7 +31,7 @@ class Library: ObservableObject {
     func addSong(song: Song) {
         songs.append(song)
         // Artist index
-        if let artistIndex = artists.firstIndex(where: { artist in artist.name == song.artist }) {
+        if let artistIndex = artists.firstIndex(where: { artist in artist.name == song.albumArtist }) {
             // Album index
             if let albumIndex = artists[artistIndex].albums.firstIndex(where: { album in album.name == song.album }) {
                 if !artists[artistIndex].albums[albumIndex].songs.contains(song) {

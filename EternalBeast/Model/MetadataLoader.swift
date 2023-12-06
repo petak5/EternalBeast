@@ -13,6 +13,7 @@ struct Metadata {
     var pathToFile: String
     var title: String?
     var artist: String?
+    var albumArtist: String?
     var album: String?
     var year: String?
     var length: String?
@@ -27,6 +28,7 @@ struct MetadataLoader {
         // Default values
         metadata = Metadata(pathToFile: pathToFile)
         metadata.title = (pathToFile as NSString).lastPathComponent
+        metadata.artist = "Unknown Artist"
         metadata.artist = "Unknown Artist"
         metadata.album = ((pathToFile as NSString).deletingLastPathComponent as NSString).lastPathComponent
         metadata.year = ""
@@ -56,8 +58,11 @@ struct MetadataLoader {
 
             // MARK: ID3 metadata
             if metaDataItem.keySpace == .id3, let key = metaDataItem.key {
+                // Album Artist
+                if key.description == "TPE2" {
+                    metadata.albumArtist = metaDataItem.stringValue ?? ""
                 // Track number
-                if key.description == "TRCK" {
+                } else if key.description == "TRCK" {
                     let values = metaDataItem.stringValue!.split(separator: "/")
                     metadata.trackNumber = Int(String(values[0])) ?? 0
                 // Part of a set (number of CD disc, etc.)

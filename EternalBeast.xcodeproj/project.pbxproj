@@ -13,6 +13,7 @@
 		D00956C527A20DE600E1E5CF /* PlayerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0ADCDDA265577F400767ACF /* PlayerDelegate.swift */; };
 		D00956CA27A20DF100E1E5CF /* PlayerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00956C827A20DF100E1E5CF /* PlayerDelegate.swift */; };
 		D00956CB27A20DF100E1E5CF /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00956C627A20DF100E1E5CF /* Queue.swift */; };
+		D01D02082B209D64001D35D2 /* Tools.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01D02072B209D64001D35D2 /* Tools.swift */; };
 		D03822C9268F45E200891D8B /* EternalBeastApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03822C8268F45E200891D8B /* EternalBeastApp.swift */; };
 		D03822CB268F45E300891D8B /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03822CA268F45E300891D8B /* MainView.swift */; };
 		D03822CD268F45E400891D8B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D03822CC268F45E400891D8B /* Assets.xcassets */; };
@@ -45,6 +46,7 @@
 		D001E6A8265A443C00E01AFB /* SongCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongCell.swift; sourceTree = "<group>"; };
 		D00956C627A20DF100E1E5CF /* Queue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
 		D00956C827A20DF100E1E5CF /* PlayerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerDelegate.swift; sourceTree = "<group>"; };
+		D01D02072B209D64001D35D2 /* Tools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tools.swift; sourceTree = "<group>"; };
 		D03822C6268F45E200891D8B /* EternalBeast.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EternalBeast.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D03822C8268F45E200891D8B /* EternalBeastApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EternalBeastApp.swift; sourceTree = "<group>"; };
 		D03822CA268F45E300891D8B /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -237,6 +239,7 @@
 				D00956C827A20DF100E1E5CF /* PlayerDelegate.swift */,
 				D0F769FA26939A7900D3B8D3 /* DoubleToTimeString.swift */,
 				D092DFC42A01B6E3008675F2 /* Sorting.swift */,
+				D01D02072B209D64001D35D2 /* Tools.swift */,
 			);
 			path = Misc;
 			sourceTree = "<group>";
@@ -355,6 +358,7 @@
 				D00956CB27A20DF100E1E5CF /* Queue.swift in Sources */,
 				D0BB944E268F47080098996C /* EternalBeast.xcdatamodeld in Sources */,
 				D0F769FB26939A7900D3B8D3 /* DoubleToTimeString.swift in Sources */,
+				D01D02082B209D64001D35D2 /* Tools.swift in Sources */,
 				D092DFC52A01B6E3008675F2 /* Sorting.swift in Sources */,
 				D0D28696269B1693002CAE0F /* MetadataLoader.swift in Sources */,
 			);

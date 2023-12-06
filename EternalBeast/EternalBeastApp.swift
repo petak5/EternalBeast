@@ -10,6 +10,7 @@ import SwiftUI
 @main
 struct EternalBeastApp: App {
     private let persistenceController = PersistenceController.shared
+    private let allowedFileTypes = ["mp3"]
 
     @Environment(\.scenePhase)
     private var scenePhase
@@ -44,16 +45,17 @@ struct EternalBeastApp: App {
             CommandGroup(after: .importExport) {
                 Button("Add songs") {
                     let openPanel = NSOpenPanel()
-                    openPanel.allowedFileTypes = ["mp3", "flac"]
+                    openPanel.allowedFileTypes = allowedFileTypes
                     openPanel.canChooseFiles = true
-                    openPanel.canChooseDirectories = false
+                    openPanel.canChooseDirectories = true
                     openPanel.allowsMultipleSelection = true
                     openPanel.begin { result in
                         if result.rawValue == NSApplication.ModalResponse.OK.rawValue {
-                            for url in openPanel.urls {
+                            let songURLs = Tools.findSongURLs(in: openPanel.urls, allowedFileTypes: allowedFileTypes)
+                            for songURL in songURLs {
                                 do {
                                     let moc = persistenceController.container.viewContext
-                                    Library.shared.loadSong(filePath: url.path, moc: moc)
+                                    Library.shared.loadSong(filePath: songURL.path, moc: moc)
                                 }
                             }
                         }
