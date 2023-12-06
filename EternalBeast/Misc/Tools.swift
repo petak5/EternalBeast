@@ -22,8 +22,8 @@ public class Tools {
                     if isDirectory.boolValue {
                         // Recursively search in subdirectories
                         let newPaths = try FileManager.default.contentsOfDirectory(at: path, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
-                        let subdirectoryMP3Files = findSongURLs(in: newPaths, allowedFileTypes: allowedFileTypes)
-                        songURLs.append(contentsOf: subdirectoryMP3Files)
+                        let subdirectorySongURLs = findSongURLs(in: newPaths, allowedFileTypes: allowedFileTypes)
+                        songURLs.append(contentsOf: subdirectorySongURLs)
                     } else {
                         // Check if the file has one of allowed extensions
                         if allowedFileTypes.contains(path.pathExtension.lowercased()) {
