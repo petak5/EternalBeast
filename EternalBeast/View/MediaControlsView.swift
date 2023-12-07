@@ -125,13 +125,9 @@ struct MediaControlsView: View {
                     .frame(width: 250)
 
                     HStack(spacing: 0) {
-                        Text((player.playbackProgress * player.duration).timeStringFromDouble())
-                            .font(.subheadline)
-                            .monospacedDigit()
-                            .frame(idealWidth: 40, alignment: .trailing)
-                            .padding(.horizontal, 5)
+                        timeView(seconds: player.playbackProgress * player.duration, alignment: .trailing)
 
-                        // MARK: - Progress
+                        // MARK: - Progress slider
                         Slider(value: Binding(get: {
                             return player.playbackProgress
                         }, set: { newValue in
@@ -141,11 +137,7 @@ struct MediaControlsView: View {
                         .disabled(player.currentSong == nil)
                         .frame(width: 250)
 
-                        Text(player.duration.timeStringFromDouble())
-                            .font(.subheadline)
-                            .monospacedDigit()
-                            .frame(idealWidth: 40, alignment: .leading)
-                            .padding(.horizontal, 5)
+                        timeView(seconds: player.duration, alignment: .leading)
                     }
                 }
                 .frame(idealWidth: 350)
@@ -167,6 +159,15 @@ struct MediaControlsView: View {
             }
             .frame(width: 110)
         }
+    }
+
+    @ViewBuilder
+    func timeView(seconds: Double, alignment: Alignment) -> some View {
+        Text(seconds.timeStringFromDouble())
+            .font(.subheadline)
+            .monospacedDigit()
+            .frame(idealWidth: 40, alignment: alignment)
+            .padding(.horizontal, 5)
     }
 }
 
