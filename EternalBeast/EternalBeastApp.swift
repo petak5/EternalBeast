@@ -10,7 +10,7 @@ import SwiftUI
 @main
 struct EternalBeastApp: App {
     private let persistenceController = PersistenceController.shared
-    private let allowedFileTypes = ["mp3"]
+    private let allowedFileTypes = ["mp3", "m4a"]
 
     @Environment(\.scenePhase)
     private var scenePhase

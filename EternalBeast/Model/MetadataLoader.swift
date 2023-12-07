@@ -29,7 +29,7 @@ struct MetadataLoader {
         metadata = Metadata(pathToFile: pathToFile)
         metadata.title = (pathToFile as NSString).lastPathComponent
         metadata.artist = "Unknown Artist"
-        metadata.artist = "Unknown Artist"
+        metadata.albumArtist = nil      // Value will be set to .artist if not found in the metadata
         metadata.album = ((pathToFile as NSString).deletingLastPathComponent as NSString).lastPathComponent
         metadata.year = ""
         metadata.length = "0"
@@ -141,6 +141,11 @@ struct MetadataLoader {
                     metadata.discNumber = Int(discNumber)
                 }
             }
+        }
+
+        // If albumArtist metadata not found, use the song's artist
+        if metadata.albumArtist == nil {
+            metadata.albumArtist = metadata.artist
         }
 
         //length = asset.duration.seconds.timeStringFromDouble()
