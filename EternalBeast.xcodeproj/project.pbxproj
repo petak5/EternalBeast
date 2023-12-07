@@ -7,10 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D001E6A9265A443C00E01AFB /* SongCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D001E6A8265A443C00E01AFB /* SongCell.swift */; };
-		D00956C327A20DE600E1E5CF /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0ADCDD626552B3800767ACF /* Queue.swift */; };
-		D00956C427A20DE600E1E5CF /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0ADCDD826552CCB00767ACF /* Player.swift */; };
-		D00956C527A20DE600E1E5CF /* PlayerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0ADCDDA265577F400767ACF /* PlayerDelegate.swift */; };
 		D00956CA27A20DF100E1E5CF /* PlayerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00956C827A20DF100E1E5CF /* PlayerDelegate.swift */; };
 		D00956CB27A20DF100E1E5CF /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00956C627A20DF100E1E5CF /* Queue.swift */; };
 		D01D02082B209D64001D35D2 /* Tools.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01D02072B209D64001D35D2 /* Tools.swift */; };
@@ -23,17 +19,8 @@
 		D092DFC32A01970F008675F2 /* ArtistDetailSongView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D092DFC22A01970F008675F2 /* ArtistDetailSongView.swift */; };
 		D092DFC52A01B6E3008675F2 /* Sorting.swift in Sources */ = {isa = PBXBuildFile; fileRef = D092DFC42A01B6E3008675F2 /* Sorting.swift */; };
 		D092DFC72A024654008675F2 /* SongsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D092DFC62A024654008675F2 /* SongsView.swift */; };
-		D095B209263E83BD00113A8C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D095B208263E83BD00113A8C /* AppDelegate.swift */; };
-		D095B20D263E83C100113A8C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D095B20C263E83C100113A8C /* Assets.xcassets */; };
-		D095B210263E83C100113A8C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D095B20E263E83C100113A8C /* Main.storyboard */; };
-		D095B21E263E8EE600113A8C /* SidebarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D095B21D263E8EE600113A8C /* SidebarViewController.swift */; };
-		D095B22C263E8FD700113A8C /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D095B22B263E8FD700113A8C /* MainViewController.swift */; };
 		D0A4A6E127A3F442002C24F2 /* MediaControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A4A6E027A3F442002C24F2 /* MediaControlsView.swift */; };
 		D0A4A6E327A415F2002C24F2 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A4A6E227A415F2002C24F2 /* Player.swift */; };
-		D0AD2559265D795100FE5431 /* EternalBeastCoreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D0AD2557265D795100FE5431 /* EternalBeastCoreData.xcdatamodeld */; };
-		D0ADCDDD26557FAD00767ACF /* DoubleToTimeString.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0ADCDDC26557FAD00767ACF /* DoubleToTimeString.swift */; };
-		D0AE19BE265A8EBA0074CD44 /* AlbumGroupCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0AE19BD265A8EBA0074CD44 /* AlbumGroupCell.swift */; };
-		D0B265582651034A009E0307 /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B265572651034A009E0307 /* Song.swift */; };
 		D0BB944E268F47080098996C /* EternalBeast.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D0BB944C268F47080098996C /* EternalBeast.xcdatamodeld */; };
 		D0BB9451268F4F560098996C /* ArtistsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BB9450268F4F560098996C /* ArtistsView.swift */; };
 		D0BB9453268F4F5E0098996C /* ArtistDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BB9452268F4F5E0098996C /* ArtistDetailView.swift */; };
@@ -43,7 +30,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		D001E6A8265A443C00E01AFB /* SongCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongCell.swift; sourceTree = "<group>"; };
 		D00956C627A20DF100E1E5CF /* Queue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
 		D00956C827A20DF100E1E5CF /* PlayerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerDelegate.swift; sourceTree = "<group>"; };
 		D01D02072B209D64001D35D2 /* Tools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tools.swift; sourceTree = "<group>"; };
@@ -59,23 +45,8 @@
 		D092DFC22A01970F008675F2 /* ArtistDetailSongView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistDetailSongView.swift; sourceTree = "<group>"; };
 		D092DFC42A01B6E3008675F2 /* Sorting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sorting.swift; sourceTree = "<group>"; };
 		D092DFC62A024654008675F2 /* SongsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongsView.swift; sourceTree = "<group>"; };
-		D095B205263E83BD00113A8C /* EternalBeast old.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "EternalBeast old.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		D095B208263E83BD00113A8C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		D095B20C263E83C100113A8C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = "EternalBeast old/Assets.xcassets"; sourceTree = SOURCE_ROOT; };
-		D095B20F263E83C100113A8C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		D095B211263E83C100113A8C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D095B212263E83C100113A8C /* EternalBeast.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EternalBeast.entitlements; sourceTree = "<group>"; };
-		D095B21D263E8EE600113A8C /* SidebarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarViewController.swift; sourceTree = "<group>"; };
-		D095B22B263E8FD700113A8C /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		D0A4A6E027A3F442002C24F2 /* MediaControlsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaControlsView.swift; sourceTree = "<group>"; };
 		D0A4A6E227A415F2002C24F2 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
-		D0AD2558265D795100FE5431 /* EternalBeastCoreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = EternalBeastCoreData.xcdatamodel; sourceTree = "<group>"; };
-		D0ADCDD626552B3800767ACF /* Queue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
-		D0ADCDD826552CCB00767ACF /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
-		D0ADCDDA265577F400767ACF /* PlayerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerDelegate.swift; sourceTree = "<group>"; };
-		D0ADCDDC26557FAD00767ACF /* DoubleToTimeString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleToTimeString.swift; sourceTree = "<group>"; };
-		D0AE19BD265A8EBA0074CD44 /* AlbumGroupCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumGroupCell.swift; sourceTree = "<group>"; };
-		D0B265572651034A009E0307 /* Song.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Song.swift; sourceTree = "<group>"; };
 		D0BB944D268F47080098996C /* EternalBeast.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = EternalBeast.xcdatamodel; sourceTree = "<group>"; };
 		D0BB9450268F4F560098996C /* ArtistsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistsView.swift; sourceTree = "<group>"; };
 		D0BB9452268F4F5E0098996C /* ArtistDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistDetailView.swift; sourceTree = "<group>"; };
@@ -87,13 +58,6 @@
 
 /* Begin PBXFrameworksBuildPhase section */
 		D03822C3268F45E200891D8B /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		D095B202263E83BD00113A8C /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -130,7 +94,6 @@
 		D095B1FC263E83BD00113A8C = {
 			isa = PBXGroup;
 			children = (
-				D095B207263E83BD00113A8C /* EternalBeast old */,
 				D03822C7268F45E200891D8B /* EternalBeast */,
 				D095B206263E83BD00113A8C /* Products */,
 			);
@@ -139,64 +102,9 @@
 		D095B206263E83BD00113A8C /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				D095B205263E83BD00113A8C /* EternalBeast old.app */,
 				D03822C6268F45E200891D8B /* EternalBeast.app */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		D095B207263E83BD00113A8C /* EternalBeast old */ = {
-			isa = PBXGroup;
-			children = (
-				D0ADCDD526552B2600767ACF /* Misc */,
-				D095B21A263E8E2700113A8C /* Model */,
-				D095B218263E8E0000113A8C /* Controller */,
-				D095B219263E8E0E00113A8C /* View */,
-				D095B208263E83BD00113A8C /* AppDelegate.swift */,
-				D095B20C263E83C100113A8C /* Assets.xcassets */,
-				D095B211263E83C100113A8C /* Info.plist */,
-				D0AD2557265D795100FE5431 /* EternalBeastCoreData.xcdatamodeld */,
-				D095B212263E83C100113A8C /* EternalBeast.entitlements */,
-			);
-			path = "EternalBeast old";
-			sourceTree = "<group>";
-		};
-		D095B218263E8E0000113A8C /* Controller */ = {
-			isa = PBXGroup;
-			children = (
-				D095B22B263E8FD700113A8C /* MainViewController.swift */,
-				D095B21D263E8EE600113A8C /* SidebarViewController.swift */,
-			);
-			path = Controller;
-			sourceTree = "<group>";
-		};
-		D095B219263E8E0E00113A8C /* View */ = {
-			isa = PBXGroup;
-			children = (
-				D095B20E263E83C100113A8C /* Main.storyboard */,
-				D001E6A8265A443C00E01AFB /* SongCell.swift */,
-				D0AE19BD265A8EBA0074CD44 /* AlbumGroupCell.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		D095B21A263E8E2700113A8C /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				D0B265572651034A009E0307 /* Song.swift */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		D0ADCDD526552B2600767ACF /* Misc */ = {
-			isa = PBXGroup;
-			children = (
-				D0ADCDD626552B3800767ACF /* Queue.swift */,
-				D0ADCDD826552CCB00767ACF /* Player.swift */,
-				D0ADCDDA265577F400767ACF /* PlayerDelegate.swift */,
-				D0ADCDDC26557FAD00767ACF /* DoubleToTimeString.swift */,
-			);
-			path = Misc;
 			sourceTree = "<group>";
 		};
 		D0BB944F268F4F3F0098996C /* View */ = {
@@ -264,23 +172,6 @@
 			productReference = D03822C6268F45E200891D8B /* EternalBeast.app */;
 			productType = "com.apple.product-type.application";
 		};
-		D095B204263E83BD00113A8C /* EternalBeast old */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = D095B215263E83C100113A8C /* Build configuration list for PBXNativeTarget "EternalBeast old" */;
-			buildPhases = (
-				D095B201263E83BD00113A8C /* Sources */,
-				D095B202263E83BD00113A8C /* Frameworks */,
-				D095B203263E83BD00113A8C /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "EternalBeast old";
-			productName = EternalBeast;
-			productReference = D095B205263E83BD00113A8C /* EternalBeast old.app */;
-			productType = "com.apple.product-type.application";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -292,9 +183,6 @@
 				TargetAttributes = {
 					D03822C5268F45E200891D8B = {
 						CreatedOnToolsVersion = 12.5.1;
-					};
-					D095B204263E83BD00113A8C = {
-						CreatedOnToolsVersion = 12.5;
 					};
 				};
 			};
@@ -311,7 +199,6 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				D095B204263E83BD00113A8C /* EternalBeast old */,
 				D03822C5268F45E200891D8B /* EternalBeast */,
 			);
 		};
@@ -324,15 +211,6 @@
 			files = (
 				D03822D0268F45E400891D8B /* Preview Assets.xcassets in Resources */,
 				D03822CD268F45E400891D8B /* Assets.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		D095B203263E83BD00113A8C /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				D095B20D263E83C100113A8C /* Assets.xcassets in Resources */,
-				D095B210263E83C100113A8C /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -364,36 +242,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D095B201263E83BD00113A8C /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				D095B22C263E8FD700113A8C /* MainViewController.swift in Sources */,
-				D0B265582651034A009E0307 /* Song.swift in Sources */,
-				D0AD2559265D795100FE5431 /* EternalBeastCoreData.xcdatamodeld in Sources */,
-				D00956C527A20DE600E1E5CF /* PlayerDelegate.swift in Sources */,
-				D0AE19BE265A8EBA0074CD44 /* AlbumGroupCell.swift in Sources */,
-				D095B209263E83BD00113A8C /* AppDelegate.swift in Sources */,
-				D095B21E263E8EE600113A8C /* SidebarViewController.swift in Sources */,
-				D0ADCDDD26557FAD00767ACF /* DoubleToTimeString.swift in Sources */,
-				D00956C327A20DE600E1E5CF /* Queue.swift in Sources */,
-				D00956C427A20DE600E1E5CF /* Player.swift in Sources */,
-				D001E6A9265A443C00E01AFB /* SongCell.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		D095B20E263E83C100113A8C /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				D095B20F263E83C100113A8C /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		D03822D8268F45E400891D8B /* Debug */ = {
@@ -563,54 +412,6 @@
 			};
 			name = Release;
 		};
-		D095B216263E83C100113A8C /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = EternalBeast/EternalBeast.entitlements;
-				CODE_SIGN_IDENTITY = "-";
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = B8BDLHDMTH;
-				ENABLE_HARDENED_RUNTIME = YES;
-				INFOPLIST_FILE = EternalBeast/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 0.1;
-				PRODUCT_BUNDLE_IDENTIFIER = com.peterurgos.EternalBeast;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-			};
-			name = Debug;
-		};
-		D095B217263E83C100113A8C /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = EternalBeast/EternalBeast.entitlements;
-				CODE_SIGN_IDENTITY = "-";
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = B8BDLHDMTH;
-				ENABLE_HARDENED_RUNTIME = YES;
-				INFOPLIST_FILE = EternalBeast/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 0.1;
-				PRODUCT_BUNDLE_IDENTIFIER = com.peterurgos.EternalBeast;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -632,28 +433,9 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D095B215263E83C100113A8C /* Build configuration list for PBXNativeTarget "EternalBeast old" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				D095B216263E83C100113A8C /* Debug */,
-				D095B217263E83C100113A8C /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		D0AD2557265D795100FE5431 /* EternalBeastCoreData.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				D0AD2558265D795100FE5431 /* EternalBeastCoreData.xcdatamodel */,
-			);
-			currentVersion = D0AD2558265D795100FE5431 /* EternalBeastCoreData.xcdatamodel */;
-			path = EternalBeastCoreData.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
 		D0BB944C268F47080098996C /* EternalBeast.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
