@@ -43,6 +43,7 @@ struct MediaControlsView: View {
                     }
                 }
             }
+            .disabled(player.currentSong == nil)
             // MARK: - Next
             Button(action: {
                 Player.shared.playNext()

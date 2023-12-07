@@ -41,18 +41,14 @@ final class Player: ObservableObject {
 
         timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
             if let item = self.player.currentItem {
-                self.playbackProgress = item.currentTime().seconds / item.duration.seconds
-                
-                
+                self.playbackProgress = (item.currentTime().seconds + 0.5) / item.duration.seconds
+
+
                 // MOVE UPDATING THE NOWPLAYBACKINFO TO RELEVANT PROPERTIES' SETTERS?
-                
-                
+
+
                 // Update playback info in the Now Playing system menu
-                if var nowPlayingInfo = MPNowPlayingInfoCenter.default().nowPlayingInfo {
-                    nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = self.player.currentItem?.currentTime().seconds
-//                    nowPlayingInfo[MPMediaItemPropertyPlaybackDuration] = self.player.currentItem?.duration
-                    MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
-                }
+                MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPNowPlayingInfoPropertyElapsedPlaybackTime] = item.currentTime().seconds
             } else {
                 self.playbackProgress = 0.0
             }
@@ -128,6 +124,19 @@ final class Player: ObservableObject {
         }
     }
 
+    private func createNowPlayingInfo(for song: Song) -> [String:Any] {
+        let nowPlayingInfo: [String: Any] = [
+            MPMediaItemPropertyTitle: song.title as Any,
+            MPMediaItemPropertyArtist: song.artist as Any,
+            MPMediaItemPropertyAlbumTitle: song.album as Any,
+            MPMediaItemPropertyPlaybackDuration: player.currentItem?.duration.seconds ?? 0 as Any,
+            MPNowPlayingInfoPropertyElapsedPlaybackTime: player.currentItem?.currentTime() ?? 0 as Any,
+            MPNowPlayingInfoPropertyPlaybackRate: 1
+        ]
+
+        return nowPlayingInfo
+    }
+
     func addToQueue(songs: [Song]) {
         for song in songs {
             addToQueue(song: song)
@@ -149,13 +158,24 @@ final class Player: ObservableObject {
         prepare(withSong: song)
     }
 
+    /// Prepare song for playing
     private func prepare(withSong song: Song) {
         currentSong = song
         let url = URL(fileURLWithPath: song.getPathToFile())
         let item = AVPlayerItem(url: url)
         player.replaceCurrentItem(with: item)
+
+        artwork = MetadataLoader.getSongArtwork(song: song)
+
+        MPNowPlayingInfoCenter.default().playbackState = .paused
+        var nowPlayingInfo = createNowPlayingInfo(for: song)
+        if let artwork = artwork {
+            nowPlayingInfo[MPMediaItemPropertyArtwork] = MPMediaItemArtwork(boundsSize: artwork.size) { _ in artwork }
+        }
+        MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
     }
 
+    /// Call `Player.prepare()` before this function when playing a new song
     func play() {
         if isPlaying {
             return
@@ -165,29 +185,11 @@ final class Player: ObservableObject {
             return
         }
 
-        guard let currentSong = currentSong else {
-            return
-        }
-
         if player.status != .readyToPlay {
             prepare()
         }
 
-        artwork = MetadataLoader.getSongArtwork(song: currentSong)
-
         MPNowPlayingInfoCenter.default().playbackState = .playing
-        var nowPlayingInfo: [String: Any] = [
-            MPMediaItemPropertyTitle: currentSong.title,
-            MPMediaItemPropertyArtist: currentSong.artist,
-            MPMediaItemPropertyAlbumTitle: currentSong.album,
-            MPMediaItemPropertyPlaybackDuration: player.currentItem?.duration.seconds,
-            MPNowPlayingInfoPropertyElapsedPlaybackTime: player.currentItem?.currentTime(),
-            MPNowPlayingInfoPropertyPlaybackRate: 1
-        ]
-        if let artwork = artwork {
-            nowPlayingInfo[MPMediaItemPropertyArtwork] = MPMediaItemArtwork(boundsSize: artwork.size) { _ in artwork }
-        }
-        MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
 
         player.play()
         isPlaying = true
@@ -357,6 +359,9 @@ final class Player: ObservableObject {
             return
         }
 
+        if let currentPlayerItem = self.player.currentItem {
+            self.playbackProgress = seconds / currentPlayerItem.duration.seconds
+        }
         player.seek(to: CMTime(seconds: seconds, preferredTimescale: .max))
     }
 }
